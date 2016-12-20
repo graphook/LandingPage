@@ -1,0 +1,83 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,100);
+
+$black: #000;
+$white: #FFF;
+$grey: #888;
+$lightGrey: #EEE;
+$margin: 4vw;
+$contentFontSize: 14px;
+$headerHeight: 50px;
+$containerBorder: 1px solid $lightGrey;
+$largeShadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+$smallShadow: 0 5px 10px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+
+@import 'layout';
+@import 'search';
+@import 'forms';
+
+body {
+	background-color: #FFF;
+	font-family: 'Roboto', sans-serif;
+	font-size: 14px;
+	margin: 0;
+}
+
+a {
+	color: #000;
+	text-decoration: underline;
+	cursor: pointer;
+
+	i {
+		margin-right: 4px;
+	}
+}
+a:hover {
+	color: #888;
+}
+
+.selectedLink {
+	color: #000;
+	font-weight: bold;
+
+	i {
+		margin-right: 4px;
+	}
+}
+
+.page-container {
+	padding-left: 5%;
+	padding-right: 5%;
+}
+
+.primaryButton {
+	font-size: 14px;
+	cursor: pointer;
+	padding: 8px;
+  border: 1px solid #000;
+	background-color: #000;
+	color: #FFF;
+  text-decoration: none;
+	display: block;
+}
+.primaryButton:hover {
+  border: 1px solid #888;
+	color: #FFF;
+	background-color: #888;
+}
+.secondary-button {
+	padding: 8px;
+  border: 1px solid #000;
+  text-decoration: none;
+	display: block;
+}
+.secondary-button:hover {
+	border: 1px solid #888;
+}
+
+.clickableShadow {
+	box-shadow: 0 5px 10px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+	transition: box-shadow 0.25s;
+}
+.clickableShadow:hover {
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
