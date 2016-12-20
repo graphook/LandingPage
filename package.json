@@ -24,7 +24,7 @@
   },
   "betterScripts": {
     "start-prod": {
-      "command": "node ./bin/server.js",
+      "command": "node ./bin/server.js"
     },
     "start-dev": {
       "command": "node ./bin/server.js",
