@@ -48,7 +48,7 @@ export function match(field) {
   return (value, data) => {
     if (data) {
       if (value !== data[field]) {
-        return 'Do not match';
+        return 'Does not match';
       }
     }
   };

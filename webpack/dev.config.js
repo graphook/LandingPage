@@ -66,7 +66,7 @@ module.exports = {
   context: path.resolve(__dirname, '..'),
   entry: {
     'main': [
-      'webpack-hot-middleware/client?path=http://' + host + ':' + port + '/__webpack_hmr',
+      'webpack-hot-middleware/client?path=http://' + host + ':' + port + '/__webpack_hmr&overlay=false',
       'font-awesome-webpack!./src/theme/font-awesome.config.js',
       './src/client.js'
     ]
