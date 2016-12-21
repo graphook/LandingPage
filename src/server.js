@@ -5,15 +5,25 @@ import compression from 'compression';
 import path from 'path';
 import PrettyError from 'pretty-error';
 import http from 'http';
+import httpProxy from 'http-proxy';
 
 import routes from 'serverRoutes.map'
 
+const targetUrl = process.env.API_URL;
 const pretty = new PrettyError();
 const app = new Express();
 const server = new http.Server(app);
+const proxy = httpProxy.createProxyServer({
+  target: targetUrl
+});
+
 
 app.use(compression());
 app.use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')));
+
+app.use('/api', (req, res) => {
+  proxy.web(req, res, {target: targetUrl});
+});
 
 app.use(Express.static(path.join(__dirname, '..', 'static')));
 

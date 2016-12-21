@@ -2,14 +2,30 @@ import React, {Component, PropTypes} from 'react';
 import s from '../styles/index.scss';
 import {Field, reduxForm} from 'redux-form';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import createUserValidator from './createUserValidator';
 import textInput from '../forms/textInput.jsx';
+import * as validationActions from 'redux/modules/formValidation';
 
-@connect(() => ({}))
+const asyncValidate = (data, dispatch, {isValid}) => {
+  if (!data.email && !data.username) {
+    return Promise.resolve({});
+  }
+  return isValid('user', {
+    email: data.email,
+    username: data.username,
+    password: 'something'
+  });
+};
+@connect(() => ({}),
+  dispatch => bindActionCreators(validationActions, dispatch)
+)
 @reduxForm({
   form: 'createUser',
   fields: ['email', 'username', 'password1', 'password2'],
-  validate: createUserValidator
+  validate: createUserValidator,
+  asyncValidate,
+  asyncBlurFields: ['email', 'username']
 })
 
 export default class CreateUserForm extends Component {
