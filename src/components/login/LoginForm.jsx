@@ -4,21 +4,25 @@ import {Field, reduxForm} from 'redux-form';
 import {connect} from 'react-redux';
 import loginValidator from './loginValidator';
 import textInput from '../forms/textInput.jsx';
+import * as authActions from 'redux/modules/auth';
 
-@connect(() => ({}))
+@connect(() => ({}), authActions)
 @reduxForm({
   form: 'login',
   fields: ['username', 'password'],
   validate: loginValidator
 })
-
 export default class CreateUserForm extends Component {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired
   }
 
   onSubmit = (values) => {
-    console.log(values);
+    this.props.login({
+      username: values.username,
+      email: values.username,
+      password: values.password
+    })
   }
   render() {
     return (
@@ -31,8 +35,8 @@ export default class CreateUserForm extends Component {
           placeholder="username or email"
           icon="fa-user" />
         <Field
-          name="username"
-          type="text"
+          name="password"
+          type="password"
           component={textInput}
           placeholder="password"
           icon="fa-lock" />

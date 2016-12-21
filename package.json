@@ -72,6 +72,7 @@
     "body-parser": "^1.14.1",
     "chai": "^3.3.0",
     "clean-webpack-plugin": "^0.1.6",
+    "client-sessions": "^0.7.0",
     "compression": "^1.6.0",
     "concurrently": "^0.1.1",
     "css-loader": "^0.23.1",

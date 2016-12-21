@@ -6,6 +6,8 @@ import path from 'path';
 import PrettyError from 'pretty-error';
 import http from 'http';
 import httpProxy from 'http-proxy';
+import session from 'client-sessions';
+import bodyParser from 'body-parser'
 
 import routes from 'serverRoutes.map'
 
@@ -18,9 +20,44 @@ const proxy = httpProxy.createProxyServer({
 });
 
 
+import request from 'superagent';
+
 app.use(compression());
 app.use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')));
 
+app.use(session({
+  cookieName: 'session',
+  secret: process.env.SESSION_SECRET,
+  duration: 30 * 60 * 1000,
+  activeDuration: 5 * 60 * 1000
+}));
+app.use(bodyParser.json());
+
+app.use('/api', (req, res, next) => {
+  if (req.session.secret === process.env.SESSION_SECRET) {
+    next()
+  } else {
+    res.status(401).send('must call this route from the web page')
+  }
+});
+app.post('/api/login', (req, res) => {
+  request.post(process.env.API_URL + '/v1/auth/token')
+    .set('Authorization', process.env.CLIENT_SECRET)
+    .send(req.body)
+    .end((err, result) => {
+      if (err) {
+        res.status(500).send('server error')
+      } else {
+        req.session.user = result.body.user;
+        req.session.token = result.body.token;
+        console.log(result.body);
+        res.send(result.body.user);
+      }
+    });
+});
+proxy.on('proxyReq', function(proxyReq, req, res, options) {
+  proxyReq.setHeader('Authorization', req.session.token);
+});
 app.use('/api', (req, res) => {
   proxy.web(req, res, {target: targetUrl});
 });

@@ -12,14 +12,24 @@ import Html from '../helpers/Html';
 import WithStylesContext from '../helpers/WithStylesContext.jsx'
 
 export default function(req, res) {
+  req.session.secret = process.env.SESSION_SECRET;
+
   if (process.env.NODE_ENV === 'development') {
     // Do not cache webpack stats: the script file would change since
     // hot module replacement is enabled in the development env
     webpackIsomorphicTools.refresh();
   }
+
+  let data = {};
+  if (req.session.token && req.session.user) {
+    data.auth = {
+      user: req.session.user
+    }
+  }
+
   const client = new ApiClient(req);
   const memoryHistory = createHistory(req.originalUrl);
-  const store = createStore(memoryHistory, client);
+  const store = createStore(memoryHistory, client, data);
   const history = syncHistoryWithStore(memoryHistory, store);
 
   function hydrateOnClient() {
