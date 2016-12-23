@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 import CreateUserForm from '../login/CreateUserForm.jsx';
 import LoginForm from '../login/LoginForm.jsx';
 import { asyncConnect } from 'redux-async-connect';
-import { isLoaded as isAuthLoaded, load as loadAuth, logout } from 'redux/modules/auth';
+import { logout } from 'redux/modules/auth';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import Modal from '../common/Modal.jsx';
@@ -12,7 +12,7 @@ import {open} from 'redux/modules/modal';
 import s from '../styles/index.scss';
 
 @asyncConnect([{
-  promise: ({store: {dispatch, getState}}) => {
+  promise: () => {
     const promises = [];
 
     return Promise.all(promises);
@@ -29,10 +29,12 @@ export default class Layout extends Component {
     children: PropTypes.object.isRequired,
     user: PropTypes.object,
     logout: PropTypes.func.isRequired,
-    pushState: PropTypes.func.isRequired
+    location: PropTypes.object.isRequired,
+    openModal: PropTypes.func.isRequired,
+    modalOpen: PropTypes.bool
   };
   renderLinks = () => {
-    const path = this.props.location.pathname
+    const path = this.props.location.pathname;
     let linkData = [
       {
         selected: path.startsWith('/set') || path === '/',
@@ -52,7 +54,7 @@ export default class Layout extends Component {
         icon: 'fa-book',
         to: '/documentation'
       }
-    ]
+    ];
     if (this.props.user) {
       linkData = linkData.concat([
         {
@@ -66,7 +68,7 @@ export default class Layout extends Component {
           icon: 'fa-sign-out',
           onClick: this.props.logout
         }
-      ])
+      ]);
     } else {
       linkData = linkData.concat([
         {
@@ -79,22 +81,21 @@ export default class Layout extends Component {
           icon: 'fa-sign-in',
           onClick: this.props.openModal.bind(null, LoginForm)
         },
-      ])
+      ]);
     }
     return linkData.map((link) => {
       if (link.to) {
         return (
-          <li className={(link.selected) ? s.curPage : ''}><Link to={link.to}>
+          <li className={(link.selected) ? s.curPage : ''} key={link.text}><Link to={link.to}>
             <i className={'fa ' + link.icon}></i><span className={s.linkText}>{link.text}</span>
           </Link></li>
-        )
-      } else {
-        return (
-          <li className={(link.selected) ? s.curPage : ''}><a onClick={link.onClick}>
-            <i className={'fa ' + link.icon}></i><span className={s.linkText}>{link.text}</span>
-          </a></li>
-        )
+        );
       }
+      return (
+        <li className={(link.selected) ? s.curPage : ''} key={link.text}><a onClick={link.onClick}>
+          <i className={'fa ' + link.icon}></i><span className={s.linkText}>{link.text}</span>
+        </a></li>
+      );
     });
   }
   render() {
@@ -110,18 +111,26 @@ export default class Layout extends Component {
           </nav>
         </header>
         <div className={s.subHeaderContent}>
-          {(() => { if (!this.props.user) { return (
-            <div className={s.signUpContainer + ' ' + s.clickableShadow}>
-              <h1>zenow</h1>
-              <p>create and share data</p>
-              <CreateUserForm />
-              <br />
-              <LoginForm />
-            </div>
-          )}})()}
-          {(() => { if (this.props.modalOpen) { return (
-            <Modal />
-          )}})()}
+          {(() => {
+            if (!this.props.user) {
+              return (
+                <div className={s.signUpContainer + ' ' + s.clickableShadow}>
+                  <h1>zenow</h1>
+                  <p className={s.adText}>create and share data</p>
+                  <CreateUserForm />
+                  <br />
+                  <LoginForm />
+                </div>
+              );
+            }
+          })()}
+          {(() => {
+            if (this.props.modalOpen) {
+              return (
+                <Modal />
+              );
+            }
+          })()}
           <main>{this.props.children}</main>
         </div>
       </div>

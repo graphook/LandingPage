@@ -2,26 +2,21 @@ import React, {Component, PropTypes} from 'react';
 import s from '../styles/index.scss';
 import {Field, reduxForm} from 'redux-form';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import createUserValidator from './createUserValidator';
 import textInput from '../forms/textInput.jsx';
-import * as validationActions from 'redux/modules/formValidation';
+import {isValid} from 'redux/modules/formValidation';
+import {createUser, login} from 'redux/modules/auth';
 
-const asyncValidate = (data, dispatch, {isValid}) => {
+const asyncValidate = (data, dispatch) => {
   if (!data.email && !data.username) {
     return Promise.resolve({});
   }
-  return isValid('user', {
+  return dispatch(isValid('user', {
     email: data.email,
     username: data.username,
     password: 'something'
-  });
+  }));
 };
-@connect(state => ({
-    user: state.auth.user
-  }),
-  dispatch => bindActionCreators(validationActions, dispatch)
-)
 @reduxForm({
   form: 'createUser',
   fields: ['email', 'username', 'password1', 'password2'],
@@ -29,24 +24,52 @@ const asyncValidate = (data, dispatch, {isValid}) => {
   asyncValidate,
   asyncBlurFields: ['email', 'username']
 })
-
+@connect(state => ({
+  createdUser: state.auth.createdUser,
+  loading: state.auth.creatingUser,
+  error: state.auth.createUserError,
+  user: state.auth.user
+}), {createUser, isValid, login})
 export default class CreateUserForm extends Component {
   static propTypes = {
-    handleSubmit: PropTypes.func.isRequired
+    handleSubmit: PropTypes.func.isRequired,
+    createUser: PropTypes.func.isRequired,
+    login: PropTypes.func.isRequired,
+    user: PropTypes.object,
+    whenDone: PropTypes.func,
+    error: PropTypes.string,
+    loading: PropTypes.bool,
+    createdUser: PropTypes.bool
   }
-
-  onSubmit = (values) => {
-    console.log(values);
-  }
-  /*componentWillReceiveProps(nextProps) {
-    if (nextProps.user && this.props.whenDone) {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.createdUser && !this.props.createdUser) {
+      this.props.login(this.userInfo);
+    }
+    if (nextProps.user && !this.props.user && this.props.whenDone) {
       this.props.whenDone();
     }
-  }*/
+  }
+  onSubmit = (values) => {
+    this.userInfo = {
+      username: values.username,
+      email: values.email,
+      password: values.password1
+    };
+    this.props.createUser(this.userInfo);
+  }
   render() {
     return (
       <form className="createUserForm" onSubmit={this.props.handleSubmit(this.onSubmit)}>
         <h2>create a developer account</h2>
+        {(() => {
+          if (this.props.error) {
+            return (
+              <p className={s.error}>
+                <i className="fa fa-exclamation-circle" aria-hidden="true"></i> {this.props.error}
+              </p>
+            );
+          }
+        })()}
         <Field
           name="username"
           type="text"
@@ -71,7 +94,16 @@ export default class CreateUserForm extends Component {
           component={textInput}
           placeholder="confirm password"
           icon="fa-lock" />
-        <input type="submit" className={s.primaryButton} value="create account" />
+        <div className={s.submitArea}>
+          <input type="submit" className={s.primaryButton} value="create account" />
+          {(() => {
+            if (this.props.loading) {
+              return (
+                <i className="fa fa-refresh fa-spin" aria-hidden="true"></i>
+              );
+            }
+          })()}
+        </div>
       </form>
     );
   }

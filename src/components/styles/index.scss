@@ -49,13 +49,8 @@ ul {
 	padding: 0;
 }
 
-.selectedLink {
-	color: $black;
-	font-weight: bold;
-
-	i {
-		margin-right: 4px;
-	}
+.error {
+	color: $errorRed;
 }
 
 .page-container {

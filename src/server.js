@@ -31,7 +31,6 @@ app.use(session({
   duration: 30 * 60 * 1000,
   activeDuration: 5 * 60 * 1000
 }));
-app.use(bodyParser.json());
 
 app.use('/api', (req, res, next) => {
   if (req.session.secret === process.env.SESSION_SECRET) {
@@ -40,13 +39,18 @@ app.use('/api', (req, res, next) => {
     res.status(401).send('must call this route from the web page')
   }
 });
+app.use('/api/login', bodyParser.json());
 app.post('/api/login', (req, res) => {
   request.post(process.env.API_URL + '/v1/auth/token')
     .set('Authorization', process.env.CLIENT_SECRET)
     .send(req.body)
     .end((err, result) => {
       if (err) {
-        res.status(500).send('server error')
+        if (result.error.text) {
+          res.status(400).send(result.error.text)
+        } else {
+          res.status(500).send('server error');
+        }
       } else {
         req.session.user = result.body.user;
         req.session.token = result.body.token;
@@ -59,9 +63,11 @@ app.get('/api/logout', (req, res) => {
   delete req.session.user;
   res.send();
 });
-proxy.on('proxyReq', function(proxyReq, req, res, options) {
-  proxyReq.setHeader('Authorization', req.session.token);
-});
+/*proxy.on('proxyReq', function(proxyReq, req, res, options) {
+  if (req.session.token) {
+    proxyReq.setHeader('Authorization', req.session.token);
+  }
+});*/
 app.use('/api', (req, res) => {
   proxy.web(req, res, {target: targetUrl});
 });

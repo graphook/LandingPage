@@ -7,7 +7,6 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action = {}) {
-  console.log(action);
   switch (action.type) {
     case IS_VALID:
       return state; // 'saving' flag handled by redux-form

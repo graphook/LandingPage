@@ -5,13 +5,13 @@ import {close} from 'redux/modules/modal';
 import s from '../styles/index.scss';
 
 @connect(state => ({
-    component: state.modal.component,
-    open: state.modal.open
-  }),
-  {close})
+  component: state.modal.component,
+  open: state.modal.open
+}), {close})
 export default class Modal extends Component {
   static propTypes = {
-    component: PropTypes.any
+    component: PropTypes.any,
+    close: PropTypes.func.isRequired
   };
   render() {
     const ModalComponent = this.props.component;

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import s from '../styles/index.scss';
+// import s from '../styles/index.scss';
 
 export default class Documentation extends Component {
   static propTypes = {

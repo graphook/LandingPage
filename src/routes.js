@@ -1,6 +1,5 @@
 import React from 'react';
 import {IndexRoute, Route} from 'react-router';
-import { isLoaded as isAuthLoaded, load as loadAuth } from 'redux/modules/auth';
 import Layout from './components/layout/Layout.jsx';
 
 import SetSearch from './components/search/SetSearch.jsx';
@@ -12,8 +11,7 @@ import TypeCreate from './components/type/TypeCreate.jsx';
 import Profile from './components/profile/Profile.jsx';
 import Documentation from './components/documentation/Documentation.jsx';
 
-export default (store) => {
-
+export default () => {
   return (
     <Route path="/" component={Layout}>
       { /* Home (main) route */ }

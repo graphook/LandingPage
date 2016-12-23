@@ -54,6 +54,12 @@ export function match(field) {
   };
 }
 
+export function alphaNumeric(value) {
+  if (!isEmpty(value) && !/^[a-z0-9._]+$/i.test(value)) {
+    return 'must consist of letters, numbers and symbols';
+  }
+}
+
 export function createValidator(rules) {
   return (data = {}) => {
     const errors = {};

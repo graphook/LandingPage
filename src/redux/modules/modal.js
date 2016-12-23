@@ -15,7 +15,7 @@ export default function reducer(state = initialState, action = {}) {
     case CLOSE:
       return {
         open: false
-      }
+      };
     default:
       return state;
   }

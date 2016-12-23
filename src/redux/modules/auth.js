@@ -7,6 +7,9 @@ const LOGIN_FAIL = 'auth/LOGIN_FAIL';
 const LOGOUT = 'auth/LOGOUT';
 const LOGOUT_SUCCESS = 'auth/LOGOUT_SUCCESS';
 const LOGOUT_FAIL = 'auth/LOGOUT_FAIL';
+const CREATE_USER = 'auth/CREATE_USER';
+const CREATE_USER_SUCCESS = 'auth/CREATE_USER_SUCCESS';
+const CREATE_USER_FAIL = 'auth/CREATE_USER_FAIL';
 
 const initialState = {
   loaded: false
@@ -49,7 +52,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loggingIn: false,
         user: null,
-        loginError: action.error
+        loginError: action.text
       };
     case LOGOUT:
       return {
@@ -67,6 +70,23 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loggingOut: false,
         logoutError: action.error
+      };
+    case CREATE_USER:
+      return {
+        ...state,
+        creatingUser: true
+      };
+    case CREATE_USER_SUCCESS:
+      return {
+        ...state,
+        creatingUser: false,
+        createdUser: true
+      };
+    case CREATE_USER_FAIL:
+      return {
+        ...state,
+        creatingUser: false,
+        createUserError: action.text
       };
     default:
       return state;
@@ -97,5 +117,14 @@ export function logout() {
   return {
     types: [LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAIL],
     promise: (client) => client.get('/logout')
+  };
+}
+
+export function createUser(data) {
+  return {
+    types: [CREATE_USER, CREATE_USER_SUCCESS, CREATE_USER_FAIL],
+    promise: (client) => client.post('/v1/user', {
+      data
+    })
   };
 }
