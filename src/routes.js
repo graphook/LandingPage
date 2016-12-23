@@ -2,38 +2,35 @@ import React from 'react';
 import {IndexRoute, Route} from 'react-router';
 import { isLoaded as isAuthLoaded, load as loadAuth } from 'redux/modules/auth';
 import Layout from './components/layout/Layout.jsx';
+
 import SetSearch from './components/search/SetSearch.jsx';
+import Set from './components/set/Set.jsx';
+import SetCreate from './components/set/SetCreate.jsx';
+import TypeSearch from './components/search/TypeSearch.jsx';
+import Type from './components/type/Type.jsx';
+import TypeCreate from './components/type/TypeCreate.jsx';
+import Profile from './components/profile/Profile.jsx';
+import Documentation from './components/documentation/Documentation.jsx';
 
 export default (store) => {
-  const requireLogin = (nextState, replace, cb) => {
-    function checkAuth() {
-      const { auth: { user }} = store.getState();
-      if (!user) {
-        // oops, not logged in, so can't be here!
-        replace('/');
-      }
-      cb();
-    }
 
-    if (!isAuthLoaded(store.getState())) {
-      store.dispatch(loadAuth()).then(checkAuth);
-    } else {
-      checkAuth();
-    }
-  };
-
-  /**
-   * Please keep routes in alphabetical order
-   */
   return (
     <Route path="/" component={Layout}>
       { /* Home (main) route */ }
       <IndexRoute component={SetSearch}/>
 
-      { /* Routes requiring login */ }
-      <Route onEnter={requireLogin} />
-
       { /* Routes */ }
+      <Route path="/set" component={SetSearch} />
+      <Route path="/set/create" component={SetCreate} />
+      <Route path="/set/:id" component={Set} />
+      <Route path="/type" component={TypeSearch} />
+      <Route path="/type/create" component={TypeCreate} />
+      <Route path="/type/:id" component={Type} />
+      <Route path="/documentation" component={Documentation} />
+      <Route path="/documentation/:focus" component={Documentation} />
+      <Route path="/documentation/set/:id" component={Documentation} />
+      <Route path="/documentation/set/:id/:focus" component={Documentation} />
+      <Route path="/profile" component={Profile} />
 
       { /* Catch all route */ }
       { /* <Route path="*" component={NotFound} status={404} /> */ }

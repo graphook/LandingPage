@@ -6,23 +6,17 @@ import { asyncConnect } from 'redux-async-connect';
 import { isLoaded as isAuthLoaded, load as loadAuth, logout } from 'redux/modules/auth';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
+import Modal from '../common/Modal.jsx';
+import {open} from 'redux/modules/modal';
 
 import s from '../styles/index.scss';
 
-@asyncConnect([{
-  promise: ({store: {dispatch, getState}}) => {
-    const promises = [];
-
-    if (!isAuthLoaded(getState())) {
-      promises.push(dispatch(loadAuth()));
-    }
-
-    return Promise.all(promises);
-  }
-}])
 @connect(
-  state => ({user: state.auth.user}),
-  {logout, pushState: push})
+  state => ({
+    user: state.auth.user,
+    modalOpen: state.modal.open
+  }),
+  {logout, pushState: push, openModal: open})
 export default class Layout extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
@@ -30,7 +24,72 @@ export default class Layout extends Component {
     logout: PropTypes.func.isRequired,
     pushState: PropTypes.func.isRequired
   };
-
+  renderLinks = () => {
+    const path = this.props.location.pathname
+    let linkData = [
+      {
+        selected: path.startsWith('/set') || path === '/',
+        text: 'data sets',
+        icon: 'fa-table',
+        to: '/set'
+      },
+      {
+        selected: path.startsWith('/type'),
+        text: 'data types',
+        icon: 'fa-file-text',
+        to: '/type'
+      },
+      {
+        selected: path.startsWith('/documentation'),
+        text: 'documentation',
+        icon: 'fa-book',
+        to: '/documentation'
+      }
+    ]
+    if (this.props.user) {
+      linkData = linkData.concat([
+        {
+          selected: path.startsWith('/profile'),
+          text: 'profile',
+          icon: 'fa-user',
+          to: '/profile'
+        },
+        {
+          text: 'log out',
+          icon: 'fa-sign-out',
+          onClick: this.props.logout
+        }
+      ])
+    } else {
+      linkData = linkData.concat([
+        {
+          text: 'create an account',
+          icon: 'fa-user',
+          onClick: this.props.openModal.bind(null, CreateUserForm)
+        },
+        {
+          text: 'log in',
+          icon: 'fa-sign-in',
+          onClick: this.props.openModal.bind(null, LoginForm)
+        },
+      ])
+    }
+    return linkData.map((link) => {
+      if (link.to) {
+        return (
+          <li className={(link.selected) ? s.curPage : ''}><Link to={link.to}>
+            <i className={'fa ' + link.icon}></i><span className={s.linkText}>{link.text}</span>
+          </Link></li>
+        )
+      } else {
+        return (
+          <li className={(link.selected) ? s.curPage : ''}><a onClick={link.onClick}>
+            <i className={'fa ' + link.icon}></i><span className={s.linkText}>{link.text}</span>
+          </a></li>
+        )
+      }
+    });
+  }
   render() {
     return (
       <div className={s.layout}>
@@ -39,29 +98,23 @@ export default class Layout extends Component {
           <h1 className={s.condensed}><Link to="/">z</Link></h1>
           <nav>
             <ul>
-              <li><Link to="/">
-                <i className="fa fa-table"></i>data sets
-              </Link></li>
-              <li><Link to="/">
-                <i className="fa fa-file-text"></i>data types
-              </Link></li>
-              <li><Link to="/">
-                <i className="fa fa-book"></i>documentation
-              </Link></li>
-              <li><Link to="/">
-                <i className="fa fa-sign-in"></i>log in
-              </Link></li>
+              {this.renderLinks()}
             </ul>
           </nav>
         </header>
         <div className={s.subHeaderContent}>
-          <div className={s.signUpContainer + ' ' + s.clickableShadow}>
-            <h1>zenow</h1>
-            <p>create and share data</p>
-            <CreateUserForm />
-            <br />
-            <LoginForm />
-          </div>
+          {(() => { if (!this.props.user) { return (
+            <div className={s.signUpContainer + ' ' + s.clickableShadow}>
+              <h1>zenow</h1>
+              <p>create and share data</p>
+              <CreateUserForm />
+              <br />
+              <LoginForm />
+            </div>
+          )}})()}
+          {(() => { if (this.props.modalOpen) { return (
+            <Modal />
+          )}})()}
           <main>{this.props.children}</main>
         </div>
       </div>

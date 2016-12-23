@@ -6,7 +6,9 @@ import loginValidator from './loginValidator';
 import textInput from '../forms/textInput.jsx';
 import * as authActions from 'redux/modules/auth';
 
-@connect(() => ({}), authActions)
+@connect(state => ({
+  user: state.auth.user
+}), authActions)
 @reduxForm({
   form: 'login',
   fields: ['username', 'password'],
@@ -24,6 +26,11 @@ export default class CreateUserForm extends Component {
       password: values.password
     })
   }
+  /*componentWillReceiveProps(nextProps) {
+    if (nextProps.user && this.props.whenDone) {
+      this.props.whenDone();
+    }
+  }*/
   render() {
     return (
       <form className="createUserForm" onSubmit={this.props.handleSubmit(this.onSubmit)}>

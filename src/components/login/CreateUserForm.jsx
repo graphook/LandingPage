@@ -17,7 +17,9 @@ const asyncValidate = (data, dispatch, {isValid}) => {
     password: 'something'
   });
 };
-@connect(() => ({}),
+@connect(state => ({
+    user: state.auth.user
+  }),
   dispatch => bindActionCreators(validationActions, dispatch)
 )
 @reduxForm({
@@ -36,6 +38,11 @@ export default class CreateUserForm extends Component {
   onSubmit = (values) => {
     console.log(values);
   }
+  /*componentWillReceiveProps(nextProps) {
+    if (nextProps.user && this.props.whenDone) {
+      this.props.whenDone();
+    }
+  }*/
   render() {
     return (
       <form className="createUserForm" onSubmit={this.props.handleSubmit(this.onSubmit)}>

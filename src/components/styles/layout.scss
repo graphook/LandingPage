@@ -20,19 +20,15 @@ header {
       text-decoration: none;
     }
   }
-  @media (min-width: 925px) {
+  @media (min-width: 730px) {
     h1.condensed { display: none; }
   }
-  @media (min-width: 695px) and (max-width: 924px) {
+  @media (min-width: 650px) and (max-width: 729px) {
     h1.expanded { display: none; }
   }
-  @media (min-width: 635px) and (max-width: 694px) {
+  @media (max-width: 649px) {
+
     h1.condensed { display: none; }
-    h1.expanded { display: none; }
-  }
-  @media (max-width: 634px) {
-    h1.condensed { display: none; }
-    h1.expanded { display: none; }
     .linkText { display: none; }
   }
 
@@ -40,14 +36,25 @@ header {
     display: flex;
     flex-direction: row;
 
+    .curPage {
+      background-color: $grey;
+      margin-left: 0;
+      margin-right: 0;
+      padding-left: 10px;
+      padding-right: 10px;
+      a {
+        color: $white;
+      }
+      a:hover {
+        color: $black;
+      }
+    }
     li {
+      height: $headerHeight;
       list-style: none;
       margin-left: 10px;
       margin-right: 10px;
-
-      .linkText {
-        margin-left: 4px;
-      }
+      line-height: $headerHeight;
     }
   }
 }
@@ -73,7 +80,8 @@ header {
 
     }
     p {
-
+      padding-top: 16px;
+      padding-bottom: 16px;
     }
   }
 

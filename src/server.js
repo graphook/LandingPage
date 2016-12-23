@@ -50,10 +50,14 @@ app.post('/api/login', (req, res) => {
       } else {
         req.session.user = result.body.user;
         req.session.token = result.body.token;
-        console.log(result.body);
         res.send(result.body.user);
       }
     });
+});
+app.get('/api/logout', (req, res) => {
+  delete req.session.token;
+  delete req.session.user;
+  res.send();
 });
 proxy.on('proxyReq', function(proxyReq, req, res, options) {
   proxyReq.setHeader('Authorization', req.session.token);
