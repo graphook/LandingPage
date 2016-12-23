@@ -11,6 +11,13 @@ import {open} from 'redux/modules/modal';
 
 import s from '../styles/index.scss';
 
+@asyncConnect([{
+  promise: ({store: {dispatch, getState}}) => {
+    const promises = [];
+
+    return Promise.all(promises);
+  }
+}])
 @connect(
   state => ({
     user: state.auth.user,
