@@ -51,7 +51,6 @@ export default function(req, res) {
       hydrateOnClient();
     } else if (renderProps) {
       loadOnServer({...renderProps, store, helpers: {client}}).then(() => {
-        const css = [];
         const component = (
           <Provider store={store} key="provider">
             <ReduxAsyncConnect {...renderProps} />
@@ -60,7 +59,7 @@ export default function(req, res) {
         res.status(200);
         global.navigator = {userAgent: req.headers['user-agent']};
         res.send('<!doctype html>\n' +
-          ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} store={store} css={css} />));
+          ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} store={store} />));
       });
     } else {
       res.status(404).send('Not found');

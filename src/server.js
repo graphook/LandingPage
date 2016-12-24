@@ -9,7 +9,7 @@ import httpProxy from 'http-proxy';
 import session from 'client-sessions';
 import bodyParser from 'body-parser'
 
-import routes from 'serverRoutes.map'
+import routes from './serverRoutes.map'
 
 const targetUrl = process.env.API_URL;
 const pretty = new PrettyError();
@@ -63,11 +63,13 @@ app.get('/api/logout', (req, res) => {
   delete req.session.user;
   res.send();
 });
-/*proxy.on('proxyReq', function(proxyReq, req, res, options) {
+proxy.on('proxyReq', (proxyReq, req, res, options) => {
   if (req.session.token) {
     proxyReq.setHeader('Authorization', req.session.token);
+  } else {
+    proxyReq.setHeader('Authorization', process.env.CLIENT_SECRET);
   }
-});*/
+});
 app.use('/api', (req, res) => {
   proxy.web(req, res, {target: targetUrl});
 });

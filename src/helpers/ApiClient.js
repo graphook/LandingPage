@@ -17,13 +17,16 @@ export default class ApiClient {
     methods.forEach((method) =>
       this[method] = (path, { params, data } = {}) => new Promise((resolve, reject) => {
         const request = superagent[method](formatUrl(path));
-
         if (params) {
           request.query(params);
         }
 
-        if (__SERVER__ && req.get('cookie')) {
-          request.set('cookie', req.get('cookie'));
+        if (__SERVER__) {
+          if (req.session.token) {
+            request.set('Authorization', req.session.token);
+          } else {
+            request.set('Authorization', process.env.CLIENT_SECRET);
+          }
         }
 
         if (data) {

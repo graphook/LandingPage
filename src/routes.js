@@ -2,10 +2,10 @@ import React from 'react';
 import {IndexRoute, Route} from 'react-router';
 import Layout from './components/layout/Layout.jsx';
 
-import SetSearch from './components/search/SetSearch.jsx';
+import SetSearch from './components/set/SetSearch.jsx';
 import Set from './components/set/Set.jsx';
 import SetCreate from './components/set/SetCreate.jsx';
-import TypeSearch from './components/search/TypeSearch.jsx';
+import TypeSearch from './components/type/TypeSearch.jsx';
 import Type from './components/type/Type.jsx';
 import TypeCreate from './components/type/TypeCreate.jsx';
 import Profile from './components/profile/Profile.jsx';

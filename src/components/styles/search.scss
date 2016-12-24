@@ -14,6 +14,8 @@
     input[type=text] {
       height: 100%;
       padding-left: 16px;
+      padding-top: 8px;
+      padding-bottom: 8px;
       border: none;
       box-sizing: border-box;
       font-size: 16px;
@@ -22,6 +24,8 @@
     }
     input[type=text]:focus {
       outline: none;
+      padding-top: 8px;
+      padding-bottom: 8px;
     }
     input[type=submit] {
       height: 100%;
@@ -42,35 +46,66 @@
     margin-left: -16px;
     margin-right: -16px;
 
-    .searchResult {
+    .setResult {
       width: 200px;
       height: 300px;
       border: $containerBorder;
       margin: 16px;
       position: relative;
+      padding: 16px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
 
-      .setResult {
-        padding: 16px;
+      @media (max-width: 469px) {
+        width: auto;
+        margin: $margin;
+        margin-top: 0;
+        height: 200px;
+      }
+
+      i {
+        text-align: center;
+      }
+      h2 {
+        margin-top: 0;
+        margin-bottom: 8px;
+      }
+      p {
+        margin-bottom: 0;
+        margin-top: 8px;
+      }
+      .description {
+        flex-grow: 1;
+        flex-shrink: 1;
+        overflow: hidden;
+        position: relative;
+        margin-top: 0;
+      }
+      .description:after {
+        content: "";
         position: absolute;
-        height: 100%;
-        width: 100%;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        cursor: pointer;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: $contentFontSize;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 1));
+      }
+      .rowFlex {
+        flex-shrink: 0;
+        margin-top: 8px;
 
-        h2 {
-          margin-top: 0;
-          margin-bottom: 8px;
-        }
-        p {
-          margin-bottom: 0;
-          margin-top: 8px;
-        }
-        .description {
-          flex-grow: 1
+        span {
+          height: 25px;
+          line-height: 25px;
         }
       }
     }
+  }
+
+  .searchLoading {
+    padding: 16px;
+    text-align: center;
   }
 }
