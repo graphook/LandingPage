@@ -7,6 +7,8 @@ import {reducer as form} from 'redux-form';
 import modal from './modal';
 import set from './set';
 import setSearchReducer from './setSearch';
+import type from './type';
+import typeSearch from './typeSearch'
 
 export default combineReducers({
   routing: routerReducer,
@@ -15,5 +17,7 @@ export default combineReducers({
   form,
   modal,
   set,
-  setSearch: setSearchReducer
+  setSearch: setSearchReducer,
+  type,
+  typeSearch
 });

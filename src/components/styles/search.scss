@@ -57,10 +57,9 @@
       display: flex;
       flex-direction: column;
       cursor: pointer;
+      flex-grow: 1;
 
       @media (max-width: 469px) {
-        width: auto;
-        margin: $margin;
         margin-top: 0;
         height: 200px;
       }
