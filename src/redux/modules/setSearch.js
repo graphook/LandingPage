@@ -9,7 +9,8 @@ const initialState = {
   page: 0,
   searchText: '',
   curSearch: '',
-  results: []
+  results: [],
+  allResultsLoaded: false
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -18,7 +19,8 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         results: (action.query !== state.curSearch) ? [] : state.results,
-        loading: true
+        loading: true,
+        error: undefined
       };
     case SEARCH_SUCCESS:
       return {
@@ -30,7 +32,8 @@ export default function reducer(state = initialState, action = {}) {
         })),
         curSearch: action.query,
         searchText: action.query,
-        page: action.page
+        page: action.page,
+        allResultsLoaded: action.result.length < NUM_PER_PAGE
       };
     case SEARCH_FAIL:
       return {

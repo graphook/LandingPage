@@ -8,7 +8,9 @@ import modal from './modal';
 import set from './set';
 import setSearchReducer from './setSearch';
 import type from './type';
-import typeSearch from './typeSearch'
+import typeSearch from './typeSearch';
+import setDetails from './setDetails';
+import item from './item';
 
 export default combineReducers({
   routing: routerReducer,
@@ -19,5 +21,7 @@ export default combineReducers({
   set,
   setSearch: setSearchReducer,
   type,
-  typeSearch
+  typeSearch,
+  setDetails,
+  item
 });

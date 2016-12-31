@@ -111,7 +111,7 @@ export default class Layout extends Component {
           </nav>
         </header>
         <div className={s.subHeaderContent}>
-          {(() => {
+          {/* (() => {
             if (!this.props.user) {
               return (
                 <div className={s.signUpContainer + ' ' + s.clickableShadow}>
@@ -123,7 +123,7 @@ export default class Layout extends Component {
                 </div>
               );
             }
-          })()}
+          })()*/}
           {(() => {
             if (this.props.modalOpen) {
               return (

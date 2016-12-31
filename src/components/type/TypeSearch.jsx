@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import {searchTypes, updateSearchText} from 'redux/modules/typeSearch';
 import {browserHistory} from 'react-router';
 import Waypoint from 'react-waypoint';
-import {Link} from 'react-router';
 
 import s from '../styles/index.scss';
 

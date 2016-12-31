@@ -4,21 +4,19 @@ const initialState = {
   hash: {}
 };
 
-const addSets = (state, sets) => {
+const addItems = (state, items) => {
   // clone
   const newState = clone(state);
-  sets.forEach((set) => {
-    newState.hash[set._id] = set;
+  items.forEach((item) => {
+    newState.hash[item._id] = item;
   });
   return newState;
 };
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case 'setSearch/SEARCH_SUCCESS':
-      return addSets(state, action.result);
-    case 'setDetails/FETCH_SUCCESS':
-      return addSets(state, [ action.result ]);
+    case 'setDetails/FETCH_ITEMS_SUCCESS':
+      return addItems(state, action.result);
     default:
       return state;
   }

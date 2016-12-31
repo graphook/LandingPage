@@ -25,8 +25,8 @@ export default function clientMiddleware(client) {
           });
         }
       ).catch((error)=> {
-        console.error('MIDDLEWARE ERROR:', error);
-        next({...rest, error, type: FAILURE});
+        console.error('MIDDLEWARE ERROR:', error.stack || error);
+        next({...rest, error: {message: 'application error'}, type: FAILURE});
       });
 
       return actionPromise;
