@@ -1,25 +1,19 @@
 import React, {Component} from 'react';
-import NtObject from './types/NtObject.jsx';
+import types from './types/type.map';
 import NtHead from './NtHead.jsx'
 
+import s from 'components/styles/index.scss';
+
+const NtObject = types.object;
+
 export default class NestingTable extends Component {
-  handleDataChange = (path, value) => {
-    let curVal = this.props.data
-    path.forEach((key, i) => {
-      if (i < (path.length - 1)) {
-        curVal = curVal[key];
-      }
-    });
-    curVal[path[path.length - 1]] = value;
-    this.props.onDataChange(this.props.data);
-  }
   render() {
     return (
-      <div className="nestingTable">
+      <div className={s.nestingTable}>
         <NtHead type={this.props.type} />
         {this.props.data.map((row, index) => {
           return (
-            <div className="ntRow">
+            <div className={s.ntRow}>
               <NtObject
                 type={this.props.type}
                 data={row}
@@ -32,11 +26,6 @@ export default class NestingTable extends Component {
   }
 }
 /*
-typeExtendable
-typeModifiable
-dataModyifiable
 data
 type
-onDataChange(newData)
-onTypeChange(newType)
 */

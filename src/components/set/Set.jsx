@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import {fetchSet, fetchItems} from 'redux/modules/setDetails';
 import {fetchType} from 'redux/modules/type';
 import Waypoint from 'react-waypoint';
+import NestingTable from './nestingTable/NestingTable.jsx';
 
-// import s from '../styles/index.scss';
+import s from '../styles/index.scss';
 
 @asyncConnect([{
   promise: ({store: {dispatch, getState}, params: {id}}) => {
@@ -22,7 +23,12 @@ import Waypoint from 'react-waypoint';
   }
 }])
 @connect(state => ({
-  setHash: state.set.hash
+  setHash: state.set.hash,
+  itemHash: state.item.hash,
+  page: state.setDetails.page,
+  numPerPage: state.setDetails.numPerPage,
+  set: state.set.hash[state.setDetails.id],
+  type: state.type.hash[state.set.hash[state.setDetails.id].type]
 }), {fetchSet, fetchItems, fetchType})
 export default class Set extends Component {
   static propTypes = {
@@ -48,10 +54,16 @@ export default class Set extends Component {
     console.log('loading more');
   }
   render() {
+    const data = [];
+    console.log(this.props.numPerPage * (this.props.page + 1));
+    for (var i = 0; i < (this.props.numPerPage * (this.props.page + 1)); i++) {
+      data.push(this.props.itemHash[this.props.set.items[i]]);
+    }
     return (
-      <div>
-        <h1>Set</h1>
-        <Waypoint onEnter={this.loadMore} />
+      <div className='set'>
+        <NestingTable
+          type={this.props.type}
+          data={data} />
       </div>
     );
   }
