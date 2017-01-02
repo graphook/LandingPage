@@ -29,36 +29,53 @@ import s from '../styles/index.scss';
   itemHash: state.item.hash,
   page: state.setDetails.page,
   numPerPage: state.setDetails.numPerPage,
+  id: state.setDetails.id,
   set: state.set.hash[state.setDetails.id],
   type: state.type.hash[state.set.hash[state.setDetails.id].type],
-  allItemsLoaded: state.setDetails.allItemsLoaded
+  allItemsLoaded: state.setDetails.allItemsLoaded,
+  itemError: state.setDetails.itemError
 }), {fetchSet, fetchItems, fetchType})
 export default class Set extends Component {
   static propTypes = {
     params: PropTypes.shape({
       id: PropTypes.string
     }),
+    location: PropTypes.shape({
+      query: PropTypes.object,
+      pathname: PropTypes.string
+    }),
     fetchSet: PropTypes.func,
-    setHash: PropTypes.object,
     fetchItems: PropTypes.func,
-    fetchType: PropTypes.func
+    fetchType: PropTypes.func,
+    setHash: PropTypes.object,
+    itemHash: PropTypes.object,
+    page: PropTypes.number,
+    numPerPage: PropTypes.number,
+    set: PropTypes.object,
+    type: PropTypes.object,
+    allItemsLoaded: PropTypes.bool,
+    itemError: PropTypes.string,
+    id: PropTypes.string
   };
   constructor(props) {
     super(props);
     this.state = {
       tableFocus: false,
       horizontalScrollOffset: 0
-    }
+    };
   }
   componentDidMount() {
     const id = this.props.params.id;
-    this.props.fetchSet(id).then(() => {
-      const typeId = this.props.setHash[id].type;
-      return Promise.all([
-        this.props.fetchItems(id, this.props.setHash[id].items, 0),
-        this.props.fetchType(typeId)
-      ]);
-    });
+    // TODO: This does not prevent the set page from forgetting its items upon change
+    if (this.props.id !== id) {
+      this.props.fetchSet(id).then(() => {
+        const typeId = this.props.setHash[id].type;
+        return Promise.all([
+          this.props.fetchItems(id, this.props.setHash[id].items, 0),
+          this.props.fetchType(typeId)
+        ]);
+      });
+    }
     this.node = ReactDOM.findDOMNode(this);
   }
   loadMore = () => {
@@ -73,7 +90,7 @@ export default class Set extends Component {
   }
   render() {
     const data = [];
-    for (var i = 0; i < (this.props.numPerPage * (this.props.page + 1)); i++) {
+    for (let i = 0; i < (this.props.numPerPage * (this.props.page + 1)); i++) {
       if (this.props.itemHash[this.props.set.items[i]]) {
         data.push(this.props.itemHash[this.props.set.items[i]]);
       }
@@ -87,9 +104,9 @@ export default class Set extends Component {
               <p>{this.props.set.description}</p>
             </div>
             <nav>
-              <Link to='/'>
+              <span>
                 <i className="fa fa-user"></i>{this.props.set.creatorName}
-              </Link>
+              </span>
               <Link to={'/type/' + this.props.set.type}>
                 <i className="fa fa-file-text"></i>{this.props.set.typeName}
               </Link>
@@ -108,24 +125,23 @@ export default class Set extends Component {
                   <Link
                       to={{
                         pathname: this.props.location.pathname,
-                        query: {...this.props.location.query, view:'table'}
+                        query: {...this.props.location.query, view: 'table'}
                       }}>
                     <i className="fa fa-table"></i>table view
                   </Link>
-                )
-              } else {
-                return (
-                  <Link
-                      to={{
-                        pathname: this.props.location.pathname,
-                        query: {...this.props.location.query, view:'json'}
-                      }}>
-                    <i className="fa fa-align-right"></i>json view
-                  </Link>
-                )
+                );
               }
+              return (
+                <Link
+                    to={{
+                      pathname: this.props.location.pathname,
+                      query: {...this.props.location.query, view: 'json'}
+                    }}>
+                  <i className="fa fa-align-right"></i>json view
+                </Link>
+              );
             })()}
-            <Link to='/'>
+            <Link to="/">
               <i className="fa fa-book"></i>rest api
             </Link>
           </nav>
@@ -139,16 +155,15 @@ export default class Set extends Component {
               <pre className={s.jsonArea}>
                 {JSON.stringify(data, null, 2)}
               </pre>
-            )
-          } else {
-            return (
-              <NestingTable
-                type={this.props.type}
-                data={data}
-                focused={this.state.focusTable}
-                horizontalScrollOffset={this.state.horizontalScrollOffset} />
-            )
+            );
           }
+          return (
+            <NestingTable
+              type={this.props.type}
+              data={data}
+              focused={this.state.focusTable}
+              horizontalScrollOffset={this.state.horizontalScrollOffset} />
+          );
         })()}
         <Waypoint onEnter={this.loadMore} />
         {(() => {
@@ -157,7 +172,13 @@ export default class Set extends Component {
               <div className={s.centeredMessage}>
                 <i className="fa fa-check"></i> no more items
               </div>
-            )
+            );
+          } else if (this.props.itemError) {
+            return (
+              <div className={s.centeredMessage + ' ' + s.error}>
+                <i className="fa fa-times"></i> {this.props.itemError}
+              </div>
+            );
           }
         })()}
       </div>

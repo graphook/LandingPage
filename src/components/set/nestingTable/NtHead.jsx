@@ -1,29 +1,28 @@
-import React from 'react';
-import HeaderObject from './headerTypes/NtHeadObject.jsx'
+import React, {Component, PropTypes} from 'react';
+import HeaderObject from './headerTypes/NtHeadObject.jsx';
 import {clone} from 'lodash';
 
 import s from 'components/styles/index.scss';
 
-const encodeType = function(type) {
-  type = clone(type, true);
+const encodeType = (oldType) => {
+  const type = clone(oldType, true);
   if (type.type === 'object') {
     type.properties = Object.keys(type.properties).map((prop) => {
       type.properties[prop].id = prop;
       return encodeType(type.properties[prop]);
-    })
+    });
     return type;
   } else if (type.type === 'array') {
     type.items = encodeType(type.items);
     return type;
-  } else {
-    return type;
   }
-}
+  return type;
+};
 
-const decodeType = function(type) {
-  type = clone(type, true);
+const decodeType = (oldType) => {
+  const type = clone(oldType, true);
   if (type.type === 'object') {
-    let tempProperties = {};
+    const tempProperties = {};
     type.properties.forEach((prop) => {
       tempProperties[prop.id] = decodeType(prop);
       delete tempProperties[prop.id].id;
@@ -33,47 +32,32 @@ const decodeType = function(type) {
   } else if (type.type === 'array') {
     type.items = decodeType(type.items);
     return type;
-  } else {
-    return type;
   }
-}
+  return type;
+};
 
-const NtHead = React.createClass({
-  getInitialState: function() {
-    return {
+export default class NtHead extends Component {
+  static propTypes = {
+    type: PropTypes.object
+  }
+  constructor(props) {
+    super(props);
+    this.state = {
       type: encodeType(this.props.type)
-    }
-  },
-  componentWillReceiveProps: function(newProps) {
+    };
+  }
+  componentWillReceiveProps(newProps) {
     this.setState({
       type: encodeType(newProps.type)
     });
-  },
-  typeModified: function(path, value) {
-    let curVal = this.state.type
-    path.forEach((key, i) => {
-      if (i < (path.length - 1)) {
-        curVal = curVal[key];
-      }
-    });
-    curVal[path[path.length - 1]] = value;
-    this.props.typeModified(decodeType(this.state.type));
-  },
+  }
   render() {
     return (
       <div className={s.ntHeadArea}>
-        <pre>
-          {JSON.stringify()}
-        </pre>
         <HeaderObject
           type={this.state.type}
           path={[]} />
       </div>
     );
   }
-});
-/*
-type
-*/
-
-export default NtHead;
+}

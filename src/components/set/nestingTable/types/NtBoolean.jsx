@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {PropTypes, Component} from 'react';
 
 import s from 'components/styles/index.scss';
 
-const NtBoolean = React.createClass({
+class NtBoolean extends Component {
+  static propTypes = {
+    data: PropTypes.bool
+  }
   render() {
     return (
       <div className={s.ntLeaf + ' ' + s.ntItem}>
@@ -10,6 +13,6 @@ const NtBoolean = React.createClass({
       </div>
     );
   }
-});
+}
 
 module.exports = NtBoolean;

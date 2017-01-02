@@ -5,6 +5,6 @@ const types = {
   'object': require('./NtObject.jsx'),
   'string': require('./NtString.jsx'),
   'boolean': require('./NtBoolean.jsx')
-}
+};
 
 export default types;

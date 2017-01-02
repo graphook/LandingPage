@@ -1,30 +1,33 @@
-import React from 'react';
+import React, {Component, PropTypes} from 'react';
 import types from './type.map.js';
 
 import s from 'components/styles/index.scss';
 
-const NtArray = React.createClass({
+class NtArray extends Component {
+  static propTypes = {
+    type: PropTypes.object,
+    data: PropTypes.array,
+    path: PropTypes.array
+  }
   render() {
-    let data = this.props.data
-    let type = this.props.type;
-    let Component = types[this.props.type.items.type];
+    const ChildComponent = types[this.props.type.items.type];
     return (
       <div className={s.ntArrayContainer}>
         {this.props.data.map((elem, index) => {
-          let tempPath = this.props.path.slice(0);
+          const tempPath = this.props.path.slice(0);
           tempPath.push(index);
           return (
-            <div className={s.ntItem}>
-              <Component
+            <div className={s.ntItem} key={tempPath.join()}>
+              <ChildComponent
                   type={this.props.type.items}
                   data={elem}
                   path={tempPath} />
             </div>
-          )
+          );
         })}
       </div>
     );
   }
-});
+}
 
 module.exports = NtArray;

@@ -1,29 +1,32 @@
-import React from 'react';
+import React, {Component, PropTypes} from 'react';
 import types from './type.map.js';
 
 import s from 'components/styles/index.scss';
 
-const NtObject = React.createClass({
+class NtObject extends Component {
+  static propTypes = {
+    type: PropTypes.object,
+    data: PropTypes.object,
+    path: PropTypes.array
+  }
   render() {
-    let data = this.props.data;
-    let type = this.props.type;
-
     return (
       <div className={s.ntObject}>
         {Object.keys(this.props.type.properties).map((propKey) => {
-          let Component = types[this.props.type.properties[propKey].type];
-          let tempPath = this.props.path.slice(0);
+          const ChildComponent = types[this.props.type.properties[propKey].type];
+          const tempPath = this.props.path.slice(0);
           tempPath.push(propKey);
           return (
-            <Component
+            <ChildComponent
+                key={tempPath.join()}
                 type={this.props.type.properties[propKey]}
                 data={this.props.data[propKey]}
                 path={tempPath} />
-          )
+            );
         })}
       </div>
     );
   }
-});
+}
 
 module.exports = NtObject;

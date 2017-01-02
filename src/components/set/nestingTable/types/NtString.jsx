@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {PropTypes, Component} from 'react';
 
 import s from 'components/styles/index.scss';
 
-const NtString = React.createClass({
+class NtString extends Component {
+  static propTypes = {
+    data: PropTypes.string
+  }
   render() {
     return (
       <div className={s.ntLeaf + ' ' + s.ntItem}>
@@ -10,6 +13,6 @@ const NtString = React.createClass({
       </div>
     );
   }
-});
+}
 
 module.exports = NtString;
