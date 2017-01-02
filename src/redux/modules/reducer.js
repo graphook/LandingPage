@@ -11,6 +11,7 @@ import type from './type';
 import typeSearch from './typeSearch';
 import setDetails from './setDetails';
 import item from './item';
+import typeDetails from './typeDetails';
 
 export default combineReducers({
   routing: routerReducer,
@@ -23,5 +24,6 @@ export default combineReducers({
   type,
   typeSearch,
   setDetails,
-  item
+  item,
+  typeDetails
 });

@@ -20,6 +20,8 @@ export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case 'typeSearch/SEARCH_SUCCESS':
       return addTypes(state, action.result);
+    case 'typeDetails/FETCH_SUCCESS':
+      return addTypes(state, [ action.result ]);
     case FETCH:
       return state;
     case FETCH_SUCCESS:
