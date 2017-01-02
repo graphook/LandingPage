@@ -53,6 +53,9 @@ header {
       margin-right: 10px;
       line-height: $headerHeight;
     }
+    li:last-child {
+      margin-right: 0;
+    }
   }
 }
 

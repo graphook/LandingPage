@@ -3,7 +3,7 @@
 $black: #000;
 $white: #FFF;
 $grey: #888;
-$lightGrey: #EEE;
+$lightGrey: #AAA;
 $errorRed: #F44336;
 $margin: 4vw;
 $contentFontSize: 14px;
@@ -33,6 +33,7 @@ a {
 	color: $black;
 	text-decoration: underline;
 	cursor: pointer;
+	text-transform: lowercase;
 
 	i {
 		margin-right: 4px;
@@ -48,6 +49,10 @@ i {
 
 ul {
 	padding: 0;
+}
+
+.clear {
+	clear: both;
 }
 
 .error {

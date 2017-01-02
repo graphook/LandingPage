@@ -16,7 +16,7 @@ export default class HeaderObject extends Component {
           if (prop.type === 'object') {
             return (
               <div className={s.item}>
-                {keyIndicator}
+                <span>{keyIndicator}</span>
                 <HeaderObject
                   type={prop}
                   path={tempPath} />
@@ -25,7 +25,7 @@ export default class HeaderObject extends Component {
           } else if (prop.type === 'array') {
             return (
               <div className={s.item}>
-                {keyIndicator}[]
+                <span>{keyIndicator}[]</span>
                 <HeaderArray
                   type={prop}
                   path={tempPath} />
@@ -34,7 +34,7 @@ export default class HeaderObject extends Component {
           } else {
             return (
               <div className={s.item}>
-                {keyIndicator}
+                <span>{keyIndicator}</span>
                 <HeaderOther
                   type={prop}
                   path={tempPath} />

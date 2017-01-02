@@ -1,80 +1,171 @@
 .set {
-  .infoArea {
-
-  }
-}
-
-.nestingTable {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  height: calc(100vh - 50px);
+  width: 100vw;
   overflow: auto;
 
-  .ntHeadArea {
-    position: relative;
-    background-color: #000;
-    color: #FFF;
-    display: flex;
-    justify-content: center;
+  .infoArea {
+    width: 100vw;
+    padding-left: $margin;
+    padding-right: $margin;
+    padding-top: 16px;
+    padding-bottom: 4px;
+    box-sizing: border-box;
 
-    .item {
+    .setInfo {
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      flex-wrap: wrap;
+
+      div {
+        flex-grow: 50;
+        margin-bottom: 8px;
+      }
+
+      nav {
+        flex-grow: 1;
+        display: flex;
+        justify-content: space-between;
+
+        > a, > span {
+          margin-left: 10px;
+          margin-right: 10px;
+        }
+        > a:first-child, > span:first-child {
+          margin-left: 0;
+        }
+        > a:last-child, > span:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+
+    .dataNav {
+      margin-top: 8px;
+      display: flex;
       justify-content: space-between;
-      box-sizing: border-box;
-      border-left: 1px solid #EEE;
-    }
-    .item:first-of-type {
-      border-left: none;
-    }
-    .leafItem {
-      width: 200px;
-      padding-bottom: 4px;
-    }
-    .itemContainer {
-      padding-top: 4px;
-      display: flex;
     }
   }
 
-  .ntRow {
-    display: flex;
-    justify-content: center;
-    .ntObject {
-      display: flex;
-      flex-direction: row;
-      margin-top: -1px;
-      border-right: 1px solid #AAA;
-    }
+  .nestingTable {
+    position: relative;
 
-    .ntItem {
+    .ntFixedHead {
+      position: fixed;
+      right: 0;
+      left: 0;
+      z-index: 4;
+      top: 50px;
+    }
+    .ntHeadArea {
+      position: relative;
+      background-color: $black;
+      color: $white;
       display: flex;
-      align-items: stretch;
-      justify-content: center;
-      flex-direction: row;
+      justify-content: flex-start;
+      padding-left: $margin;
+      width: 100%;
       box-sizing: border-box;
-      flex-grow: 1;
-    }
-    .ntArrayContainer {
-      display: flex;
-      flex-direction: column;
-    }
-    .ntLeaf {
-      width: 200px;
-      border-bottom: 1px solid #AAA;
-      border-left: 1px solid #AAA;
-      input[type=text] {
-        width: 100%;
-        height: 100%;
-        border: none;
-        padding: 4px;
+      z-index: 2;
+
+      .item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
         box-sizing: border-box;
-        font-size: 16px;
-        background-color: transparent;
+        border-left: 1px solid $white;
+      }
+      .item:first-of-type {
+        border-left: none;
+      }
+      .leafItem {
+        width: 199px;
+        padding-bottom: 4px;
+      }
+      .itemContainer {
+        display: flex;
+      }
+      > .itemContainer {
+        background-color: $black;
+
+        > .item {
+          padding-top: 4px;
+        }
+        > .item:first-of-type {
+          border-left: 1px solid $white;
+        }
+        > .item:last-of-type {
+          border-right: 1px solid $white;
+        }
       }
     }
+
+    .ntRow {
+      display: flex;
+      justify-content: flex-start;
+      padding-left: $margin;
+      border-bottom: 1px solid $black;
+      width: 100%;
+      box-sizing: border-box;
+      flex-shrink: 0;
+
+      > .ntObject {
+        border-right: 1px solid $lightGrey;
+        padding-right: 0;
+
+        > .ntLeaf {
+          border-bottom: 1px solid $black;
+          margin-bottom: -1px;
+          padding-bottom: 1px;
+        }
+      }
+
+      .ntObject {
+        display: flex;
+        flex-direction: row;
+        margin-top: -1px;
+      }
+
+      .ntItem {
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+        flex-direction: row;
+        box-sizing: border-box;
+        flex-grow: 1;
+      }
+      .ntArrayContainer {
+        display: flex;
+        flex-direction: column;
+
+        > .ntItem:last-child .ntLeaf {
+          border-bottom: 1px solid $black;
+          margin-bottom: -1px;
+          padding-bottom: 1px;
+        }
+      }
+      .ntLeaf {
+        width: 200px;
+        border-bottom: 1px solid $lightGrey;
+        border-left: 1px solid $lightGrey;
+        padding: 4px;
+        input[type=text] {
+          width: 100%;
+          height: 100%;
+          border: none;
+          padding: 4px;
+          box-sizing: border-box;
+          font-size: 16px;
+          background-color: transparent;
+        }
+      }
+    }
+  }
+
+  .jsonArea {
+    margin: 0;
+    padding-left: $margin;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-top: 1px solid $lightGrey;
   }
 }

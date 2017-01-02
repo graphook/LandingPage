@@ -4,6 +4,6 @@ import s from 'components/styles/index.scss';
 
 export default class HeaderOther extends Component {
   render() {
-    return (<div className={s.leafItem + ' ' + s.item}>{this.props.type.type}</div>)
+    return (<div className={s.leafItem + ' ' + s.item}></div>)
   }
 };

@@ -75,7 +75,7 @@ export default class SetSearch extends Component {
                   key={result}
                   onClick={this.goToSet.bind(null, resultData._id)}>
                 <i className={'fa fa-2x ' + resultData.icon}></i>
-                <p><Link to={'/type/' + resultData.type}>
+                <p>type: <Link to={'/type/' + resultData.type}>
                   {resultData.typeName}
                 </Link></p>
                 <h2>{resultData.title}</h2>
@@ -83,8 +83,12 @@ export default class SetSearch extends Component {
                   {resultData.description}
                 </p>
                 <div className={s.rowFlex}>
-                  <span>{resultData.items.length} <i className="fa fa-file"></i></span>
-                  <span>{resultData.stars} <i className="fa fa-star"></i></span>
+                  <span title={resultData.items.length + ' items in this set'}>
+                    {resultData.items.length} <i className="fa fa-file"></i>
+                  </span>
+                  <span title={resultData.stars + ' stars'}>
+                    {resultData.stars} <i className="fa fa-star"></i>
+                  </span>
                 </div>
               </div>
             );
