@@ -4,6 +4,7 @@ import {reducer as reduxAsyncConnect} from 'redux-async-connect';
 
 import auth from './auth';
 import {reducer as form} from 'redux-form';
+import formValidation from './formValidation';
 import modal from './modal';
 import set from './set';
 import setSearchReducer from './setSearch';
@@ -18,6 +19,7 @@ export default combineReducers({
   reduxAsyncConnect,
   auth,
   form,
+  formValidation,
   modal,
   set,
   setSearch: setSearchReducer,

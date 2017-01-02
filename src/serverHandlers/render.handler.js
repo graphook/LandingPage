@@ -13,6 +13,13 @@ import WithStylesContext from '../helpers/WithStylesContext.jsx'
 
 export default function(req, res) {
   req.session.secret = process.env.SESSION_SECRET;
+  if (process.env.ENV !== 'prod' && process.env.AUTO_TOKEN) {
+    req.session.token = process.env.AUTO_TOKEN,
+    req.session.user = {
+      username: process.env.AUTO_USERNAME,
+      email: process.env.AUTO_EMAIL
+    }
+  }
 
   if (process.env.NODE_ENV === 'development') {
     // Do not cache webpack stats: the script file would change since
