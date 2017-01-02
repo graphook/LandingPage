@@ -20,7 +20,7 @@ export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case FETCH:
       return {
-        ...state,
+        ...initialState,
         loading: true,
         id: action.id,
         setError: ''
@@ -39,17 +39,16 @@ export default function reducer(state = initialState, action = {}) {
     case FETCH_ITEMS:
       return {
         ...state,
-        page: action.page,
         itemError: ''
       };
     case FETCH_ITEMS_SUCCESS:
       return {
         ...state,
+        page: action.page,
         allItemsLoaded: action.result.length < NUM_PER_PAGE
       };
     case FETCH_ITEMS_FAIL:
       return {
-        page: action.page - 1,
         itemError: action.error
       };
     default:

@@ -8,7 +8,7 @@ $errorRed: #F44336;
 $margin: 4vw;
 $contentFontSize: 14px;
 $headerHeight: 50px;
-$containerBorder: 1px solid $lightGrey;
+$containerBorder: 1px solid #EEE;
 $largeShadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 $smallShadow: 0 5px 10px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 
@@ -153,4 +153,9 @@ ul {
 			color: $grey;
 		}
 	}
+}
+
+.centeredMessage {
+	padding: 16px;
+	text-align: center;
 }

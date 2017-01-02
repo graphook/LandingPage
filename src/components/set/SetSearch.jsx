@@ -108,7 +108,7 @@ export default class SetSearch extends Component {
         {(() => {
           if (this.props.loading) {
             return (
-              <div className={s.searchLoading}>
+              <div className={s.centeredMessage}>
                 <i className="fa fa-refresh fa-spin" aria-hidden="true"></i>
               </div>
             );

@@ -30,7 +30,8 @@ import s from '../styles/index.scss';
   page: state.setDetails.page,
   numPerPage: state.setDetails.numPerPage,
   set: state.set.hash[state.setDetails.id],
-  type: state.type.hash[state.set.hash[state.setDetails.id].type]
+  type: state.type.hash[state.set.hash[state.setDetails.id].type],
+  allItemsLoaded: state.setDetails.allItemsLoaded
 }), {fetchSet, fetchItems, fetchType})
 export default class Set extends Component {
   static propTypes = {
@@ -61,15 +62,21 @@ export default class Set extends Component {
     this.node = ReactDOM.findDOMNode(this);
   }
   loadMore = () => {
-
+    if (!this.props.allItemsLoaded) {
+      this.props.fetchItems(this.props.params.id, this.props.set.items, this.props.page + 1);
+    }
   }
   handleScroll = () => {
-    this.setState({horizontalScrollOffset: this.node.scrollLeft});
+    if (this.state.horizontalScrollOffset !== this.node.scrollLeft) {
+      this.setState({horizontalScrollOffset: this.node.scrollLeft});
+    }
   }
   render() {
     const data = [];
     for (var i = 0; i < (this.props.numPerPage * (this.props.page + 1)); i++) {
-      data.push(this.props.itemHash[this.props.set.items[i]]);
+      if (this.props.itemHash[this.props.set.items[i]]) {
+        data.push(this.props.itemHash[this.props.set.items[i]]);
+      }
     }
     return (
       <div className={s.set} onScroll={this.handleScroll}>
@@ -119,7 +126,7 @@ export default class Set extends Component {
               }
             })()}
             <Link to='/'>
-              <i className="fa fa-book"></i>docs
+              <i className="fa fa-book"></i>rest api
             </Link>
           </nav>
         </div>
@@ -144,6 +151,15 @@ export default class Set extends Component {
           }
         })()}
         <Waypoint onEnter={this.loadMore} />
+        {(() => {
+          if (this.props.allItemsLoaded) {
+            return (
+              <div className={s.centeredMessage}>
+                <i className="fa fa-check"></i> no more items
+              </div>
+            )
+          }
+        })()}
       </div>
     );
   }

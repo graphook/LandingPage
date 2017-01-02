@@ -50,7 +50,7 @@ export default class Layout extends Component {
       },
       {
         selected: path.startsWith('/documentation'),
-        text: 'documentation',
+        text: 'rest api',
         icon: 'fa-book',
         to: '/documentation'
       }
