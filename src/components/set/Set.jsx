@@ -3,6 +3,7 @@ import { asyncConnect } from 'redux-async-connect';
 import { connect } from 'react-redux';
 import {fetchSet, fetchItems} from 'redux/modules/setDetails';
 import {fetchType} from 'redux/modules/type';
+import {star, unstar, fetchUser} from 'redux/modules/profileDetails';
 import Waypoint from 'react-waypoint';
 import NestingTable from './nestingTable/NestingTable.jsx';
 import ReactDOM from 'react-dom';
@@ -21,6 +22,7 @@ import s from '../styles/index.scss';
         dispatch(fetchType(typeId))
       ]);
     }));
+    promises.push(dispatch(fetchUser()));
     return Promise.all(promises);
   }
 }])
@@ -33,8 +35,9 @@ import s from '../styles/index.scss';
   set: state.set.hash[state.setDetails.id],
   type: state.type.hash[state.set.hash[state.setDetails.id].type],
   allItemsLoaded: state.setDetails.allItemsLoaded,
-  itemError: state.setDetails.itemError
-}), {fetchSet, fetchItems, fetchType})
+  itemError: state.setDetails.itemError,
+  isStarred: state.profileDetails.stars.indexOf(state.setDetails.id) !== -1
+}), {fetchSet, fetchItems, fetchType, star, unstar})
 export default class Set extends Component {
   static propTypes = {
     params: PropTypes.shape({
@@ -113,9 +116,16 @@ export default class Set extends Component {
               <span>
                 <i className="fa fa-file"></i> {this.props.set.items.length}
               </span>
-              <a>
-                <i className="fa fa-star-o"></i>{this.props.set.stars}
-              </a>
+              {!this.props.isStarred && (
+                <a onClick={() => this.props.star(this.props.set._id)}>
+                  <i className="fa fa-star-o"></i>{this.props.set.stars}
+                </a>
+              )}
+              {this.props.isStarred && (
+                <a onClick={() => this.props.unstar(this.props.set._id)}>
+                  <i className="fa fa-star"></i>{this.props.set.stars}
+                </a>
+              )}
             </nav>
           </div>
           <nav className={s.dataNav}>

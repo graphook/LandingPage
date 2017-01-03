@@ -1,4 +1,13 @@
 import clone from 'utils/clone';
+const FETCH = 'set/FETCH';
+const FETCH_SUCCESS = 'set/FETCH_SUCCESS';
+const FETCH_FAIL = 'set/FETCH_FAIL';
+const FETCH_MULT = 'set/FETCH_MULT';
+const FETCH_MULT_SUCCESS = 'set/FETCH_MULT_SUCCESS';
+const FETCH_MULT_FAIL = 'set/FETCH_MULT_FAIL';
+const SEARCH = 'set/SEARCH';
+const SEARCH_SUCCESS = 'set/SEARCH_SUCCESS';
+const SEARCH_FAIL = 'set/SEARCH_FAIL';
 
 const initialState = {
   hash: {}
@@ -14,12 +23,63 @@ const addSets = (state, sets) => {
 };
 
 export default function reducer(state = initialState, action = {}) {
+  let newState;
   switch (action.type) {
     case 'setSearch/SEARCH_SUCCESS':
       return addSets(state, action.result);
     case 'setDetails/FETCH_SUCCESS':
       return addSets(state, [ action.result ]);
+    case FETCH_SUCCESS:
+      return addSets(state, [ action.result ]);
+    case FETCH_MULT_SUCCESS:
+      return addSets(state, action.result);
+    case SEARCH_SUCCESS:
+      return addSets(state, action.result);
+    case 'profileDetails/FETCH_USER_SETS_SUCCESS':
+      return addSets(state, action.result);
+    case 'profileDetails/STAR_SUCCESS':
+      newState = clone(state);
+      newState.hash[action.id].stars += 1;
+      return newState;
+    case 'profileDetails/UNSTAR_SUCCESS':
+      newState = clone(state);
+      newState.hash[action.id].stars -= 1;
+      return newState;
     default:
       return state;
   }
+}
+
+export function fetchSet(setId) {
+  return {
+    types: [FETCH, FETCH_SUCCESS, FETCH_FAIL],
+    promise: (client) => client.get('/v1/type/' + setId),
+    id: setId
+  };
+}
+export function fetchSets(setIds, numberPerPage, pageNumber) {
+  return {
+    types: [FETCH_MULT, FETCH_MULT_SUCCESS, FETCH_MULT_FAIL],
+    promise: (client) => client.post('/v1/set/search', {
+      data: {
+        _id: {
+          $in: setIds
+        }
+      },
+      params: {
+        count: numberPerPage,
+        page: pageNumber
+      }
+    }),
+    numberPerPage: numberPerPage,
+    page: pageNumber
+  };
+}
+export function searchSets(query) {
+  return {
+    types: [SEARCH, SEARCH_SUCCESS, SEARCH_FAIL],
+    promise: (client) => client.post('/v1/set/search', {
+      data: query
+    })
+  };
 }

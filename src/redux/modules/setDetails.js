@@ -20,7 +20,7 @@ export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case FETCH:
       return {
-        ...initialState,
+        ...state,
         loading: true,
         id: action.id,
         setError: ''

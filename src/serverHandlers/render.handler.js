@@ -17,7 +17,8 @@ export default function(req, res) {
     req.session.token = process.env.AUTO_TOKEN,
     req.session.user = {
       username: process.env.AUTO_USERNAME,
-      email: process.env.AUTO_EMAIL
+      email: process.env.AUTO_EMAIL,
+      key: process.env.AUTO_KEY
     }
   }
 
