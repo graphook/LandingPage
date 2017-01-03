@@ -68,17 +68,6 @@ export default class Set extends Component {
     };
   }
   componentDidMount() {
-    const id = this.props.params.id;
-    // TODO: This does not prevent the set page from forgetting its items upon change
-    if (this.props.id !== id) {
-      this.props.fetchSet(id).then(() => {
-        const typeId = this.props.setHash[id].type;
-        return Promise.all([
-          this.props.fetchItems(id, this.props.setHash[id].items, 0),
-          this.props.fetchType(typeId)
-        ]);
-      });
-    }
     this.node = ReactDOM.findDOMNode(this);
   }
   loadMore = () => {

@@ -89,7 +89,7 @@ export default class SetSearch extends Component {
         {(() => {
           if (this.props.searchResults.length === 0 && !this.props.loading) {
             return (
-              <div className={s.searchLoading}>
+              <div className={s.centeredMessage}>
                 <i className="fa fa-frown-o" aria-hidden="true">
                 </i> no results for {this.props.curSearch}.
               </div>

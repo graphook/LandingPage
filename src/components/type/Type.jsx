@@ -48,11 +48,6 @@ export default class Set extends Component {
     };
   }
   componentDidMount() {
-    const id = this.props.params.id;
-    // TODO: This does not prevent the set page from forgetting its items upon change
-    if (this.props.id !== id) {
-      this.props.fetchType(id);
-    }
     this.node = ReactDOM.findDOMNode(this);
   }
 
