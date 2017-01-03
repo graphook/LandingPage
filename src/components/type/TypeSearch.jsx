@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import {searchTypes, updateSearchText} from 'redux/modules/typeSearch';
 import {browserHistory} from 'react-router';
 import Waypoint from 'react-waypoint';
+import {throttle} from 'lodash';
 
 import s from '../styles/index.scss';
 
@@ -38,6 +39,12 @@ export default class SetSearch extends Component {
     searchResults: PropTypes.array,
     typeHash: PropTypes.object
   }
+  constructor(props) {
+    super(props);
+    this.searchThrottle = throttle(() => {
+      this.props.searchTypes(this.refs.searchBox.value);
+    }, 1000);
+  }
   search = (e) => {
     e.preventDefault();
     browserHistory.push('/type?q=' + this.props.searchText);
@@ -49,6 +56,7 @@ export default class SetSearch extends Component {
   }
   updateSearchText = (e) => {
     this.props.updateSearchText(e.target.value);
+    this.searchThrottle();
   }
   goToSet = (id, e) => {
     if (e.target.tagName !== 'A') {
@@ -63,7 +71,9 @@ export default class SetSearch extends Component {
               type="text"
               placeholder="find data types"
               onChange={this.updateSearchText}
-              value={this.props.searchText} />
+              value={this.props.searchText}
+              onBlur={this.search}
+              ref='searchBox' />
           <input type="submit" value="search" />
         </form>
         <section className={s.searchResults}>
