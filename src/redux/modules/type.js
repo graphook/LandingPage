@@ -17,22 +17,16 @@ const addTypes = (state, types) => {
 };
 
 export default function reducer(state = initialState, action = {}) {
-  switch (action.type) {
-    case 'typeSearch/SEARCH_SUCCESS':
-      return addTypes(state, action.result);
-    case 'typeDetails/FETCH_SUCCESS':
-      return addTypes(state, [ action.result ]);
-    case FETCH:
-      return state;
-    case FETCH_SUCCESS:
-      return addTypes(state, [ action.result ]);
-    case FETCH_FAIL:
-      const newState = clone(state);
-      newState.hash[action.id] = newState.hash[action.id] || action.error;
-      return newState;
-    default:
-      return state;
+  if (action.result && action.result.types) {
+    const typeInfo = action.result.types;
+    return addTypes(state, (typeInfo.read || []).concat(typeInfo.created || [])
+      .concat(typeInfo.updated || []).concat(typeInfo.deleted || []));
   }
+  if (action.type === FETCH || action.type === FETCH_SUCCESS || action.type === FETCH_FAIL) {
+    console.log('success or fail');
+    console.log(action);
+  }
+  return state;
 }
 
 export function fetchType(typeId) {

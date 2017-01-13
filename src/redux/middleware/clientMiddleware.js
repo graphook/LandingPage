@@ -17,13 +17,14 @@ export default function clientMiddleware(client) {
         (error) => {
           next({
             ...rest,
+            result: error,
             error: error.errors || { 'server': 'server error' },
             type: FAILURE
           });
         }
       ).catch((error)=> {
         console.error('MIDDLEWARE ERROR:', error.stack || error);
-        next({...rest, error: {message: 'application error'}, type: FAILURE});
+        next({...rest, error: { app: 'application error'}, type: FAILURE});
       });
 
       return actionPromise;

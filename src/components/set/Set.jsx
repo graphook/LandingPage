@@ -15,8 +15,9 @@ import s from '../styles/index.scss';
   promise: ({store: {dispatch, getState}, params: {id}}) => {
     const promises = [];
     promises.push(dispatch(fetchSet(id)).then(() => {
+      console.log('eh');
       const state = getState();
-      const typeId = state.set.hash[id].type;
+      const typeId = state.set.hash[id].type._id;
       return Promise.all([
         dispatch(fetchItems(id, state.set.hash[id].items, 0)),
         dispatch(fetchType(typeId))
@@ -26,18 +27,26 @@ import s from '../styles/index.scss';
     return Promise.all(promises);
   }
 }])
-@connect(state => ({
-  setHash: state.set.hash,
-  itemHash: state.item.hash,
-  page: state.setDetails.page,
-  numPerPage: state.setDetails.numPerPage,
-  id: state.setDetails.id,
-  set: state.set.hash[state.setDetails.id],
-  type: state.type.hash[state.set.hash[state.setDetails.id].type],
-  allItemsLoaded: state.setDetails.allItemsLoaded,
-  itemError: state.setDetails.itemError,
-  isStarred: state.profileDetails.stars.indexOf(state.setDetails.id) !== -1
-}), {fetchSet, fetchItems, fetchType, star, unstar})
+@connect(state => {
+  const props = {
+    setHash: state.set.hash,
+    itemHash: state.item.hash,
+    page: state.setDetails.page,
+    numPerPage: state.setDetails.numPerPage,
+    id: state.setDetails.id,
+    allItemsLoaded: state.setDetails.allItemsLoaded,
+    itemError: state.setDetails.itemError,
+    isStarred: (state.user) ? state.user.stars.indexOf(state.setDetails.id) !== -1 : false,
+  }
+  if (state.setDetails.id && state.set.hash[state.setDetails.id]) {
+    const set = state.set.hash[state.setDetails.id];
+    Object.assign(props, {
+      set: set,
+      type: state.type.hash[set.type._id]
+    });
+  }
+  return props;
+}, {fetchSet, fetchItems, fetchType, star, unstar})
 export default class Set extends Component {
   static propTypes = {
     params: PropTypes.shape({
@@ -57,7 +66,7 @@ export default class Set extends Component {
     set: PropTypes.object,
     type: PropTypes.object,
     allItemsLoaded: PropTypes.bool,
-    itemError: PropTypes.string,
+    itemError: PropTypes.object,
     id: PropTypes.string,
     isStarred: PropTypes.bool,
     star: PropTypes.func,
@@ -84,106 +93,110 @@ export default class Set extends Component {
     }
   }
   render() {
-    const data = [];
-    for (let i = 0; i < (this.props.numPerPage * (this.props.page + 1)); i++) {
-      if (this.props.itemHash[this.props.set.items[i]]) {
-        data.push(this.props.itemHash[this.props.set.items[i]]);
+    if (this.props.set) {
+      const data = [];
+      for (let i = 0; i < (this.props.numPerPage * (this.props.page + 1)); i++) {
+        if (this.props.itemHash[this.props.set.items[i]]) {
+          data.push(this.props.itemHash[this.props.set.items[i]]);
+        }
       }
-    }
-    return (
-      <div className={s.set} onScroll={this.handleScroll}>
-        <div className={s.infoArea} style={{marginLeft: this.state.horizontalScrollOffset}}>
-          <div className={s.setInfo}>
-            <div>
-              <h1>{this.props.set.title} (this.props.set._id)</h1>
-              <p>{this.props.set.description}</p>
+      return (
+        <div className={s.set} onScroll={this.handleScroll}>
+          <div className={s.infoArea} style={{marginLeft: this.state.horizontalScrollOffset}}>
+            <div className={s.setInfo}>
+              <div>
+                <h1>{this.props.set.title} ({this.props.set._id})</h1>
+                <p>{this.props.set.description}</p>
+              </div>
+              <nav>
+                <span>
+                  <i className="fa fa-user"></i>{this.props.set.creator.username}
+                </span>
+                <Link to={'/type/' + this.props.set.type._id}>
+                  <i className="fa fa-file-text"></i>{this.props.set.type.title}
+                </Link>
+                <span>
+                  <i className="fa fa-file"></i> {this.props.set.items.length}
+                </span>
+                {!this.props.isStarred && (
+                  <a onClick={() => this.props.star(this.props.set._id)}>
+                    <i className="fa fa-star-o"></i>{this.props.set.stars}
+                  </a>
+                )}
+                {this.props.isStarred && (
+                  <a onClick={() => this.props.unstar(this.props.set._id)}>
+                    <i className="fa fa-star"></i>{this.props.set.stars}
+                  </a>
+                )}
+              </nav>
             </div>
-            <nav>
-              <span>
-                <i className="fa fa-user"></i>{this.props.set.creatorName}
-              </span>
-              <Link to={'/type/' + this.props.set.type}>
-                <i className="fa fa-file-text"></i>{this.props.set.typeName}
-              </Link>
-              <span>
-                <i className="fa fa-file"></i> {this.props.set.items.length}
-              </span>
-              {!this.props.isStarred && (
-                <a onClick={() => this.props.star(this.props.set._id)}>
-                  <i className="fa fa-star-o"></i>{this.props.set.stars}
-                </a>
-              )}
-              {this.props.isStarred && (
-                <a onClick={() => this.props.unstar(this.props.set._id)}>
-                  <i className="fa fa-star"></i>{this.props.set.stars}
-                </a>
-              )}
-            </nav>
-          </div>
-          <nav className={s.dataNav}>
-            {(() => {
-              if (this.props.location.query.view === 'json') {
+            <nav className={s.dataNav}>
+              {(() => {
+                if (this.props.location.query.view === 'json') {
+                  return (
+                    <Link
+                        to={{
+                          pathname: this.props.location.pathname,
+                          query: {...this.props.location.query, view: 'table'}
+                        }}>
+                      <i className="fa fa-table"></i>table view
+                    </Link>
+                  );
+                }
                 return (
                   <Link
                       to={{
                         pathname: this.props.location.pathname,
-                        query: {...this.props.location.query, view: 'table'}
+                        query: {...this.props.location.query, view: 'json'}
                       }}>
-                    <i className="fa fa-table"></i>table view
+                    <i className="fa fa-align-right"></i>json view
                   </Link>
                 );
-              }
+              })()}
+              <Link to="/">
+                <i className="fa fa-book"></i>rest api
+              </Link>
+            </nav>
+          </div>
+          <Waypoint
+            onEnter={() => this.setState({focusTable: false})}
+            onLeave={() => this.setState({focusTable: true})} />
+          {(() => {
+            if (this.props.location.query.view === 'json') {
               return (
-                <Link
-                    to={{
-                      pathname: this.props.location.pathname,
-                      query: {...this.props.location.query, view: 'json'}
-                    }}>
-                  <i className="fa fa-align-right"></i>json view
-                </Link>
+                <pre className={s.jsonArea}>
+                  {JSON.stringify(data, null, 2)}
+                </pre>
               );
-            })()}
-            <Link to="/">
-              <i className="fa fa-book"></i>rest api
-            </Link>
-          </nav>
+            }
+            return (
+              <NestingTable
+                type={this.props.type}
+                data={data}
+                focused={this.state.focusTable}
+                horizontalScrollOffset={this.state.horizontalScrollOffset} />
+            );
+          })()}
+          <Waypoint onEnter={this.loadMore} />
+          {(() => {
+            if (this.props.allItemsLoaded) {
+              return (
+                <div className={s.centeredMessage}>
+                  <i className="fa fa-check"></i> no more items
+                </div>
+              );
+            } else if (this.props.itemError.item) {
+              return (
+                <div className={s.centeredMessage + ' ' + s.error}>
+                  <i className="fa fa-times"></i> {this.props.itemError.item}
+                </div>
+              );
+            }
+          })()}
         </div>
-        <Waypoint
-          onEnter={() => this.setState({focusTable: false})}
-          onLeave={() => this.setState({focusTable: true})} />
-        {(() => {
-          if (this.props.location.query.view === 'json') {
-            return (
-              <pre className={s.jsonArea}>
-                {JSON.stringify(data, null, 2)}
-              </pre>
-            );
-          }
-          return (
-            <NestingTable
-              type={this.props.type}
-              data={data}
-              focused={this.state.focusTable}
-              horizontalScrollOffset={this.state.horizontalScrollOffset} />
-          );
-        })()}
-        <Waypoint onEnter={this.loadMore} />
-        {(() => {
-          if (this.props.allItemsLoaded) {
-            return (
-              <div className={s.centeredMessage}>
-                <i className="fa fa-check"></i> no more items
-              </div>
-            );
-          } else if (this.props.itemError) {
-            return (
-              <div className={s.centeredMessage + ' ' + s.error}>
-                <i className="fa fa-times"></i> {this.props.itemError}
-              </div>
-            );
-          }
-        })()}
-      </div>
-    );
+      );
+    } else {
+      return (<div>Fail!</div>)
+    }
   }
 }

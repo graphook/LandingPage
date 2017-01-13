@@ -12,7 +12,7 @@ const initialState = {
   id: '',
   allItemsLoaded: false,
   setError: '',
-  itemError: '',
+  itemError: {},
   numPerPage: NUM_PER_PAGE
 };
 
@@ -39,16 +39,17 @@ export default function reducer(state = initialState, action = {}) {
     case FETCH_ITEMS:
       return {
         ...state,
-        itemError: ''
+        itemError: {}
       };
     case FETCH_ITEMS_SUCCESS:
       return {
         ...state,
         page: action.page,
-        allItemsLoaded: action.result.length < NUM_PER_PAGE
+        allItemsLoaded: action.result.items.read.length < NUM_PER_PAGE
       };
     case FETCH_ITEMS_FAIL:
       return {
+        ...state,
         itemError: action.error
       };
     default:

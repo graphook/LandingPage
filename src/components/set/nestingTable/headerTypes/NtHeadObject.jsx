@@ -12,9 +12,9 @@ export default class HeaderObject extends Component {
   render() {
     return (
       <div className={s.itemContainer}>
-        {this.props.type.properties.map((prop, index) => {
+        {this.props.type.fields.map((prop, index) => {
           const tempPath = this.props.path.slice(0);
-          tempPath.push('properties');
+          tempPath.push('fields');
           tempPath.push(index);
           const keyIndicator = prop.id;
           if (prop.type === 'object') {

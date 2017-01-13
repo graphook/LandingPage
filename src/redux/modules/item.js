@@ -14,10 +14,10 @@ const addItems = (state, items) => {
 };
 
 export default function reducer(state = initialState, action = {}) {
-  switch (action.type) {
-    case 'setDetails/FETCH_ITEMS_SUCCESS':
-      return addItems(state, action.result);
-    default:
-      return state;
+  if (action.result && action.result.items) {
+    const itemInfo = action.result.items;
+    return addItems(state, (itemInfo.read || []).concat(itemInfo.created || [])
+      .concat(itemInfo.updated || []).concat(itemInfo.deleted || []));
   }
+  return state;
 }

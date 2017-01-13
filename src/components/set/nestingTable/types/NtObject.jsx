@@ -12,14 +12,14 @@ class NtObject extends Component {
   render() {
     return (
       <div className={s.ntObject}>
-        {Object.keys(this.props.type.properties).map((propKey) => {
-          const ChildComponent = types[this.props.type.properties[propKey].type];
+        {Object.keys(this.props.type.fields).map((propKey) => {
+          const ChildComponent = types[this.props.type.fields[propKey].type];
           const tempPath = this.props.path.slice(0);
           tempPath.push(propKey);
           return (
             <ChildComponent
                 key={tempPath.join()}
-                type={this.props.type.properties[propKey]}
+                type={this.props.type.fields[propKey]}
                 data={this.props.data[propKey]}
                 path={tempPath} />
             );

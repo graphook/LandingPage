@@ -84,9 +84,8 @@ export default class SetSearch extends Component {
               <div className={s.setResult + ' ' + s.clickableShadow}
                   key={result}
                   onClick={this.goToSet.bind(null, resultData._id)}>
-                <i className={'fa fa-2x ' + resultData.icon}></i>
-                <p>type: <Link to={'/type/' + resultData.type}>
-                  {resultData.typeName}
+                <p>type: <Link to={'/type/' + resultData.type._id}>
+                  {resultData.type.title}
                 </Link></p>
                 <h2>{resultData.title}</h2>
                 <p className={s.description}>

@@ -7,9 +7,9 @@ import s from 'components/styles/index.scss';
 const encodeType = (oldType) => {
   const type = clone(oldType, true);
   if (type.type === 'object') {
-    type.properties = Object.keys(type.properties).map((prop) => {
-      type.properties[prop].id = prop;
-      return encodeType(type.properties[prop]);
+    type.fields = Object.keys(type.fields).map((prop) => {
+      type.fields[prop].id = prop;
+      return encodeType(type.fields[prop]);
     });
     return type;
   } else if (type.type === 'array') {
@@ -22,12 +22,12 @@ const encodeType = (oldType) => {
 const decodeType = (oldType) => {
   const type = clone(oldType, true);
   if (type.type === 'object') {
-    const tempProperties = {};
-    type.properties.forEach((prop) => {
-      tempProperties[prop.id] = decodeType(prop);
-      delete tempProperties[prop.id].id;
+    const tempFields = {};
+    type.fields.forEach((prop) => {
+      tempFields[prop.id] = decodeType(prop);
+      delete tempFields[prop.id].id;
     });
-    type.properties = tempProperties;
+    type.fields = tempFields;
     return type;
   } else if (type.type === 'array') {
     type.items = decodeType(type.items);

@@ -20,34 +20,38 @@ export default class NestingTable extends Component {
     };
   }
   render() {
-    return (
-      <div className={s.nestingTable}>
-        <NtHead type={this.props.type} />
-        {(() => {
-          if (this.props.focused) {
+    if (this.props.type) {
+      return (
+        <div className={s.nestingTable}>
+          <NtHead type={this.props.type.properties} />
+          {(() => {
+            if (this.props.focused) {
+              return (
+                <div className={s.ntFixedHead}
+                    style={{left: -this.props.horizontalScrollOffset}}>
+                  <NtHead type={this.props.type.properties} />
+                </div>
+              );
+            }
+          })()}
+          {this.props.data.map((row, index) => {
             return (
-              <div className={s.ntFixedHead}
-                  style={{left: -this.props.horizontalScrollOffset}}>
-                <NtHead type={this.props.type} />
+              <div className={s.ntRow} key={row._id}>
+                <NtObject
+                  type={this.props.type.properties}
+                  data={row}
+                  path={[index]}/>
               </div>
             );
-          }
-        })()}
-        {this.props.data.map((row, index) => {
-          return (
-            <div className={s.ntRow} key={row._id}>
-              <NtObject
-                type={this.props.type}
-                data={row}
-                path={[index]}/>
-            </div>
-          );
-        })}
-      </div>
-    );
+          })}
+        </div>
+      );
+    } else {
+      return (
+        <div className={s.centeredMessage + ' ' + s.error}>
+          <i className="fa fa-times"></i> could not find type
+        </div>
+      )
+    }
   }
 }
-/*
-data
-type
-*/

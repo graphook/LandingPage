@@ -19,35 +19,17 @@ const addSets = (state, sets) => {
   sets.forEach((set) => {
     newState.hash[set._id] = set;
   });
+  console.log(newState);
   return newState;
 };
 
 export default function reducer(state = initialState, action = {}) {
-  let newState;
-  switch (action.type) {
-    case 'setSearch/SEARCH_SUCCESS':
-      return addSets(state, action.result);
-    case 'setDetails/FETCH_SUCCESS':
-      return addSets(state, [ action.result ]);
-    case FETCH_SUCCESS:
-      return addSets(state, [ action.result ]);
-    case FETCH_MULT_SUCCESS:
-      return addSets(state, action.result);
-    case SEARCH_SUCCESS:
-      return addSets(state, action.result);
-    case 'profileDetails/FETCH_USER_SETS_SUCCESS':
-      return addSets(state, action.result);
-    case 'profileDetails/STAR_SUCCESS':
-      newState = clone(state);
-      newState.hash[action.id].stars += 1;
-      return newState;
-    case 'profileDetails/UNSTAR_SUCCESS':
-      newState = clone(state);
-      newState.hash[action.id].stars -= 1;
-      return newState;
-    default:
-      return state;
+  if (action.result && action.result.sets) {
+    const setInfo = action.result.sets;
+    return addSets(state, (setInfo.read || []).concat(setInfo.created || [])
+      .concat(setInfo.updated || []).concat(setInfo.deleted || []));
   }
+  return state;
 }
 
 export function fetchSet(setId) {
