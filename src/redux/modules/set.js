@@ -19,7 +19,6 @@ const addSets = (state, sets) => {
   sets.forEach((set) => {
     newState.hash[set._id] = set;
   });
-  console.log(newState);
   return newState;
 };
 

@@ -59,7 +59,7 @@ export function searchSets(searchQuery, pageNumber) {
     types: [SEARCH, SEARCH_SUCCESS, SEARCH_FAIL],
     promise: (client) => client.get('/v1/set', {
       params: {
-        q: searchQuery,
+        q: searchQuery || undefined,
         page: pageNumber || 0,
         count: NUM_PER_PAGE
       },

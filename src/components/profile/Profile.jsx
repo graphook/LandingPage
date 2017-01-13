@@ -19,9 +19,9 @@ import s from '../styles/index.scss';
   }
 }])
 @connect(state => ({
-  user: state.auth.user || {},
+  user: state.profileDetails.user || {},
   sets: state.profileDetails.sets || [],
-  stars: state.profileDetails.stars || [],
+  stars: state.profileDetails.user.stars || [],
   setHash: state.set.hash || {}
 }), {unstar})
 export default class Profile extends Component {
@@ -66,25 +66,31 @@ export default class Profile extends Component {
             })}
           </ul>
         </div>
-        <div className={s.infoContainer}>
-          <h2>starred sets</h2>
-          <ul>
-            {this.props.stars.map((set) => {
-              return (
-                <li key={set}>
-                  <Link to={'/set/' + set}>
-                    {this.props.setHash[set].title}
-                  </Link>
-                  <div>
-                    <a onClick={() => this.props.unstar(set)}>
-                      <i className="fa fa-star"></i>unstar
-                    </a>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+        {(() => {
+          if (this.props.stars.length > 0) {
+            return (
+              <div className={s.infoContainer}>
+                <h2>starred sets</h2>
+                <ul>
+                  {this.props.stars.map((set) => {
+                    return (
+                      <li key={set}>
+                        <Link to={'/set/' + set}>
+                          {this.props.setHash[set].title}
+                        </Link>
+                        <div>
+                          <a onClick={() => this.props.unstar(set)}>
+                            <i className="fa fa-star"></i>unstar
+                          </a>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            );
+          }
+        })()}
       </div>
     );
   }

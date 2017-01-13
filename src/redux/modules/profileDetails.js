@@ -1,5 +1,3 @@
-import {clone} from 'lodash';
-
 const FETCH = 'profileDetails/FETCH';
 const FETCH_SUCCESS = 'profileDetails/FETCH_SUCCESS';
 const FETCH_FAIL = 'profileDetails/FETCH_FAIL';
@@ -19,11 +17,19 @@ const initialState = {
   error: '',
   userSetsError: '',
   sets: [],
-  stars: []
+  user: {
+    stars: []
+  }
 };
 
 export default function reducer(state = initialState, action = {}) {
-  let newStars;
+  if (action.result && action.result.users) {
+    return {
+      ...state,
+      user: action.result.users[Object.keys(action.result.users)[0]][0]
+      // ^ *sarcasm* cool
+    };
+  }
   switch (action.type) {
     case FETCH:
       return {
@@ -36,13 +42,12 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loading: false,
         error: '',
-        stars: action.result.stars
+        user: action.result.users.read[0]
       };
     case FETCH_FAIL:
       return {
         ...state,
-        loading: false,
-        error: action.error
+        loading: false
       };
     case FETCH_USER_SETS:
       return {
@@ -55,7 +60,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loadingUserSets: false,
         userSetsError: '',
-        sets: action.result.map((set) => { return set._id; })
+        sets: action.result.sets.read.map((set) => { return set._id; })
       };
     case FETCH_USER_SETS_FAIL:
       return {
@@ -64,18 +69,13 @@ export default function reducer(state = initialState, action = {}) {
         userSetsError: action.error
       };
     case STAR_SUCCESS:
-      newStars = clone(state.stars);
-      newStars.push(action.id);
-      return {
-        ...state,
-        stars: newStars
-      };
+      return state;
     case UNSTAR_SUCCESS:
-      newStars = clone(state.stars);
-      newStars.splice(state.stars.indexOf(action.id), 1);
+      return state;
+    case 'auth/LOGOUT_SUCCESS':
       return {
         ...state,
-        stars: newStars
+        user: initialState.user
       };
     default:
       return state;
@@ -93,7 +93,7 @@ export function fetchUserSets(username) {
     types: [FETCH_USER_SETS, FETCH_USER_SETS_SUCCESS, FETCH_USER_SETS_FAIL],
     promise: (client) => client.post('/v1/set/search', {
       data: {
-        creatorName: username
+        'creator.username': username
       }
     })
   };

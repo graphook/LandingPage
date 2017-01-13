@@ -13,7 +13,7 @@ import s from '../styles/index.scss';
   promise: ({store: {dispatch, getState}, location: {query: {q}}}) => {
     const promises = [];
     if (q !== getState().setSearch.curSearch) {
-      promises.push(dispatch(searchSets(q)));
+      promises.push(dispatch(searchSets(q || '')));
     } else if (!getState().setSearch.loaded) {
       promises.push(dispatch(searchSets()));
     }
@@ -38,7 +38,8 @@ export default class SetSearch extends Component {
     page: PropTypes.number,
     updateSearchText: PropTypes.func,
     searchResults: PropTypes.array,
-    setHash: PropTypes.object
+    setHash: PropTypes.object,
+    location: PropTypes.object
   }
   constructor(props) {
     super(props);
@@ -74,9 +75,20 @@ export default class SetSearch extends Component {
               onChange={this.updateSearchText}
               value={this.props.searchText}
               onBlur={this.search}
+              onFocus={() => { if (this.props.location.pathname === '/') browserHistory.push('/set'); }}
               ref="searchBox" />
           <input type="submit" value="search" />
         </form>
+        {(() => {
+          if (this.props.location.pathname === '/') {
+            return (
+              <div className={s.centeredMessage + ' ' + s.largeHeader}>
+                <h1>zenow</h1>
+                <p>create and share data</p>
+              </div>
+            );
+          }
+        })()}
         <section className={s.searchResults}>
           {this.props.searchResults.map((result) => {
             const resultData = this.props.setHash[result];

@@ -25,7 +25,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loading: false,
         loaded: true,
-        results: state.results.concat(action.result.map((result) => {
+        results: state.results.concat(action.result.types.read.map((result) => {
           return result._id;
         })),
         curSearch: action.query,

@@ -22,10 +22,6 @@ export default function reducer(state = initialState, action = {}) {
     return addTypes(state, (typeInfo.read || []).concat(typeInfo.created || [])
       .concat(typeInfo.updated || []).concat(typeInfo.deleted || []));
   }
-  if (action.type === FETCH || action.type === FETCH_SUCCESS || action.type === FETCH_FAIL) {
-    console.log('success or fail');
-    console.log(action);
-  }
   return state;
 }
 

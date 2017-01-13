@@ -7,19 +7,6 @@ import {Link} from 'react-router';
 
 import s from '../styles/index.scss';
 
-const formatTypeJson = (type) => {
-  if (type.type === 'object') {
-    const result = {};
-    Object.keys(type.properties).forEach((key) => {
-      result[key] = formatTypeJson(type.properties[key]);
-    });
-    return result;
-  } else if (type.type === 'array') {
-    return [ formatTypeJson(type.items) ];
-  }
-  return type.type;
-};
-
 @asyncConnect([{
   promise: ({store: {dispatch}, params: {id}}) => {
     const promises = [];
@@ -76,7 +63,7 @@ export default class Set extends Component {
           </div>
         </div>
         <pre className={s.jsonArea}>
-          {JSON.stringify(formatTypeJson(this.props.type), null, 2)}
+          {JSON.stringify(this.props.type.properties, null, 2)}
         </pre>
       </div>
     );

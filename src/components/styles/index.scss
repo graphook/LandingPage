@@ -32,6 +32,11 @@ h1, h2, h3, h4, h5, h6, p {
 	margin: 0;
 }
 
+.largeHeader h1 {
+	font-size: 80px;
+	margin-top: -28px;
+}
+
 a {
 	color: $black;
 	text-decoration: underline;
@@ -188,6 +193,9 @@ ul {
 	p {
 		margin-top: 4px;
 		margin-bottom: 4px;
+	}
+	ul {
+		margin-bottom: 0;
 	}
 }
 .infoContainer:hover {

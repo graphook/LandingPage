@@ -46,12 +46,11 @@ export default class NestingTable extends Component {
           })}
         </div>
       );
-    } else {
-      return (
-        <div className={s.centeredMessage + ' ' + s.error}>
-          <i className="fa fa-times"></i> could not find type
-        </div>
-      )
     }
+    return (
+      <div className={s.centeredMessage + ' ' + s.error}>
+        <i className="fa fa-times"></i> could not find type
+      </div>
+    );
   }
 }

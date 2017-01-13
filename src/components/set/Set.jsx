@@ -15,7 +15,6 @@ import s from '../styles/index.scss';
   promise: ({store: {dispatch, getState}, params: {id}}) => {
     const promises = [];
     promises.push(dispatch(fetchSet(id)).then(() => {
-      console.log('eh');
       const state = getState();
       const typeId = state.set.hash[id].type._id;
       return Promise.all([
@@ -36,8 +35,8 @@ import s from '../styles/index.scss';
     id: state.setDetails.id,
     allItemsLoaded: state.setDetails.allItemsLoaded,
     itemError: state.setDetails.itemError,
-    isStarred: (state.user) ? state.user.stars.indexOf(state.setDetails.id) !== -1 : false,
-  }
+    isStarred: (state.profileDetails.user.stars) ? state.profileDetails.user.stars.indexOf(state.setDetails.id) !== -1 : false
+  };
   if (state.setDetails.id && state.set.hash[state.setDetails.id]) {
     const set = state.set.hash[state.setDetails.id];
     Object.assign(props, {
@@ -195,8 +194,7 @@ export default class Set extends Component {
           })()}
         </div>
       );
-    } else {
-      return (<div>Fail!</div>)
     }
+    return (<div>Fail!</div>);
   }
 }

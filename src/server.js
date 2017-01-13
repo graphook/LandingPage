@@ -85,7 +85,7 @@ routes.forEach((route) => {
         app[route.method](route.path, route.handler);
       }
     } catch(e) {
-      console.log('Error at route ', route, e);
+      console.error('Error at route ', route, e);
     }
   });
 
