@@ -46,15 +46,13 @@ app.post('/api/login', (req, res) => {
     .send(req.body)
     .end((err, result) => {
       if (err) {
-        if (result.error.text) {
-          res.status(400).send(result.error.text)
-        } else {
-          res.status(500).send('server error');
+        if (result.error) {
+          res.status(400).send(result.body)
         }
       } else {
-        req.session.user = result.body.user;
-        req.session.token = result.body.token;
-        res.send(result.body.user);
+        req.session.user = result.body.auth.user;
+        req.session.token = result.body.auth.token;
+        res.send(result.body.auth.user);
       }
     });
 });

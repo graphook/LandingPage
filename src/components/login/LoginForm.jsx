@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import loginValidator from './loginValidator';
 import textInput from '../forms/textInput.jsx';
 import * as authActions from 'redux/modules/auth';
+import constants from '../../constants';
 
 @reduxForm({
   form: 'login',
@@ -31,8 +32,8 @@ export default class CreateUserForm extends Component {
   }
   onSubmit = (values) => {
     this.props.login({
-      username: values.username,
-      email: values.username,
+      username: new RegExp(constants.usernameRegex).test(values.username) ? values.username : undefined,
+      email: new RegExp(constants.emailRegex).test(values.username) ? values.username : undefined,
       password: values.password
     });
   }

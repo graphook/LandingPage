@@ -3,7 +3,7 @@ const join = (rules) => (value, data) => rules.map(rule => rule(value, data)).fi
 
 export function email(value) {
   // Let's not start a debate on email regex. This is just for an example app!
-  if (!isEmpty(value) && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+  if (!isEmpty(value) && !/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,4}$/.test(value)) {
     return 'Invalid email address';
   }
 }
@@ -55,8 +55,8 @@ export function match(field) {
 }
 
 export function alphaNumeric(value) {
-  if (!isEmpty(value) && !/^[a-z0-9._]+$/i.test(value)) {
-    return 'must consist of letters, numbers and symbols';
+  if (!isEmpty(value) && !/^[a-zA-Z0-9$-/:-?{-~!"^_`\[\]]/i.test(value)) {
+    return 'must consist of letters, numbers or symbols (-!$%^&*()_+|~=`{}[]:";\'<>?,.\/)';
   }
 }
 

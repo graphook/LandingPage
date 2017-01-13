@@ -74,7 +74,7 @@ export default class SetSearch extends Component {
               onChange={this.updateSearchText}
               value={this.props.searchText}
               onBlur={this.search}
-              ref='searchBox' />
+              ref="searchBox" />
           <input type="submit" value="search" />
         </form>
         <section className={s.searchResults}>

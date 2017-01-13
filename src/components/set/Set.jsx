@@ -58,7 +58,10 @@ export default class Set extends Component {
     type: PropTypes.object,
     allItemsLoaded: PropTypes.bool,
     itemError: PropTypes.string,
-    id: PropTypes.string
+    id: PropTypes.string,
+    isStarred: PropTypes.bool,
+    star: PropTypes.func,
+    unstar: PropTypes.func
   };
   constructor(props) {
     super(props);
@@ -92,7 +95,7 @@ export default class Set extends Component {
         <div className={s.infoArea} style={{marginLeft: this.state.horizontalScrollOffset}}>
           <div className={s.setInfo}>
             <div>
-              <h1>{this.props.set.title}</h1>
+              <h1>{this.props.set.title} (this.props.set._id)</h1>
               <p>{this.props.set.description}</p>
             </div>
             <nav>

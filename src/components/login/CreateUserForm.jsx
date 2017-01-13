@@ -4,18 +4,29 @@ import {Field, reduxForm} from 'redux-form';
 import {connect} from 'react-redux';
 import createUserValidator from './createUserValidator';
 import textInput from '../forms/textInput.jsx';
-import {isValid} from 'redux/modules/formValidation';
 import {createUser, login} from 'redux/modules/auth';
+import ApiClient from 'helpers/ApiClient';
+const client = new ApiClient();
 
-const asyncValidate = (data, dispatch) => {
+const asyncValidate = (data) => {
   if (!data.email && !data.username) {
     return Promise.resolve({});
   }
-  return dispatch(isValid('user', {
-    email: data.email,
-    username: data.username,
-    password: 'something'
-  }));
+  return client.post('/v1/user/validate', {
+    data: {
+      email: data.email,
+      username: data.username,
+      password: 'something'
+    }
+  })
+  .then(() => { return Promise.resolve({}); })
+  .catch((err) => {
+    const errObj = {};
+    Object.keys(err.errors).forEach((errorKey) => {
+      errObj[errorKey.replace('body.', '')] = err.errors[errorKey];
+    });
+    throw errObj;
+  });
 };
 @reduxForm({
   form: 'createUser',
@@ -29,7 +40,7 @@ const asyncValidate = (data, dispatch) => {
   loading: state.auth.creatingUser,
   error: state.auth.createUserError,
   user: state.auth.user
-}), {createUser, isValid, login})
+}), {createUser, login})
 export default class CreateUserForm extends Component {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,

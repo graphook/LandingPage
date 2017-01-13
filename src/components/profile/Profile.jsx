@@ -8,25 +8,29 @@ import {Link} from 'react-router';
 import s from '../styles/index.scss';
 
 @asyncConnect([{
-  promise: ({store: {dispatch, getState}, params: {id}}) => {
+  promise: ({store: {dispatch, getState}}) => {
     const promises = [];
     promises.push(dispatch(fetchUserSets(getState().auth.user.username)));
     promises.push(dispatch(fetchUser()).then(() => {
       const stars = getState().setDetails.stars;
       return dispatch(fetchSets(stars, 500));
     }));
-    return Promise.all(promises)
+    return Promise.all(promises);
   }
 }])
 @connect(state => ({
-  user: state.auth.user,
-  sets: state.profileDetails.sets,
-  stars: state.profileDetails.stars,
-  setHash: state.set.hash
+  user: state.auth.user || {},
+  sets: state.profileDetails.sets || [],
+  stars: state.profileDetails.stars || [],
+  setHash: state.set.hash || {}
 }), {unstar})
 export default class Profile extends Component {
   static propTypes = {
-    children: PropTypes.any,
+    user: PropTypes.object,
+    sets: PropTypes.array,
+    stars: PropTypes.array,
+    setHash: PropTypes.object,
+    unstar: PropTypes.func
   };
   render() {
     return (
@@ -42,12 +46,12 @@ export default class Profile extends Component {
           <ul>
             {this.props.sets.map((set) => {
               return (
-                <li>
+                <li key={set}>
                   <Link to={'/set/' + set}>
                     {this.props.setHash[set].title}
                   </Link>
                   <div>
-                    <Link to='/'>
+                    <Link to="/">
                       <i className="fa fa-book"></i> rest api
                     </Link>
                     <span>
@@ -58,7 +62,7 @@ export default class Profile extends Component {
                     </span>
                   </div>
                 </li>
-              )
+              );
             })}
           </ul>
         </div>
@@ -67,7 +71,7 @@ export default class Profile extends Component {
           <ul>
             {this.props.stars.map((set) => {
               return (
-                <li>
+                <li key={set}>
                   <Link to={'/set/' + set}>
                     {this.props.setHash[set].title}
                   </Link>
@@ -77,7 +81,7 @@ export default class Profile extends Component {
                     </a>
                   </div>
                 </li>
-              )
+              );
             })}
           </ul>
         </div>

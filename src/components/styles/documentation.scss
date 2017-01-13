@@ -1,0 +1,15 @@
+.documentation {
+  position: relative;
+  height: calc(100vh - 50px);
+  display: flex;
+
+  nav {
+    width: 230px;
+    height: 100%;
+    box-shadow: $smallShadow;
+    padding-right: $margin;
+    padding-left: $margin;
+    flex-shrink: 0;
+    overflow-y: auto;
+  }
+}

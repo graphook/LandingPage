@@ -62,7 +62,7 @@ export default class Set extends Component {
         <div className={s.infoArea} style={{marginLeft: this.state.horizontalScrollOffset}}>
           <div className={s.typeInfo}>
             <div>
-              <h1>{this.props.type.title}</h1>
+              <h1>{this.props.type.title} ({this.props.type._id})</h1>
               <p>{this.props.type.description}</p>
             </div>
             <nav>

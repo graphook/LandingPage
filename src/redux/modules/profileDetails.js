@@ -1,4 +1,4 @@
-import {clone} from 'lodash'
+import {clone} from 'lodash';
 
 const FETCH = 'profileDetails/FETCH';
 const FETCH_SUCCESS = 'profileDetails/FETCH_SUCCESS';
@@ -13,7 +13,6 @@ const UNSTAR = 'profileDetails/UNSTAR';
 const UNSTAR_SUCCESS = 'profileDetails/UNSTAR_SUCCESS';
 const UNSTAR_FAIL = 'profileDetails/UNSTAR_FAIL';
 
-const NUM_PER_PAGE = 20;
 const initialState = {
   loading: false,
   loadingUserSets: false,
@@ -33,8 +32,6 @@ export default function reducer(state = initialState, action = {}) {
         error: ''
       };
     case FETCH_SUCCESS:
-      console.log('success fetch');
-      console.log(action.result);
       return {
         ...state,
         loading: false,
@@ -58,7 +55,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loadingUserSets: false,
         userSetsError: '',
-        sets: action.result.map((set) => { return set._id })
+        sets: action.result.map((set) => { return set._id; })
       };
     case FETCH_USER_SETS_FAIL:
       return {
@@ -72,14 +69,14 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         stars: newStars
-      }
+      };
     case UNSTAR_SUCCESS:
       newStars = clone(state.stars);
       newStars.splice(state.stars.indexOf(action.id), 1);
       return {
         ...state,
         stars: newStars
-      }
+      };
     default:
       return state;
   }

@@ -17,8 +17,7 @@ export default function clientMiddleware(client) {
         (error) => {
           next({
             ...rest,
-            error,
-            text: (error.response && error.response.text) ? error.response.text : undefined,
+            error: error.errors || { 'server': 'server error' },
             type: FAILURE
           });
         }
