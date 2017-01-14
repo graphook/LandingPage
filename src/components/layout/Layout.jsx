@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {Link} from 'react-router';
-import CreateUserForm from '../login/CreateUserForm.jsx';
-import LoginForm from '../login/LoginForm.jsx';
+import AuthPrompt from '../login/AuthPrompt.jsx';
 import { asyncConnect } from 'redux-async-connect';
 import { logout } from 'redux/modules/auth';
 import { push } from 'react-router-redux';
@@ -74,12 +73,12 @@ export default class Layout extends Component {
         {
           text: 'create an account',
           icon: 'fa-user',
-          onClick: this.props.openModal.bind(null, CreateUserForm)
+          onClick: this.props.openModal.bind(null, <AuthPrompt />)
         },
         {
           text: 'log in',
           icon: 'fa-sign-in',
-          onClick: this.props.openModal.bind(null, LoginForm)
+          onClick: this.props.openModal.bind(null, <AuthPrompt loginFocus />)
         },
       ]);
     }

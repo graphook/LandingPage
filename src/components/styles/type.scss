@@ -11,6 +11,7 @@
     padding-top: 16px;
     padding-bottom: 4px;
     box-sizing: border-box;
+    overflow-x: auto;
 
     .typeInfo {
       display: flex;
@@ -52,5 +53,34 @@
     padding-top: 8px;
     padding-bottom: 8px;
     border-top: 1px solid $lightGrey;
+    overflow-x: auto;
+
+    > .typeVisualizer {
+      margin-left: 0;
+    }
+  }
+}
+
+.typeVisualizer {
+  margin-left: 16px;
+  list-style-type: none;
+  margin-top: 0;
+
+  .field {
+    border-bottom: 1px solid $lightGrey;
+    padding-bottom: 4px !important;
+  }
+  li {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+  li:last-of-type {
+    padding-bottom: 0;
+  }
+  li:first-of-type {
+    padding-top: 0;
+  }
+  strong {
+    text-transform: uppercase;
   }
 }

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import {fetchType} from 'redux/modules/typeDetails';
 import ReactDOM from 'react-dom';
 import {Link} from 'react-router';
+import TypeVisualizer from './TypeVisualizer.jsx';
 
 import s from '../styles/index.scss';
 
@@ -14,11 +15,13 @@ import s from '../styles/index.scss';
     return Promise.all(promises);
   }
 }])
-@connect(state => ({
-  id: state.typeDetails.id,
-  type: state.type.hash[state.typeDetails.id],
-  error: state.typeDetails.error
-}), {fetchType})
+@connect(state => {
+  return {
+    id: state.typeDetails.id,
+    type: state.type.hash[state.typeDetails.id],
+    error: state.typeDetails.error
+  };
+}, {fetchType})
 export default class Set extends Component {
   static propTypes = {
     params: PropTypes.shape({
@@ -26,7 +29,8 @@ export default class Set extends Component {
     }),
     fetchType: PropTypes.func,
     type: PropTypes.object,
-    id: PropTypes.string
+    id: PropTypes.string,
+    location: PropTypes.object
   };
   constructor(props) {
     super(props);
@@ -38,14 +42,9 @@ export default class Set extends Component {
     this.node = ReactDOM.findDOMNode(this);
   }
 
-  handleScroll = () => {
-    if (this.state.horizontalScrollOffset !== this.node.scrollLeft) {
-      this.setState({horizontalScrollOffset: this.node.scrollLeft});
-    }
-  }
   render() {
     return (
-      <div className={s.type} onScroll={this.handleScroll}>
+      <div className={s.type}>
         <div className={s.infoArea} style={{marginLeft: this.state.horizontalScrollOffset}}>
           <div className={s.typeInfo}>
             <div>
@@ -56,15 +55,50 @@ export default class Set extends Component {
               <span>
                 <i className="fa fa-table"></i> {this.props.type.numUses}
               </span>
-              <Link to="/">
-                <i className="fa fa-book"></i>rest api
-              </Link>
             </nav>
           </div>
+          <nav className={s.dataNav}>
+            {(() => {
+              if (this.props.location.query.view === 'json') {
+                return (
+                  <Link
+                      to={{
+                        pathname: this.props.location.pathname,
+                        query: {...this.props.location.query, view: 'list'}
+                      }}>
+                    <i className="fa fa-list-ul"></i>list view
+                  </Link>
+                );
+              }
+              return (
+                <Link
+                    to={{
+                      pathname: this.props.location.pathname,
+                      query: {...this.props.location.query, view: 'json'}
+                    }}>
+                  <i className="fa fa-align-right"></i>json view
+                </Link>
+              );
+            })()}
+            <Link to="/">
+              <i className="fa fa-book"></i>rest api
+            </Link>
+          </nav>
         </div>
-        <pre className={s.jsonArea}>
-          {JSON.stringify(this.props.type.properties, null, 2)}
-        </pre>
+        {(() => {
+          if (this.props.location.query.view === 'json') {
+            return (
+              <pre className={s.jsonArea}>
+                {JSON.stringify(this.props.type.properties, null, 2)}
+              </pre>
+            );
+          }
+          return (
+            <div className={s.jsonArea}>
+              <TypeVisualizer type={this.props.type.properties} />
+            </div>
+          );
+        })()}
       </div>
     );
   }

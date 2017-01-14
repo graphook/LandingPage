@@ -8,6 +8,7 @@ import Waypoint from 'react-waypoint';
 import NestingTable from './nestingTable/NestingTable.jsx';
 import ReactDOM from 'react-dom';
 import {Link} from 'react-router';
+import {promptSignIn} from 'redux/modules/modal';
 
 import s from '../styles/index.scss';
 
@@ -35,7 +36,8 @@ import s from '../styles/index.scss';
     id: state.setDetails.id,
     allItemsLoaded: state.setDetails.allItemsLoaded,
     itemError: state.setDetails.itemError,
-    isStarred: (state.profileDetails.user.stars) ? state.profileDetails.user.stars.indexOf(state.setDetails.id) !== -1 : false
+    isStarred: (state.profileDetails.user.stars) ? state.profileDetails.user.stars.indexOf(state.setDetails.id) !== -1 : false,
+    isLoggedIn: !!(state.auth.user)
   };
   if (state.setDetails.id && state.set.hash[state.setDetails.id]) {
     const set = state.set.hash[state.setDetails.id];
@@ -45,7 +47,7 @@ import s from '../styles/index.scss';
     });
   }
   return props;
-}, {fetchSet, fetchItems, fetchType, star, unstar})
+}, {fetchSet, fetchItems, fetchType, star, unstar, promptSignIn})
 export default class Set extends Component {
   static propTypes = {
     params: PropTypes.shape({
@@ -69,7 +71,9 @@ export default class Set extends Component {
     id: PropTypes.string,
     isStarred: PropTypes.bool,
     star: PropTypes.func,
-    unstar: PropTypes.func
+    unstar: PropTypes.func,
+    isLoggedIn: PropTypes.bool,
+    promptSignIn: PropTypes.func
   };
   constructor(props) {
     super(props);
@@ -118,7 +122,7 @@ export default class Set extends Component {
                   <i className="fa fa-file"></i> {this.props.set.items.length}
                 </span>
                 {!this.props.isStarred && (
-                  <a onClick={() => this.props.star(this.props.set._id)}>
+                  <a onClick={() => (this.props.isLoggedIn) ? this.props.star(this.props.set._id) : this.props.promptSignIn() }>
                     <i className="fa fa-star-o"></i>{this.props.set.stars}
                   </a>
                 )}

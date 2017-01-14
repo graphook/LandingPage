@@ -1,3 +1,6 @@
+import React from 'react';
+import AuthPrompt from 'components/login/AuthPrompt.jsx';
+
 const OPEN = 'modal/OPEN';
 const CLOSE = 'modal/CLOSE';
 
@@ -31,5 +34,12 @@ export function open(component) {
 export function close() {
   return {
     type: CLOSE
+  };
+}
+
+export function promptSignIn() {
+  return {
+    type: OPEN,
+    component: <AuthPrompt loginFocus={false} />
   };
 }

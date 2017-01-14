@@ -14,13 +14,12 @@ export default class Modal extends Component {
     close: PropTypes.func.isRequired
   };
   render() {
-    const ModalComponent = this.props.component;
     return (
       <div className={s.modalConainer}>
         <div className={s.modalCover} onClick={this.props.close} />
         <div className={s.modalArea + ' ' + s.clickableShadow}>
           <i className={'fa fa-times ' + s.modalExit} onClick={this.props.close}></i>
-          <ModalComponent whenDone={this.props.close} />
+          {this.props.component}
         </div>
       </div>
     );
