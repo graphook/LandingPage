@@ -1,7 +1,17 @@
 import React, { Component, PropTypes } from 'react';
+import { asyncConnect } from 'redux-async-connect';
+import { fetchUser } from 'redux/modules/profileDetails';
+import Overview from './pages/overview.jsx';
 
 import s from '../styles/index.scss';
 
+@asyncConnect([{
+  promise: ({store: {dispatch, getState}}) => {
+    const promises = [];
+    promises.push(dispatch(fetchUser()));
+    return Promise.all(promises);
+  }
+}])
 export default class Documentation extends Component {
   static propTypes = {
     children: PropTypes.any,
@@ -12,8 +22,10 @@ export default class Documentation extends Component {
         <nav className={s.clickableShadow}>
 
         </nav>
-        <div>
-
+        <div className={s.docContentArea}>
+          <div className={s.docContent}>
+            <Overview />
+          </div>
         </div>
       </div>
     );

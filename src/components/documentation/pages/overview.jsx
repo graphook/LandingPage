@@ -1,6 +1,22 @@
 import React, {Component, PropTypes} from 'react';
+import SectionHeader from '../SectionHeader.jsx';
+import {Link} from 'react-router';
+import RequestTool from '../RequestTool.jsx';
+import { connect } from 'react-redux';
+import CreateUserForm from 'components/login/CreateUserForm.jsx';
+import data from './tutorialData.js';
 
-export default Overview extends Component {
+import s from 'components/styles/index.scss';
+
+@connect(state => ({
+  isLoggedIn: !!(state.auth.user),
+  user: state.profileDetails.user
+}))
+export default class Overview extends Component {
+  static propTypes = {
+    isLoggedIn: PropTypes.bool,
+    user: PropTypes.object
+  }
   render() {
     return (
       <div>
@@ -8,20 +24,34 @@ export default Overview extends Component {
         <p>The primary way to interact with information on Zenow is through http requests to our RESTful API (Application Programming Interface). Integrating your project can be done in just a few steps.</p>
 
         <SectionHeader>Get your developer account</SectionHeader>
-        <p>Each user is provided with a unique API Key. This key allows you make requests to Zenow. You can find your API Key by going to the “profile” page.</p>
-        <img src="palceholder" />
+
+        {(() => {
+          if (this.props.isLoggedIn) {
+            return [
+              <p>Each user is provided with a unique API Key. Yours is <code>{this.props.user.key}</code>. This key allows you make requests to Zenow. You can find your API Key by going to the "profile" page.</p>,
+              <img src="/images/apiKeyDirections.png" />
+            ];
+          }
+          return [
+            <p>Before using the Zenow API you need a developer account to get an API Key.</p>,
+            <div className={s.smallFormContainer + ' ' + s.clickableShadow}>
+              <CreateUserForm />
+            </div>
+          ];
+        })()}
+
 
         <SectionHeader>Understanding HTTP Requests</SectionHeader>
         <p>HTTP (Hypertext Transfer Protocol) is one of the most popular standards for sending messages between computers on the internet. It’s what allows you to send requests to Zenow and receive information from it.</p>
         <p>There is a large variety of libraries to help you make an HTTP request. A few are listed below. Choose the library that best fits your project.</p>
         <ul>
-          <li>NodeJS: <a href="https://github.com/visionmedia/superagent">SuperAgent</a>, <a href="https://nodejs.org/api/http.html">Native HTTP (less recommended)</a></li>
-          <li>PHP: <a href="http://php.net/manual/en/function.stream-context-create.php">stream context create</a></li>
-          <li>Ruby on Rails:  <a href="https://github.com/httprb/http">HTTP Gem</a>, <a href="http://ruby-doc.org/stdlib-2.4.0/libdoc/net/http/rdoc/index.html">Native HTTP (less recommended)</a></li>
-          <li>ASP.net: <a href="https://msdn.microsoft.com/en-us/library/456dfw4f(v=vs.110).aspx">Web Request</a></li>
-          <li>DJango: <a href="http://www.django-rest-framework.org/tutorial/2-requests-and-responses/">DJango REST Framework</a></li>
-          <li>Flask: <a href="http://docs.python-requests.org/en/latest/user/quickstart/">Requests Module</a></li>
-          Java: <a <li>href="http://docs.oracle.com/javase/7/docs/api/java/net/HttpURLConnection.html">HttpURLConnection</a></li>
+          <li>NodeJS: <a href="https://github.com/visionmedia/superagent" target="_blank">SuperAgent</a>, <a href="https://nodejs.org/api/http.html" target="_blank">Native HTTP (less recommended)</a></li>
+          <li>PHP: <a href="http://php.net/manual/en/function.stream-context-create.php" target="_blank">stream context create</a></li>
+          <li>Ruby on Rails: <a href="https://github.com/httprb/http" target="_blank">HTTP Gem</a>, <a href="http://ruby-doc.org/stdlib-2.4.0/libdoc/net/http/rdoc/index.html" target="_blank">Native HTTP (less recommended)</a></li>
+          <li>ASP.net: <a href="https://msdn.microsoft.com/en-us/library/456dfw4f(v=vs.110).aspx" target="_blank">Web Request</a></li>
+          <li>DJango: <a href="http://www.django-rest-framework.org/tutorial/2-requests-and-responses/" target="_blank">DJango REST Framework</a></li>
+          <li>Flask: <a href="http://docs.python-requests.org/en/latest/user/quickstart/" target="_blank">Requests Module</a></li>
+          <li>Java: <a href="http://docs.oracle.com/javase/7/docs/api/java/net/HttpURLConnection.html" target="_blank">HttpURLConnection</a></li>
         </ul>
         <p>Using HTTP is simple. First you send a <strong>request</strong> to Zenow’s API, and the API will then return a <strong>response</strong>.</p>
         <p>HTTP requests consist of 4 basic components: the Method, the URL, the Headers, and the Body.</p>
@@ -29,7 +59,7 @@ export default Overview extends Component {
           <li>The <strong>Method</strong> defines the purpose of your request. Each request on Zenow can be one of four methods:</li>
           <ul>
             <li><strong>GET</strong>: Request to read some content</li>
-            <li><strong>POST</stong>: Request to create some new content</li>
+            <li><strong>POST</strong>: Request to create some new content</li>
             <li><strong>PUT</strong>: Request to update some content</li>
             <li><strong>DELETE</strong>: Request to remove some content</li>
           </ul>
@@ -66,36 +96,34 @@ export default Overview extends Component {
 
         <SectionHeader>Understanding JSON</SectionHeader>
         <p>All HTTP request and response bodies (discussed in the previous section) on Zenow are formatted in JSON (JavaScript Object Notation). This is a logical way to represent data as a string of characters, and looks something like this:</p>
-        <pre>
-        {
-          "surname": "Neutron",
-          "people": [
+        <pre>{JSON.stringify({
+          'surname': 'Neutron',
+          'people': [
             {
-              "firstName": "Jimmy",
-              "age": 12,
-              "isParent": false
+              'firstName': 'Jimmy',
+              'age': 12,
+              'isParent': false
             },
             {
-              "firstName": "Hugh",
-              "age": 40,
-              "isParent": true
+              'firstName': 'Hugh',
+              'age': 40,
+              'isParent': true
             },
             {
-              "firstName": "Judy",
-              "age": 40,
-              "isParent": true
+              'firstName': 'Judy',
+              'age': 40,
+              'isParent': true
             }
           ],
-          "lives": [
-            "Retroville"
+          'lives': [
+            'Retroville'
           ]
-        }
-        </pre>
+        }, null, 2)}</pre>
         <p>JSON consists of various types of information which may or may not contain more types of information. These types are as follows:</p>
         <ul>
-          <li><strong>Object</strong>: Objects are denoted by curly brackets <code>{}</code>. Inside these curly brackets are various <strong>keys</strong> which are strings that correspond with <strong>values</strong>. A value can be any of the JSON types. For example in <code>{ “surname”: “Neutron”, “people”: [] }</code> the key “surname” corresponds to the string “Neutron” while the key “people” corresponds with an empty array. Note that keys are surrounded by quotes, keys and values are separated by colons, and there is a comma separating each key-value pair.</li>
-          <li><strong>Array</strong>: Arrays are denoted by brackets <code>[]</code>. Inside these brackets is an ordered list of any number of JSON types. For example the array <code>[“Jimmy”, true, {}]</code> contains 3 ordered items: first, the string “Jimmy,” second, the boolean “true,” and third, an empty array. Note that all items in the array are separated by a comma.</li>
-          <li><strong>String</strong>: Strings are a collection of characters usually used to create words or sentences. Example: <code>”Neutro”</code>. Note that strings are surrounded by quotes.</li>
+          <li><strong>Object</strong>: Objects are denoted by curly brackets <code>{}</code>. Inside these curly brackets are various <strong>keys</strong> which are strings that correspond with <strong>values</strong>. A value can be any of the JSON types. For example in <code>{JSON.stringify({ surname: 'Neutron', people: [] })}</code> the key "surname" corresponds to the string "Neutron" while the key "people" corresponds with an empty array. Note that keys are surrounded by quotes, keys and values are separated by colons, and there is a comma separating each key-value pair.</li>
+          <li><strong>Array</strong>: Arrays are denoted by brackets <code>[]</code>. Inside these brackets is an ordered list of any number of JSON types. For example the array <code>["Jimmy", true, {}]</code> contains 3 ordered items: first, the string "Jimmy," second, the boolean "true," and third, an empty array. Note that all items in the array are separated by a comma.</li>
+          <li><strong>String</strong>: Strings are a collection of characters usually used to create words or sentences. Example: <code>"Neutro"</code>. Note that strings are surrounded by quotes.</li>
           <li><strong>Number</strong>: Numbers are… well numbers. Examples: <code>12</code>, <code>3.1415</code>. Note that numbers should only contain numbers or a decimal point in the case that it’s a decimal.</li>
           <li><strong>Boolean</strong>: Booleans indicate a binary condition and are written in one of two ways: <code>true</code>, <code>false</code></li>
         </ul>
@@ -118,231 +146,57 @@ export default Overview extends Component {
         <p>On Zenow, data is arranged into sets of items. Each set has a unique Id which you can can look up the Id on the (set details page).</p>
         <img src="image of the set detail page" />
         <p>In order to request the metadata about this set we’ll use the path <code>/v1/set/SET’S_ID.</code></p>
-        <RequestTool
-          initMethod="GET"
-          initPath="/v1/set/{insert id}"
-          initStatus="200"
-          initResponseBody={} />
+        <RequestTool {...data.getSet.request} />
 
         <SectionHeader>Get Items in a Set</SectionHeader>
         <p>We’ve been able to receive metadata about the set, but Zenow’s real power comes from getting the set’s actual data. Each set represents a collection of items. To get these items we can request the path <code>/v1/set/SET’S_ID/item?count=10&page=0</code></p>
         <p>Notice that this request has parameters. <code>count</code> represents the number of items you want to receive from your request, and <code>page</code> is the page of items based on your count. For example, if there are 20 items in a set and you send a request with <code>count=10&page=1</code>, you will receive the 11th through 20th item.</p>
-        <RequestTool initMethod="GET" initPath="/v1/set/{insert id}/item?count=10&page=0" />
+        <RequestTool {...data.getItems.request} />
 
         <SectionHeader>Search Items in a Set</SectionHeader>
         <p>Sometimes you want to find specific items within a set based on parameters. To do this, we can <code>POST</code> a search request and pass our search query through the request body.</p>
-        <p>In the example below, we’re looking for all the cartoon families with the surname “Turner”</p>
-        <RequestTool
-          initMethod="POST"
-          initPath="/v1/set/{insert id}/item/search"
-          initBody={{
-            surname: "Turner"
-          }}
-          initStatus="200"
-          initResponseBody={} />
+        <p>In the example below, we’re looking for all the cartoon families with the surname "Turner"</p>
+        <RequestTool {...data.searchItems.request} />
         <p>This is just one example. For more complex search queries, see the (Advanced Search documentation).</p>
 
         <SectionHeader>Create your own Set</SectionHeader>
         <p>Before creating a set, we must choose a <strong>type</strong>. Types define the format for every item in the set. Our set of cartoon families will use the (family type) which has the id //insert id//</p>
-        <RequestTool
-          initMethod="POST"
-          initPath="/v1/set"
-          initBody={{
-          	"title": "Cartoon Families",
-          	"description": "A list of cartoon families",
-          	"tags": ["cartoon", "family", "character", "fiction"],
-          	"type": "584d75e8bba7a42e648ebf54",
-          	"items": [
-          		{
-          			"surname": "Waterson",
-          			"people": [
-          				{
-          					"firstName": "Gumball",
-          					"age": 12,
-          					"isParent": false
-          				},
-          				{
-          					"firstName": "Darwin",
-          					"age": 10,
-          					"isParent": false
-          				},
-          				{
-          					"firstName": "Anais",
-          					"age": 4,
-          					"isParent": false
-          				},
-          				{
-          					"firstName": "Nicole",
-          					"age": 38,
-          					"isParent": true
-          				},
-          				{
-          					"firstName": "Richard",
-          					"age": 38,
-          					"isParent": true
-          				}
-          			],
-          			"lives": [
-          				"Elmore"
-          			]
-          		}
-          	]
-          }} />
+        <RequestTool {...data.createSet.request} />
         <p>Our request body contains a few fields:</p>
         <ul>
           <li>Title: the title of your set</li>
           <li>Description: the description of your set</li>
           <li>Tags: an array of strings that describe your set. These are useful to help people searching on Zenow find your set.</li>
           <li>Type: the id of the type this set will follow</li>
-          <li>Items: an array of items in the set. You can define these items the same way you define them in the “Add Items to a Set” section below.</li>
+          <li>Items: an array of items in the set. You can define these items the same way you define them in the "Add Items to a Set" section below.</li>
         </ul>
 
         <SectionHeader>Add Items to a Set</SectionHeader>
         <p>Items can be added to the set by posting to <code>/v1/set/SET’S_ID/item</code></p>
-        <RequestTool
-          initMethod="POST"
-          initPath="/v1/set/{insert id}/item"
-          initBody={[
-            {some id},
-            {some id},
-            {
-              "surname": "Neutron",
-              "people": [
-                {
-                  "firstName": "Jimmy",
-                  "age": 12,
-          				"isParent": false
-                },
-                {
-                  "firstName": "Hugh",
-                  "age": 40,
-          				"isParent": true
-                },
-                {
-                  "firstName": "Judy",
-                  "age": 40,
-          				"isParent": true
-                }
-              ],
-              "lives": [
-                "Retroville"
-              ]
-            },
-            {
-              "surname": "Turner",
-              "people": [
-                {
-                  "firstName": "Timmy",
-                  "age": 10,
-                  "isParent": false
-                },
-                {
-                  "firstName": "Dad",
-                  "age": 42,
-                  "isParent": true
-                },
-                {
-                  "firstName": "Mom",
-                  "age": 40,
-                  "isParent": true
-                }
-              ],
-              "lives": [
-                "Dimmsdale"
-              ]
-            },
-            {
-              "surname": "Gaang",
-              "people": [
-                {
-                  "firstName": "Aang",
-                  "age": 12,
-                  "isParent": false
-                },
-                {
-                  "firstName": "Zuko",
-                  "age": 16,
-                  "isParent": false
-                },
-                {
-                  "firstName": "Katara",
-                  "age": 14,
-                  "isParent": false
-                },
-                {
-                  "firstName": "Sokka",
-                  "age": 15,
-                  "isParent": false
-                },
-                {
-                  "firstName": "Toph",
-                  "age": 12,
-                  "isParent": false
-                }
-              ],
-              "lives": [
-                "Water Tribes",
-          			"Earth Kingdom",
-          			"Fire Nation",
-          			"Air Temples"
-              ]
-            }
-          ]} />
+        <RequestTool {...data.addItems.request} />
         <p>Note that this request accepts an array that contains both JSON objects that follow the set’s type and strings. These strings are the ids of items in other sets the follow the same type.</p>
 
         <SectionHeader>Other Set Operations</SectionHeader>
         <p>See the REST API documentation for more useful set operations:</p>
-        <li>Clone a Set</li>
-        <li>Update a Set</li>
-        <li>Delete a Set</li>
-        <li>Retrieve a Specific Item in a set</li>
-        <li>Update an Item in a Set</li>
-        <li>Remove an Item from a Set</li>
+        <ul>
+          <li>Clone a Set</li>
+          <li>Update a Set</li>
+          <li>Delete a Set</li>
+          <li>Retrieve a Specific Item in a set</li>
+          <li>Update an Item in a Set</li>
+          <li>Remove an Item from a Set</li>
+        </ul>
 
         <SectionHeader>Create a Type</SectionHeader>
         <p>Often times the types currently available on Zenow won’t fit the type you’d like your set to follow. So, you can create your own types if needed.</p>
         <p>Here we’re making a duplicate of the family type we’ve been using.</p>
-        <RequestTool
-          initMethod="POST"
-          initPath="/v1/type"
-          initBody={{
-            "title": "Family",
-            "description": "Describes a family unit. Usually one that lives in the same house."
-            "properties": {
-              "surname": {
-                "type": "string"
-              },
-              "people": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "firstName": {
-                      "type": "string"
-                    },
-                    "age": {
-                      "type": "number"
-                    },
-                    "isParent": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              },
-              "lives": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            }
-          }} />
+        <RequestTool {...data.createType.request} />
         <p>The request body requires various fields:</p>
         <ul>
           <li>Title: the title of the type</li>
           <li>Description: the description of the type</li>
           <li>Tags: an array of strings that describe your type. These are useful to help people searching on Zenow find your type.</li>
-          <li>Properties: The definition of the structure for items following this type. Each field includes the kind of type that should go in that field. Note that “object” types have “properties” field to define more key values and “array” types have an “items” field to define the type of the items in the array.</li>
+          <li>Properties: The definition of the structure for items following this type. Each field includes the kind of type that should go in that field. Note that 'object' types have "properties" field to define more key values and "array" types have an "items" field to define the type of the items in the array.</li>
         </ul>
       </div>
     )

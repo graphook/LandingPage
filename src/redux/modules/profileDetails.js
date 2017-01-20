@@ -77,6 +77,11 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         user: initialState.user
       };
+    case 'auth/LOGIN_SUCCESS':
+      return {
+        ...state,
+        user: action.result
+      };
     default:
       return state;
   }

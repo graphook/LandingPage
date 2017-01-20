@@ -70,7 +70,7 @@ export default class CreateUserForm extends Component {
   }
   render() {
     return (
-      <form className="createUserForm" onSubmit={this.props.handleSubmit(this.onSubmit)}>
+      <form className={ s.createUserForm } onSubmit={this.props.handleSubmit(this.onSubmit)}>
         <h2>create a developer account</h2>
         {(() => {
           if (this.props.error) {

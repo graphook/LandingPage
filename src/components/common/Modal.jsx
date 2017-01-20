@@ -14,12 +14,17 @@ export default class Modal extends Component {
     close: PropTypes.func.isRequired
   };
   render() {
+    const childrenWithProps = React.Children.map(this.props.component, (child) => {
+      return React.cloneElement(child, {
+        whenDone: this.props.close
+      })
+    });
     return (
       <div className={s.modalConainer}>
         <div className={s.modalCover} onClick={this.props.close} />
         <div className={s.modalArea + ' ' + s.clickableShadow}>
           <i className={'fa fa-times ' + s.modalExit} onClick={this.props.close}></i>
-          {this.props.component}
+          {childrenWithProps}
         </div>
       </div>
     );

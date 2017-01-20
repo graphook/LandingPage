@@ -6,7 +6,8 @@ import s from '../styles/index.scss';
 
 export default class Layout extends Component {
   static propTypes = {
-    loginFocus: PropTypes.bool
+    loginFocus: PropTypes.bool,
+    whenDone: PropTypes.func
   }
   constructor(props) {
     super(props);
@@ -18,7 +19,7 @@ export default class Layout extends Component {
     if (this.state.loginFocus) {
       return (
         <div>
-          <LoginForm />
+          <LoginForm whenDone={this.props.whenDone} />
           <div className={s.centeredMessage}>
             <a onClick={() => this.setState({ loginFocus: false })}>
               <i className="fa fa-user"></i>create an account
@@ -29,7 +30,7 @@ export default class Layout extends Component {
     }
     return (
       <div>
-        <CreateUserForm />
+        <CreateUserForm whenDone={this.props.whenDone} />
         <div className={s.centeredMessage}>
           <a onClick={() => this.setState({ loginFocus: true })}>
             <i className="fa fa-sign-in"></i>log in

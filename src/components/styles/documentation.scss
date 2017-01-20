@@ -12,4 +12,95 @@
     flex-shrink: 0;
     overflow-y: auto;
   }
+  .docContentArea {
+    padding: 16px;
+    padding-left: $margin;
+    padding-right: $margin;
+    overflow-y: auto;
+    width: 100%;
+    box-sizing: border-box;
+
+    .docContent {
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+
+      p {
+        font-size: 16px;
+        margin-top: 1em;
+        margin-bottom: 1em;
+      }
+      h1 {
+        margin-top: 0.67em;
+        margin-bottom: 0.67em;
+      }
+      ul, ol {
+        font-size: 16px;
+        padding-left: 40px;
+        margin-top: 1em;
+        margin-bottom: 1em
+      }
+      code {
+        background-color: $subtleGrey;
+      }
+      img {
+        box-shadow: $smallShadow;
+        border: $containerBorder;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 100%;
+        display: block;
+      }
+
+      .smallFormContainer {
+        width: 300px;
+        margin-right: auto;
+        margin-left: auto;
+        padding: 16px;
+        border: $containerBorder;
+      }
+    }
+  }
+}
+
+.requestTool {
+  padding: 16px;
+  border: $containerBorder;
+
+  .topRequestTools {
+    display: flex;
+    margin-bottom: 8px;
+    align-items: center;
+
+    .urlArea {
+      display: flex;
+      padding-left: 8px;
+      padding-right: 8px;
+      flex-grow: 1;
+
+      input {
+        padding-top: 0;
+        height: 21px;
+        padding-left: 0;
+      }
+    }
+  }
+  .requestBody, .responseBody {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    height: 100px;
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    border: $containerBorder;
+    font-size: 12px;
+    font-family: monospace;
+    padding: 4px;
+    resize: vertical;
+  }
+  .responseBody {
+    margin: 0;
+    color : transparent;
+    text-shadow : 0 0 0 $black;
+  }
 }
