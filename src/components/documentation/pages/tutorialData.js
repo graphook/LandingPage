@@ -805,6 +805,6 @@ const docData = {
       }
     }
   }
-}
+};
 
 export default docData;

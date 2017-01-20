@@ -6,7 +6,7 @@ import Overview from './pages/overview.jsx';
 import s from '../styles/index.scss';
 
 @asyncConnect([{
-  promise: ({store: {dispatch, getState}}) => {
+  promise: ({store: {dispatch}}) => {
     const promises = [];
     promises.push(dispatch(fetchUser()));
     return Promise.all(promises);

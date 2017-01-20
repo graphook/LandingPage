@@ -7,6 +7,8 @@ import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import Modal from '../common/Modal.jsx';
 import {open} from 'redux/modules/modal';
+import config from 'config';
+import Helmet from 'react-helmet';
 
 import s from '../styles/index.scss';
 
@@ -100,6 +102,7 @@ export default class Layout extends Component {
   render() {
     return (
       <div className={s.layout}>
+        <Helmet {...config.app.head} />
         <header>
           <h1 className={s.expanded}><Link to="/">zenow</Link></h1>
           <h1 className={s.condensed}><Link to="/">z</Link></h1>

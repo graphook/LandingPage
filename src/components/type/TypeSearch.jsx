@@ -5,6 +5,7 @@ import {searchTypes, updateSearchText} from 'redux/modules/typeSearch';
 import {browserHistory} from 'react-router';
 import Waypoint from 'react-waypoint';
 import {throttle} from 'lodash';
+import Helmet from 'react-helmet';
 
 import s from '../styles/index.scss';
 
@@ -66,6 +67,7 @@ export default class SetSearch extends Component {
   render() {
     return (
       <div className={s.search}>
+        <Helmet title={this.props.curSearch} />
         <form className={s.searchBar + ' ' + s.clickableShadow} onSubmit={this.search}>
           <input
               type="text"

@@ -17,7 +17,7 @@ export default class Modal extends Component {
     const childrenWithProps = React.Children.map(this.props.component, (child) => {
       return React.cloneElement(child, {
         whenDone: this.props.close
-      })
+      });
     });
     return (
       <div className={s.modalConainer}>

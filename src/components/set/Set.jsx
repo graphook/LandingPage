@@ -9,6 +9,7 @@ import NestingTable from './nestingTable/NestingTable.jsx';
 import ReactDOM from 'react-dom';
 import {Link} from 'react-router';
 import {promptSignIn} from 'redux/modules/modal';
+import Helmet from 'react-helmet';
 
 import s from '../styles/index.scss';
 
@@ -105,6 +106,7 @@ export default class Set extends Component {
       }
       return (
         <div className={s.set} onScroll={this.handleScroll}>
+          <Helmet title={this.props.set.title} />
           <div className={s.infoArea} style={{marginLeft: this.state.horizontalScrollOffset}}>
             <div className={s.setInfo}>
               <div>

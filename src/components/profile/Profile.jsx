@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchSets } from 'redux/modules/set.js';
 import { fetchUser, fetchUserSets, unstar } from 'redux/modules/profileDetails';
 import {Link} from 'react-router';
+import Helmet from 'react-helmet';
 
 import s from '../styles/index.scss';
 
@@ -35,6 +36,7 @@ export default class Profile extends Component {
   render() {
     return (
       <div className={s.profile + ' ' + s.infoPage}>
+        <Helmet title="profile" />
         <div className={s.infoContainer}>
           <h2>{this.props.user.username}</h2>
           <p>{this.props.user.email}</p>

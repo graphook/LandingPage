@@ -18,20 +18,19 @@ module.exports = Object.assign({
     title: 'React Redux Example',
     description: 'All the modern best practices in one example.',
     head: {
-      titleTemplate: 'React Redux Example: %s',
+      title: 'create, share, and find free public data',
+      titleTemplate: '%s - zenow',
       meta: [
-        {name: 'description', content: 'All the modern best practices in one example.'},
+        {name: 'description', content: 'Create, Share, and Find Free Public Data'},
         {charset: 'utf-8'},
-        {property: 'og:site_name', content: 'React Redux Example'},
-        {property: 'og:image', content: 'https://react-redux.herokuapp.com/logo.jpg'},
+        {property: 'og:site_name', content: 'zenow'},
+        {property: 'og:image', content: 'https://www.zenow.io/images/logo.png'},
+        {property: 'og:type', content: 'website'},
         {property: 'og:locale', content: 'en_US'},
-        {property: 'og:title', content: 'React Redux Example'},
-        {property: 'og:description', content: 'All the modern best practices in one example.'},
-        {property: 'og:card', content: 'summary'},
-        {property: 'og:site', content: '@erikras'},
-        {property: 'og:creator', content: '@erikras'},
-        {property: 'og:image:width', content: '200'},
-        {property: 'og:image:height', content: '200'}
+        {property: 'og:title', content: 'zenow'},
+        {property: 'og:description', content: 'Create, Share, and Find Free Public Data'},
+        {property: 'og:image:width', content: '380'},
+        {property: 'og:image:height', content: '194'}
       ]
     }
   },

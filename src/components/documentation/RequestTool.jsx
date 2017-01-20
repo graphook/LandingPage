@@ -1,4 +1,4 @@
-import React, {Component, Pathname} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {promptSignIn} from 'redux/modules/modal';
 import { connect } from 'react-redux';
 import requester from 'superagent';
@@ -6,7 +6,7 @@ import url from 'url';
 
 import s from 'components/styles/index.scss';
 
-const protocol = 'http:'
+const protocol = 'http:';
 const host = 'localhost:3030';
 
 @connect(state => ({
@@ -14,6 +14,11 @@ const host = 'localhost:3030';
   apiKey: state.profileDetails.user.key || 'YOUR_API_KEY'
 }), {promptSignIn})
 export default class RequestTool extends Component {
+  static propTypes = {
+    isLoggedIn: PropTypes.bool,
+    apiKey: PropTypes.string,
+    promptSignIn: PropTypes.func
+  }
   constructor(props) {
     super(props);
     this.updateInfo(props);
@@ -40,26 +45,24 @@ export default class RequestTool extends Component {
       madeRequest: false,
       loading: false,
       error: ''
-    }
+    };
   }
   handleSubmit = (e) => {
     e.preventDefault();
     if (this.props.isLoggedIn) {
       try {
-        let request = requester[this.state.method.toLowerCase()](this.state.url)
+        let request = requester[this.state.method.toLowerCase()](this.state.url);
         if (this.state.method === 'POST' || this.state.method === 'PUT') {
-          request = request.send(JSON.parse(this.state.body))
+          request = request.send(JSON.parse(this.state.body));
         }
         request.end((err, res) => {
-          console.log(res)
           this.setState({
             responseBody: res.body,
             status: res.status
-          })
-        })
-      } catch(err) {
-        console.log(err);
-        this.setState({error: 'improperly formatted json'})
+          });
+        });
+      } catch (err) {
+        this.setState({error: 'improperly formatted json'});
       }
     } else {
       this.props.promptSignIn();
@@ -96,12 +99,12 @@ export default class RequestTool extends Component {
           if (this.state.method === 'POST' || this.state.method === 'PUT') {
             return (
               <textarea className={s.requestBody} value={this.state.body} onChange={(e) => this.setState({body: e.target.value})} />
-            )
+            );
           }
         })()}
         <div>response status: {this.state.status}</div>
         <textarea className={s.responseBody} value={JSON.stringify(this.state.responseBody, null, 2)} />
       </form>
-    )
+    );
   }
 }

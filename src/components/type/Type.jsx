@@ -5,6 +5,7 @@ import {fetchType} from 'redux/modules/typeDetails';
 import ReactDOM from 'react-dom';
 import {Link} from 'react-router';
 import TypeVisualizer from './TypeVisualizer.jsx';
+import Helmet from 'react-helmet';
 
 import s from '../styles/index.scss';
 
@@ -45,6 +46,7 @@ export default class Set extends Component {
   render() {
     return (
       <div className={s.type}>
+        <Helmet title={this.props.type.title} />
         <div className={s.infoArea} style={{marginLeft: this.state.horizontalScrollOffset}}>
           <div className={s.typeInfo}>
             <div>

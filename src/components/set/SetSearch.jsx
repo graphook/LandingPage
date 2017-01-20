@@ -6,6 +6,7 @@ import {browserHistory} from 'react-router';
 import Waypoint from 'react-waypoint';
 import {Link} from 'react-router';
 import {throttle} from 'lodash';
+import Helmet from 'react-helmet';
 
 import s from '../styles/index.scss';
 
@@ -84,10 +85,11 @@ export default class SetSearch extends Component {
             return (
               <div className={s.centeredMessage + ' ' + s.largeHeader}>
                 <h1>zenow</h1>
-                <p>create and share data</p>
+                <p>create, share, and find free public data</p>
               </div>
             );
           }
+          return (<Helmet title={this.props.curSearch} />);
         })()}
         <section className={s.searchResults}>
           {this.props.searchResults.map((result) => {

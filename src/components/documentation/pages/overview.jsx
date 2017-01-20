@@ -199,6 +199,6 @@ export default class Overview extends Component {
           <li>Properties: The definition of the structure for items following this type. Each field includes the kind of type that should go in that field. Note that 'object' types have "properties" field to define more key values and "array" types have an "items" field to define the type of the items in the array.</li>
         </ul>
       </div>
-    )
+    );
   }
 }
