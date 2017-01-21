@@ -21,14 +21,14 @@ const proxy = httpProxy.createProxyServer({
 
 import request from 'superagent';
 
-if (process.env.ENV === 'prod') {
+/*if (process.env.ENV === 'prod') {
   app.use((req, res, next) => {
     if (req.get('x-forwarded-proto') !== 'https') {
       res.redirect('https://' + req.hostname + req.originalUrl);
     } else
       next()
   });
-}
+}*/
 app.use(compression());
 app.use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')));
 
