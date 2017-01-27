@@ -10,6 +10,7 @@ export default class Authentication extends Component {
   render() {
     return (
       <div id="containerThing" className={s.containerThing}>
+        <p className={s.error}>This page is currently only partially constructed. For more detailed documentation go to the tutorial.</p>
         <p>Currently authentication through Zenow can only be done via API keys. I plan on adding more methods later.</p>
         <p>You may either submit your api key via the <code>apikey</code> url parameter or the <code>apikey</code> header.</p>
 

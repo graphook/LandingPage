@@ -14,6 +14,7 @@ export default class Type extends Component {
   render() {
     return (
       <div id="containerThing" className={s.containerThing}>
+        <p className={s.error}>This page is currently only partially constructed. For more detailed documentation go to the tutorial.</p>
         <SectionHeader name="basicSearch">{sections.Type.basicSearch}</SectionHeader>
         <StandardRoute {...data.basicSearch} />
 

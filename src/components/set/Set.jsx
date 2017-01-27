@@ -158,7 +158,7 @@ export default class Set extends Component {
                   </Link>
                 );
               })()}
-              <Link to="/">
+              <Link to="/documentation/Set">
                 <i className="fa fa-book"></i>rest api
               </Link>
             </nav>

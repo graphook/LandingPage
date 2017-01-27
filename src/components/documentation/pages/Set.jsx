@@ -10,10 +10,11 @@ export default class Set extends Component {
   render() {
     return (
       <div id="containerThing" className={s.containerThing}>
+        <p className={s.error}>This page is currently only partially constructed. For more detailed documentation go to the tutorial.</p>
         <SectionHeader name="basicSearch">{sections.Set.basicSearch}</SectionHeader>
         <StandardRoute {...data.basicSearch} />
 
-        <SectionHeader name="getSet">{sections.Set.createSet}</SectionHeader>
+        <SectionHeader name="getSet">{sections.Set.getSet}</SectionHeader>
         <StandardRoute {...data.getSet} />
 
         <SectionHeader name="advancedSearch">{sections.Set.advancedSearch}</SectionHeader>

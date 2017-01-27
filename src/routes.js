@@ -10,6 +10,7 @@ import Type from './components/type/Type.jsx';
 import TypeCreate from './components/type/TypeCreate.jsx';
 import Profile from './components/profile/Profile.jsx';
 import Documentation from './components/documentation/Documentation.jsx';
+import Contact from './components/contact/Contact.jsx';
 
 export default () => {
   return (
@@ -28,6 +29,7 @@ export default () => {
       <Route path="/documentation/:topic" component={Documentation} />
       <Route path="/documentation/:topic/:subTopic" component={Documentation} />
       <Route path="/profile" component={Profile} />
+      <Route path="/contact" component={Contact} />
 
       { /* Catch all route */ }
       { /* <Route path="*" component={NotFound} status={404} /> */ }

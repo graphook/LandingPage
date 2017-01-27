@@ -44,7 +44,7 @@ export default class Profile extends Component {
         </div>
         <div className={s.infoContainer}>
           <h2>my sets</h2>
-          <p><a><i className="fa fa-upload"></i>create a new set</a></p>
+          <p><Link to="/documentation/Set/createSet"><i className="fa fa-upload"></i>create a new set</Link></p>
           <ul>
             {this.props.sets.map((set) => {
               return (

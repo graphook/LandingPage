@@ -101,7 +101,7 @@ header {
     cursor: pointer;
     z-index: 5;
     bottom: 16px;
-    right: 16px;
+    right: $margin;
     background-color: $white;
   }
 }
@@ -109,5 +109,27 @@ header {
 @media (max-width: 1079px) {
   .signUpContainer {
     display: none;
+  }
+}
+
+.contact {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-left: $margin;
+  padding-right: $margin;
+  padding-top: 16px;
+
+  h1 {
+    margin-bottom: 16px;
+  }
+
+  table {
+    margin-top: 16px;
+    tr {
+      td {
+        padding: 8px;
+      }
+    }
   }
 }

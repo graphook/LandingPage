@@ -134,7 +134,9 @@ export default class Layout extends Component {
             }
           })()}
           <main>{this.props.children}</main>
-          <div className={s.feedbackButton + ' ' + s.clickableShadow}>contact / feedback</div>
+          <div className={s.feedbackButton + ' ' + s.clickableShadow}>
+            <Link to="/contact">contact / feedback</Link>
+          </div>
         </div>
       </div>
     );
