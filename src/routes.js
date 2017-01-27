@@ -25,9 +25,8 @@ export default () => {
       <Route path="/type/create" component={TypeCreate} />
       <Route path="/type/:id" component={Type} />
       <Route path="/documentation" component={Documentation} />
-      <Route path="/documentation/:focus" component={Documentation} />
-      <Route path="/documentation/set/:id" component={Documentation} />
-      <Route path="/documentation/set/:id/:focus" component={Documentation} />
+      <Route path="/documentation/:topic" component={Documentation} />
+      <Route path="/documentation/:topic/:subTopic" component={Documentation} />
       <Route path="/profile" component={Profile} />
 
       { /* Catch all route */ }

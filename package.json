@@ -121,6 +121,7 @@
     "react-redux": "^4.0.0",
     "react-router": "2.0.0",
     "react-router-redux": "^4.0.0",
+    "react-scroll": "^1.4.5",
     "react-transform-catch-errors": "^1.0.0",
     "react-transform-hmr": "^1.0.1",
     "react-waypoint": "^4.1.0",

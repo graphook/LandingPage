@@ -3,7 +3,7 @@ const docData = {
   getSet: {
     request: {
       initMethod: 'GET',
-      initPath: '/v1/set/587fd64b8ba914505141a430',
+      initPath: '/v1/set/58895a32ac72909f9a496314',
       initStatus: '200',
       initResponseBody: {
         'status': 200,
@@ -11,20 +11,18 @@ const docData = {
         'sets': {
           'read': [
             {
-              '_id': '587fd64b8ba914505141a430',
+              '_id': '58895a32ac72909f9a496314',
               'title': 'Cartoon Families',
-              'description': 'A list of cartoon families. This is used as a demo set for the documentation.',
+              'description': 'A list of cartoon families',
               'type': {
-                '_id': '5876fd4c6dbcdd0018867d78',
+                '_id': '5889596bac72909f9a49630f',
                 'title': 'Family'
               },
               'tags': [
                 'cartoon',
                 'family',
                 'character',
-                'fiction',
-                'demo',
-                'test'
+                'fiction'
               ],
               'creator': {
                 '_id': '586ec2e73c4e8c1fdb7ac068',
@@ -32,10 +30,10 @@ const docData = {
               },
               'stars': 0,
               'items': [
-                '587fd64b8ba914505141a431',
-                '587fd64b8ba914505141a432',
-                '587fd64b8ba914505141a433',
-                '587fd64b8ba914505141a434'
+                '58895a32ac72909f9a496315',
+                '58896145ac72909f9a49632a',
+                '58896145ac72909f9a49632b',
+                '58896145ac72909f9a49632c'
               ]
             }
           ]
@@ -46,15 +44,100 @@ const docData = {
   getItems: {
     request: {
       initMethod: 'GET',
-      initPath: '/v1/set/587fd64b8ba914505141a430/item?count=10&page=0',
+      initPath: '/v1/set/58895a32ac72909f9a496314/item?count=2&page=0',
       initStatus: '200',
-      initResponseBody: {}
+      initResponseBody: {
+        'status': 200,
+        'errors': {},
+        'items': {
+          'read': [
+            {
+              '_id': '58895a32ac72909f9a496315',
+              'surname': 'Waterson',
+              'people': [
+                {
+                  'firstName': 'Gumball',
+                  'age': 12,
+                  'isParent': false
+                },
+                {
+                  'firstName': 'Darwin',
+                  'age': 10,
+                  'isParent': false
+                },
+                {
+                  'firstName': 'Anais',
+                  'age': 4,
+                  'isParent': false
+                },
+                {
+                  'firstName': 'Nicole',
+                  'age': 38,
+                  'isParent': true
+                },
+                {
+                  'firstName': 'Richard',
+                  'age': 38,
+                  'isParent': true
+                }
+              ],
+              'lives': [
+                'Elmore'
+              ],
+              '_type': {
+                '_id': '5889596bac72909f9a49630f',
+                '_type': 'Family'
+              },
+              '_sets': [
+                {
+                  '_id': '58895a32ac72909f9a496314',
+                  '_title': 'Cartoon Families'
+                }
+              ]
+            },
+            {
+              '_id': '58896145ac72909f9a49632a',
+              'surname': 'Neutron',
+              'people': [
+                {
+                  'firstName': 'Jimmy',
+                  'age': 12,
+                  'isParent': false
+                },
+                {
+                  'firstName': 'Hugh',
+                  'age': 40,
+                  'isParent': true
+                },
+                {
+                  'firstName': 'Judy',
+                  'age': 40,
+                  'isParent': true
+                }
+              ],
+              'lives': [
+                'Retroville'
+              ],
+              '_type': {
+                '_id': '5889596bac72909f9a49630f',
+                '_type': 'Family'
+              },
+              '_sets': [
+                {
+                  '_id': '58895a32ac72909f9a496314',
+                  '_title': 'Cartoon Families'
+                }
+              ]
+            }
+          ]
+        }
+      }
     }
   },
   searchItems: {
     request: {
       initMethod: 'POST',
-      initPath: '/v1/set/587fd64b8ba914505141a430/item/search',
+      initPath: '/v1/set/58895a32ac72909f9a496314/item/search',
       initStatus: '200',
       initBody: {
         surname: 'Turner'
@@ -65,7 +148,7 @@ const docData = {
         'items': {
           'read': [
             {
-              '_id': '587fd64b8ba914505141a433',
+              '_id': '58896145ac72909f9a49632b',
               'surname': 'Turner',
               'people': [
                 {
@@ -88,12 +171,12 @@ const docData = {
                 'Dimmsdale'
               ],
               '_type': {
-                '_id': '5876fd4c6dbcdd0018867d78',
+                '_id': '5889596bac72909f9a49630f',
                 '_type': 'Family'
               },
               '_sets': [
                 {
-                  '_id': '587fd64b8ba914505141a430',
+                  '_id': '58895a32ac72909f9a496314',
                   '_title': 'Cartoon Families'
                 }
               ]
@@ -109,42 +192,42 @@ const docData = {
       initPath: '/v1/set',
       initStatus: '201',
       initBody: {
-        'title': 'Cartoon Families',
-        'description': 'A list of cartoon families',
-        'tags': ['cartoon', 'family', 'character', 'fiction'],
-        'type': '5876fd4c6dbcdd0018867d78',
+        'title': 'Cartoon Families 2, Electric Boogaloo',
+        'description': 'A list of cartoon families. Used for the documentation.',
+        'tags': ['cartoon', 'family', 'character', 'fiction', 'test', 'sample', 'example'],
+        'type': '5889596bac72909f9a49630f',
         'items': [
           {
-            'surname': 'Waterson',
+            'surname': 'Simpson',
             'people': [
               {
-                'firstName': 'Gumball',
-                'age': 12,
-                'isParent': false
+                'firstName': 'Homer',
+                'age': 39,
+                'isParent': true
               },
               {
-                'firstName': 'Darwin',
+                'firstName': 'Marge',
+                'age': 36,
+                'isParent': true
+              },
+              {
+                'firstName': 'Bart',
                 'age': 10,
                 'isParent': false
               },
               {
-                'firstName': 'Anais',
-                'age': 4,
+                'firstName': 'Lisa',
+                'age': 8,
                 'isParent': false
               },
               {
-                'firstName': 'Nicole',
-                'age': 38,
-                'isParent': true
-              },
-              {
-                'firstName': 'Richard',
-                'age': 38,
-                'isParent': true
+                'firstName': 'Maggie',
+                'age': 1,
+                'isParent': false
               }
             ],
             'lives': [
-              'Elmore'
+              'Springfield'
             ]
           }
         ]
@@ -155,7 +238,7 @@ const docData = {
         'types': {
           'updated': [
             {
-              '_id': '5876fd4c6dbcdd0018867d78',
+              '_id': '5889596bac72909f9a49630f',
               'title': 'Family',
               'description': 'Describes a family unit. Usually one that lives in the same house.',
               'properties': {
@@ -183,7 +266,9 @@ const docData = {
                           'description': ''
                         }
                       },
-                      'description': ''
+                      'requires': [],
+                      'description': '',
+                      'allowOtherFields': false
                     },
                     'description': ''
                   },
@@ -196,17 +281,19 @@ const docData = {
                     'description': ''
                   }
                 },
-                'description': ''
+                'requires': [],
+                'description': '',
+                'allowOtherFields': false
               },
               'tags': [],
               'uses': [
                 {
-                  '_id': '587fd64b8ba914505141a430',
+                  '_id': '58895a32ac72909f9a496314',
                   'title': 'Cartoon Families'
                 },
                 {
-                  '_id': '5880ed444e10815876f88cb2',
-                  'title': 'Cartoon Families'
+                  '_id': '588a9fcaeef4e4a5c066d8bb',
+                  'title': 'Cartoon Families 2, Electric Boogaloo'
                 }
               ],
               'numUses': 2
@@ -216,18 +303,21 @@ const docData = {
         'sets': {
           'created': [
             {
-              '_id': '5880ed444e10815876f88cb2',
-              'title': 'Cartoon Families',
-              'description': 'A list of cartoon families',
+              '_id': '588a9fcaeef4e4a5c066d8bb',
+              'title': 'Cartoon Families 2, Electric Boogaloo',
+              'description': 'A list of cartoon families. Used for the documentation.',
               'type': {
-                '_id': '5876fd4c6dbcdd0018867d78',
+                '_id': '5889596bac72909f9a49630f',
                 'title': 'Family'
               },
               'tags': [
                 'cartoon',
                 'family',
                 'character',
-                'fiction'
+                'fiction',
+                'test',
+                'sample',
+                'example'
               ],
               'creator': {
                 '_id': '586ec2e73c4e8c1fdb7ac068',
@@ -235,7 +325,7 @@ const docData = {
               },
               'stars': 0,
               'items': [
-                '5880ed444e10815876f88cb3'
+                '588a9fcaeef4e4a5c066d8bc'
               ]
             }
           ]
@@ -243,48 +333,48 @@ const docData = {
         'items': {
           'created': [
             {
-              'surname': 'Waterson',
+              'surname': 'Simpson',
               'people': [
                 {
-                  'firstName': 'Gumball',
-                  'age': 12,
-                  'isParent': false
+                  'firstName': 'Homer',
+                  'age': 39,
+                  'isParent': true
                 },
                 {
-                  'firstName': 'Darwin',
+                  'firstName': 'Marge',
+                  'age': 36,
+                  'isParent': true
+                },
+                {
+                  'firstName': 'Bart',
                   'age': 10,
                   'isParent': false
                 },
                 {
-                  'firstName': 'Anais',
-                  'age': 4,
+                  'firstName': 'Lisa',
+                  'age': 8,
                   'isParent': false
                 },
                 {
-                  'firstName': 'Nicole',
-                  'age': 38,
-                  'isParent': true
-                },
-                {
-                  'firstName': 'Richard',
-                  'age': 38,
-                  'isParent': true
+                  'firstName': 'Maggie',
+                  'age': 1,
+                  'isParent': false
                 }
               ],
               'lives': [
-                'Elmore'
+                'Springfield'
               ],
               '_type': {
-                '_id': '5876fd4c6dbcdd0018867d78',
+                '_id': '5889596bac72909f9a49630f',
                 '_type': 'Family'
               },
               '_sets': [
                 {
-                  '_id': '5880ed444e10815876f88cb2',
-                  '_title': 'Cartoon Families'
+                  '_id': '588a9fcaeef4e4a5c066d8bb',
+                  '_title': 'Cartoon Families 2, Electric Boogaloo'
                 }
               ],
-              '_id': '5880ed444e10815876f88cb3'
+              '_id': '588a9fcaeef4e4a5c066d8bc'
             }
           ]
         }
@@ -294,91 +384,41 @@ const docData = {
   addItems: {
     request: {
       initMethod: 'POST',
-      initPath: '/v1/set/5880ed444e10815876f88cb2/item',
+      initPath: '/v1/set/588a9fcaeef4e4a5c066d8bb/item',
       initStatus: '200',
       initBody: [
-        '5876fd7e6dbcdd0018867d7c',
-        '5876fd7e6dbcdd0018867d7d',
+        '58896145ac72909f9a49632c',
         {
-          'surname': 'Neutron',
+          'surname': 'Smith',
           'people': [
             {
-              'firstName': 'Jimmy',
-              'age': 12,
+              'firstName': 'Rick',
+              'age': 90,
               'isParent': false
             },
             {
-              'firstName': 'Hugh',
-              'age': 40,
+              'firstName': 'Beth',
+              'age': 34,
               'isParent': true
             },
             {
-              'firstName': 'Judy',
-              'age': 40,
+              'firstName': 'Jerry',
+              'age': 34,
               'isParent': true
-            }
-          ],
-          'lives': [
-            'Retroville'
-          ]
-        },
-        {
-          'surname': 'Turner',
-          'people': [
+            },
             {
-              'firstName': 'Timmy',
-              'age': 10,
+              'firstName': 'Summer',
+              'age': 17,
               'isParent': false
             },
             {
-              'firstName': 'Dad',
-              'age': 42,
-              'isParent': true
-            },
-            {
-              'firstName': 'Mom',
-              'age': 40,
-              'isParent': true
-            }
-          ],
-          'lives': [
-            'Dimmsdale'
-          ]
-        },
-        {
-          'surname': 'Gaang',
-          'people': [
-            {
-              'firstName': 'Aang',
-              'age': 12,
-              'isParent': false
-            },
-            {
-              'firstName': 'Zuko',
-              'age': 16,
-              'isParent': false
-            },
-            {
-              'firstName': 'Katara',
+              'firstName': 'Morty',
               'age': 14,
-              'isParent': false
-            },
-            {
-              'firstName': 'Sokka',
-              'age': 15,
-              'isParent': false
-            },
-            {
-              'firstName': 'Toph',
-              'age': 12,
-              'isParent': false
+              'isParent': true
             }
           ],
           'lives': [
-            'Water Tribes',
-            'Earth Kingdom',
-            'Fire Nation',
-            'Air Temples'
+            'Earth'
           ]
         }
       ],
@@ -388,18 +428,21 @@ const docData = {
         'sets': {
           'updated': [
             {
-              '_id': '5880ed444e10815876f88cb2',
-              'title': 'Cartoon Families',
-              'description': 'A list of cartoon families',
+              '_id': '588a9fcaeef4e4a5c066d8bb',
+              'title': 'Cartoon Families 2, Electric Boogaloo',
+              'description': 'A list of cartoon families. Used for the documentation.',
               'type': {
-                '_id': '5876fd4c6dbcdd0018867d78',
+                '_id': '5889596bac72909f9a49630f',
                 'title': 'Family'
               },
               'tags': [
                 'cartoon',
                 'family',
                 'character',
-                'fiction'
+                'fiction',
+                'test',
+                'sample',
+                'example'
               ],
               'creator': {
                 '_id': '586ec2e73c4e8c1fdb7ac068',
@@ -407,12 +450,9 @@ const docData = {
               },
               'stars': 0,
               'items': [
-                '5880ed444e10815876f88cb3',
-                '5876fd7e6dbcdd0018867d7c',
-                '5876fd7e6dbcdd0018867d7d',
-                '5880ee9bebe2fa58b13d7e6f',
-                '5880ee9bebe2fa58b13d7e70',
-                '5880ee9bebe2fa58b13d7e71'
+                '588a9fcaeef4e4a5c066d8bc',
+                '58896145ac72909f9a49632c',
+                '588aa234eef4e4a5c066d8c5'
               ]
             }
           ]
@@ -420,154 +460,7 @@ const docData = {
         'items': {
           'read': [
             {
-              '_id': '5876fd7e6dbcdd0018867d7c',
-              'surname': 'Waterson',
-              'people': [
-                {
-                  'firstName': 'Gumball',
-                  'age': 12,
-                  'isParent': false
-                },
-                {
-                  'firstName': 'Darwin',
-                  'age': 10,
-                  'isParent': false
-                },
-                {
-                  'firstName': 'Anais',
-                  'age': 4,
-                  'isParent': false
-                },
-                {
-                  'firstName': 'Nicole',
-                  'age': 38,
-                  'isParent': true
-                },
-                {
-                  'firstName': 'Richard',
-                  'age': 38,
-                  'isParent': true
-                }
-              ],
-              'lives': [
-                'Elmore'
-              ],
-              '_type': {
-                '_id': '5876fd4c6dbcdd0018867d78',
-                '_type': 'Family'
-              },
-              '_sets': [
-                {
-                  '_id': '5876fd7e6dbcdd0018867d7b',
-                  '_title': 'Cartoon Families'
-                }
-              ]
-            },
-            {
-              '_id': '5876fd7e6dbcdd0018867d7d',
-              'surname': 'Neutron',
-              'people': [
-                {
-                  'firstName': 'Jimmy',
-                  'age': 12,
-                  'isParent': false
-                },
-                {
-                  'firstName': 'Hugh',
-                  'age': 40,
-                  'isParent': true
-                },
-                {
-                  'firstName': 'Judy',
-                  'age': 40,
-                  'isParent': true
-                }
-              ],
-              'lives': [
-                'Retroville'
-              ],
-              '_type': {
-                '_id': '5876fd4c6dbcdd0018867d78',
-                '_type': 'Family'
-              },
-              '_sets': [
-                {
-                  '_id': '5876fd7e6dbcdd0018867d7b',
-                  '_title': 'Cartoon Families'
-                }
-              ]
-            }
-          ],
-          'created': [
-            {
-              'surname': 'Neutron',
-              'people': [
-                {
-                  'firstName': 'Jimmy',
-                  'age': 12,
-                  'isParent': false
-                },
-                {
-                  'firstName': 'Hugh',
-                  'age': 40,
-                  'isParent': true
-                },
-                {
-                  'firstName': 'Judy',
-                  'age': 40,
-                  'isParent': true
-                }
-              ],
-              'lives': [
-                'Retroville'
-              ],
-              '_type': {
-                '_id': '5876fd4c6dbcdd0018867d78',
-                '_type': 'Family'
-              },
-              '_sets': [
-                {
-                  '_id': '5880ed444e10815876f88cb2',
-                  '_title': 'Cartoon Families'
-                }
-              ],
-              '_id': '5880ee9bebe2fa58b13d7e6f'
-            },
-            {
-              'surname': 'Turner',
-              'people': [
-                {
-                  'firstName': 'Timmy',
-                  'age': 10,
-                  'isParent': false
-                },
-                {
-                  'firstName': 'Dad',
-                  'age': 42,
-                  'isParent': true
-                },
-                {
-                  'firstName': 'Mom',
-                  'age': 40,
-                  'isParent': true
-                }
-              ],
-              'lives': [
-                'Dimmsdale'
-              ],
-              '_type': {
-                '_id': '5876fd4c6dbcdd0018867d78',
-                '_type': 'Family'
-              },
-              '_sets': [
-                {
-                  '_id': '5880ed444e10815876f88cb2',
-                  '_title': 'Cartoon Families'
-                }
-              ],
-              '_id': '5880ee9bebe2fa58b13d7e70'
-            },
-            {
+              '_id': '58896145ac72909f9a49632c',
               'surname': 'Gaang',
               'people': [
                 {
@@ -603,98 +496,112 @@ const docData = {
                 'Air Temples'
               ],
               '_type': {
-                '_id': '5876fd4c6dbcdd0018867d78',
+                '_id': '5889596bac72909f9a49630f',
                 '_type': 'Family'
               },
               '_sets': [
                 {
-                  '_id': '5880ed444e10815876f88cb2',
+                  '_id': '58895a32ac72909f9a496314',
                   '_title': 'Cartoon Families'
                 }
+              ]
+            }
+          ],
+          'created': [
+            {
+              'surname': 'Smith',
+              'people': [
+                {
+                  'firstName': 'Rick',
+                  'age': 90,
+                  'isParent': false
+                },
+                {
+                  'firstName': 'Beth',
+                  'age': 34,
+                  'isParent': true
+                },
+                {
+                  'firstName': 'Jerry',
+                  'age': 34,
+                  'isParent': true
+                },
+                {
+                  'firstName': 'Summer',
+                  'age': 17,
+                  'isParent': false
+                },
+                {
+                  'firstName': 'Morty',
+                  'age': 14,
+                  'isParent': true
+                }
               ],
-              '_id': '5880ee9bebe2fa58b13d7e71'
+              'lives': [
+                'Earth'
+              ],
+              '_type': {
+                '_id': '5889596bac72909f9a49630f',
+                '_type': 'Family'
+              },
+              '_sets': [
+                {
+                  '_id': '588a9fcaeef4e4a5c066d8bb',
+                  '_title': 'Cartoon Families 2, Electric Boogaloo'
+                }
+              ],
+              '_id': '588aa234eef4e4a5c066d8c5'
             }
           ],
           'updated': [
             {
-              '_id': '5876fd7e6dbcdd0018867d7c',
-              'surname': 'Waterson',
+              '_id': '58896145ac72909f9a49632c',
+              'surname': 'Gaang',
               'people': [
                 {
-                  'firstName': 'Gumball',
+                  'firstName': 'Aang',
                   'age': 12,
                   'isParent': false
                 },
                 {
-                  'firstName': 'Darwin',
-                  'age': 10,
+                  'firstName': 'Zuko',
+                  'age': 16,
                   'isParent': false
                 },
                 {
-                  'firstName': 'Anais',
-                  'age': 4,
+                  'firstName': 'Katara',
+                  'age': 14,
                   'isParent': false
                 },
                 {
-                  'firstName': 'Nicole',
-                  'age': 38,
-                  'isParent': true
+                  'firstName': 'Sokka',
+                  'age': 15,
+                  'isParent': false
                 },
                 {
-                  'firstName': 'Richard',
-                  'age': 38,
-                  'isParent': true
-                }
-              ],
-              'lives': [
-                'Elmore'
-              ],
-              '_type': {
-                '_id': '5876fd4c6dbcdd0018867d78',
-                '_type': 'Family'
-              },
-              '_sets': [
-                {
-                  '_id': '5876fd7e6dbcdd0018867d7b',
-                  '_title': 'Cartoon Families'
-                },
-                '5880ed444e10815876f88cb2'
-              ],
-              '_setTitles': [
-                'Cartoon Families'
-              ]
-            },
-            {
-              '_id': '5876fd7e6dbcdd0018867d7d',
-              'surname': 'Neutron',
-              'people': [
-                {
-                  'firstName': 'Jimmy',
+                  'firstName': 'Toph',
                   'age': 12,
                   'isParent': false
-                },
-                {
-                  'firstName': 'Hugh',
-                  'age': 40,
-                  'isParent': true
-                },
-                {
-                  'firstName': 'Judy',
-                  'age': 40,
-                  'isParent': true
                 }
               ],
               'lives': [
-                'Retroville'
+                'Water Tribes',
+                'Earth Kingdom',
+                'Fire Nation',
+                'Air Temples'
               ],
               '_type': {
-                '_id': '5876fd4c6dbcdd0018867d78',
+                '_id': '5889596bac72909f9a49630f',
                 '_type': 'Family'
               },
               '_sets': [
                 {
-                  '_id': '5876fd7e6dbcdd0018867d7b',
+                  '_id': '58895a32ac72909f9a496314',
                   '_title': 'Cartoon Families'
+                },
+                {
+                  '_id': '588a9fcaeef4e4a5c066d8bb',
+                  'title': 'Cartoon Families 2, Electric Boogaloo'
                 }
               ]
             }

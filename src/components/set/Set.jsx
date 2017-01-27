@@ -201,6 +201,6 @@ export default class Set extends Component {
         </div>
       );
     }
-    return (<div>Fail!</div>);
+    return (<div className={s.centeredMessage}>there was a problem loading this page. try refreshing.</div>);
   }
 }

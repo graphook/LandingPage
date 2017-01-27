@@ -1,22 +1,38 @@
+/*.containerThing {
+  overflow-y: auto;
+  height: 100%;
+}*/
+
 .documentation {
   position: relative;
-  height: calc(100vh - 50px);
-  display: flex;
 
   nav {
     width: 230px;
-    height: 100%;
+    height: calc(100vh - 50px);
+    position: fixed;
     box-shadow: $smallShadow;
     padding-right: $margin;
     padding-left: $margin;
-    flex-shrink: 0;
     overflow-y: auto;
+    top: $headerHeight;
+    left: 0;
+
+    > ul > li {
+      font-size: 16px;
+      margin-left: 0;
+    }
+    li {
+      padding-top: 4px;
+      padding-bottom: 4px;
+      list-style: none;
+      margin-left: 16px;
+
+    }
   }
   .docContentArea {
     padding: 16px;
-    padding-left: $margin;
+    padding-left: calc(12vw + 230px);
     padding-right: $margin;
-    overflow-y: auto;
     width: 100%;
     box-sizing: border-box;
 
@@ -66,6 +82,16 @@
 .requestTool {
   padding: 16px;
   border: $containerBorder;
+  margin-top: 8px;
+  margin-bottom: 8px;
+
+  > ul {
+    margin: 0 !important;
+    padding-left: 0 !important;
+  }
+  h2 {
+    margin-bottom: 8px;
+  }
 
   .topRequestTools {
     display: flex;

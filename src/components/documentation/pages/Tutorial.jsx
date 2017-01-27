@@ -12,19 +12,18 @@ import s from 'components/styles/index.scss';
   isLoggedIn: !!(state.auth.user),
   user: state.profileDetails.user
 }))
-export default class Overview extends Component {
+export default class Tutorial extends Component {
   static propTypes = {
     isLoggedIn: PropTypes.bool,
     user: PropTypes.object
   }
   render() {
     return (
-      <div>
+      <div id="containerThing" className={s.containerThing}>
         <p>Welcome to Zenow, the platform for creating and sharing data.</p>
         <p>The primary way to interact with information on Zenow is through http requests to our RESTful API (Application Programming Interface). Integrating your project can be done in just a few steps.</p>
 
-        <SectionHeader>Get your developer account</SectionHeader>
-
+        <SectionHeader name="getAccount">Get your developer account</SectionHeader>
         {(() => {
           if (this.props.isLoggedIn) {
             return [
@@ -41,7 +40,7 @@ export default class Overview extends Component {
         })()}
 
 
-        <SectionHeader>Understanding HTTP Requests</SectionHeader>
+        <SectionHeader name="httpRequests">Understanding HTTP Requests</SectionHeader>
         <p>HTTP (Hypertext Transfer Protocol) is one of the most popular standards for sending messages between computers on the internet. It’s what allows you to send requests to Zenow and receive information from it.</p>
         <p>There is a large variety of libraries to help you make an HTTP request. A few are listed below. Choose the library that best fits your project.</p>
         <ul>
@@ -94,7 +93,7 @@ export default class Overview extends Component {
           <li>The <strong>Response Body</strong> provides you with the information you requested. All response bodies are in JSON which is discussed in the next section.</li>
         </ul>
 
-        <SectionHeader>Understanding JSON</SectionHeader>
+        <SectionHeader name="json">Understanding JSON</SectionHeader>
         <p>All HTTP request and response bodies (discussed in the previous section) on Zenow are formatted in JSON (JavaScript Object Notation). This is a logical way to represent data as a string of characters, and looks something like this:</p>
         <pre>{JSON.stringify({
           'surname': 'Neutron',
@@ -128,9 +127,9 @@ export default class Overview extends Component {
           <li><strong>Boolean</strong>: Booleans indicate a binary condition and are written in one of two ways: <code>true</code>, <code>false</code></li>
         </ul>
 
-        <SectionHeader>Using Zenow’s Request Tool</SectionHeader>
+        <SectionHeader name="requestTool">Using Zenow’s Request Tool</SectionHeader>
         <p>This documentation comes with a tool to demonstrate how each request functions. It’s various components are outlined below.</p>
-        <img src="diagram of request tool" />
+        <img src="/images/requestToolDiagram.png" />
         <ol>
           <li>Method</li>
           <li>URL</li>
@@ -140,26 +139,26 @@ export default class Overview extends Component {
           <li>Response Body (Initially the response body will be an anticipated result. You can run the request again to see the actual result)</li>
         </ol>
 
-        <SectionHeader>Get a Set</SectionHeader>
+        <SectionHeader name="getSet">Get a Set</SectionHeader>
         <p>Now that we understand the method by which requests are made, we can start making requests to interact with Zenow.</p>
         <p>For the following sections in this tutorial, we’ll be using data about some cartoon families.</p>
-        <p>On Zenow, data is arranged into sets of items. Each set has a unique Id which you can can look up the Id on the (set details page).</p>
-        <img src="image of the set detail page" />
+        <p>On Zenow, data is arranged into sets of items. Each set has a unique Id which you can can look up the Id on the <Link to="/set/58895a32ac72909f9a496314">set details page</Link>.</p>
+        <img src="/images/detailPageId.png" />
         <p>In order to request the metadata about this set we’ll use the path <code>/v1/set/SET’S_ID.</code></p>
         <RequestTool {...data.getSet.request} />
 
-        <SectionHeader>Get Items in a Set</SectionHeader>
+        <SectionHeader name="getItems">Get Items in a Set</SectionHeader>
         <p>We’ve been able to receive metadata about the set, but Zenow’s real power comes from getting the set’s actual data. Each set represents a collection of items. To get these items we can request the path <code>/v1/set/SET’S_ID/item?count=10&page=0</code></p>
         <p>Notice that this request has parameters. <code>count</code> represents the number of items you want to receive from your request, and <code>page</code> is the page of items based on your count. For example, if there are 20 items in a set and you send a request with <code>count=10&page=1</code>, you will receive the 11th through 20th item.</p>
         <RequestTool {...data.getItems.request} />
 
-        <SectionHeader>Search Items in a Set</SectionHeader>
+        <SectionHeader name="searchItems">Search Items in a Set</SectionHeader>
         <p>Sometimes you want to find specific items within a set based on parameters. To do this, we can <code>POST</code> a search request and pass our search query through the request body.</p>
         <p>In the example below, we’re looking for all the cartoon families with the surname "Turner"</p>
         <RequestTool {...data.searchItems.request} />
         <p>This is just one example. For more complex search queries, see the (Advanced Search documentation).</p>
 
-        <SectionHeader>Create your own Set</SectionHeader>
+        <SectionHeader name="createSet">Create your own Set</SectionHeader>
         <p>Before creating a set, we must choose a <strong>type</strong>. Types define the format for every item in the set. Our set of cartoon families will use the (family type) which has the id //insert id//</p>
         <RequestTool {...data.createSet.request} />
         <p>Our request body contains a few fields:</p>
@@ -171,23 +170,21 @@ export default class Overview extends Component {
           <li>Items: an array of items in the set. You can define these items the same way you define them in the "Add Items to a Set" section below.</li>
         </ul>
 
-        <SectionHeader>Add Items to a Set</SectionHeader>
+        <SectionHeader name="addItems">Add Items to a Set</SectionHeader>
         <p>Items can be added to the set by posting to <code>/v1/set/SET’S_ID/item</code></p>
         <RequestTool {...data.addItems.request} />
         <p>Note that this request accepts an array that contains both JSON objects that follow the set’s type and strings. These strings are the ids of items in other sets the follow the same type.</p>
 
-        <SectionHeader>Other Set Operations</SectionHeader>
+        <SectionHeader name="otherSet">Other Set Operations</SectionHeader>
         <p>See the REST API documentation for more useful set operations:</p>
         <ul>
-          <li>Clone a Set</li>
-          <li>Update a Set</li>
-          <li>Delete a Set</li>
-          <li>Retrieve a Specific Item in a set</li>
-          <li>Update an Item in a Set</li>
-          <li>Remove an Item from a Set</li>
+          <li><Link to="/documentation/Set/updateSet">Update a Set</Link></li>
+          <li><Link to="/documentation/Set/deleteSet">Delete a Set</Link></li>
+          <li><Link to="/documentation/Set/getItem">Retrieve a Specific Item in a set</Link></li>
+          <li><Link to="/documentation/Set/deleteItem">Remove an Item from a Set</Link></li>
         </ul>
 
-        <SectionHeader>Create a Type</SectionHeader>
+        <SectionHeader name="createType">Create a Type</SectionHeader>
         <p>Often times the types currently available on Zenow won’t fit the type you’d like your set to follow. So, you can create your own types if needed.</p>
         <p>Here we’re making a duplicate of the family type we’ve been using.</p>
         <RequestTool {...data.createType.request} />
