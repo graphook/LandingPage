@@ -39,11 +39,6 @@ app.use(session({
   activeDuration: 5 * 60 * 1000
 }));
 
-app.use((req, res, next) => {
-  console.log(req.originalUrl);
-  next();
-})
-
 app.use('/api', (req, res, next) => {
   if (req.session.secret === process.env.SESSION_SECRET) {
     next()
@@ -79,6 +74,9 @@ proxy.on('proxyReq', (proxyReq, req, res, options) => {
   } else {
     proxyReq.setHeader('Authorization', process.env.CLIENT_SECRET);
   }
+});
+proxy.on('proxyRes', function (proxyRes, req, res) {
+  console.log('RAW Response from the target', JSON.stringify(proxyRes.headers, true, 2));
 });
 app.use('/api', (req, res) => {
   proxy.web(req, res, {target: targetUrl});
