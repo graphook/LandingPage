@@ -77,6 +77,7 @@ proxy.on('proxyReq', (proxyReq, req, res, options) => {
 });
 proxy.on('proxyRes', function (proxyRes, req, res) {
   console.log('RAW Response from the target', JSON.stringify(proxyRes.headers, true, 2));
+  console.log(JSON.stringify(proxyRes.body, true, 2))
 });
 app.use('/api', (req, res) => {
   proxy.web(req, res, {target: targetUrl});
