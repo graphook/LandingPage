@@ -69,6 +69,8 @@ app.get('/api/logout', (req, res) => {
   res.send();
 });
 proxy.on('proxyReq', (proxyReq, req, res, options) => {
+  //console.log(proxyReq)
+
   if (req.session.token) {
     proxyReq.setHeader('Authorization', req.session.token);
   } else {
@@ -77,7 +79,7 @@ proxy.on('proxyReq', (proxyReq, req, res, options) => {
 });
 proxy.on('proxyRes', function (proxyRes, req, res) {
   console.log('RAW Response from the target', JSON.stringify(proxyRes.headers, true, 2));
-  console.log(JSON.stringify(proxyRes.body, true, 2))
+  console.log(JSON.stringify(proxyRes, true, 2))
 });
 app.use('/api', (req, res) => {
   proxy.web(req, res, {target: targetUrl});

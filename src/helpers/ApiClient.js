@@ -34,6 +34,9 @@ export default class ApiClient {
         }
 
         request.end((err, { body } = {}) => {
+          console.log("Response REsult")
+          console.log(err);
+          console.log(body);
           return err ? reject(body || err) : resolve(body);
         });
       }));
