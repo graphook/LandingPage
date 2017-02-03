@@ -39,6 +39,11 @@ app.use(session({
   activeDuration: 5 * 60 * 1000
 }));
 
+app.use((req, res, next) => {
+  console.log(req.originalUrl);
+  next();
+})
+
 app.use('/api', (req, res, next) => {
   if (req.session.secret === process.env.SESSION_SECRET) {
     next()
