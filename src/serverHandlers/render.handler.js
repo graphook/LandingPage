@@ -12,10 +12,10 @@ import Html from '../helpers/Html';
 import WithStylesContext from '../helpers/WithStylesContext.jsx'
 
 export default function(req, res) {
-  req.session.secret = process.env.SESSION_SECRET;
+  req.clientSession.secret = process.env.SESSION_SECRET;
   if (process.env.ENV !== 'prod' && process.env.AUTO_TOKEN) {
-    req.session.token = process.env.AUTO_TOKEN,
-    req.session.user = {
+    req.clientSession.token = process.env.AUTO_TOKEN,
+    req.clientSession.user = {
       username: process.env.AUTO_USERNAME,
       email: process.env.AUTO_EMAIL,
       key: process.env.AUTO_KEY
@@ -29,9 +29,9 @@ export default function(req, res) {
   }
 
   let data = {};
-  if (req.session.token && req.session.user) {
+  if (req.clientSession.token && req.clientSession.user) {
     data.auth = {
-      user: req.session.user
+      user: req.clientSession.user
     }
   }
 

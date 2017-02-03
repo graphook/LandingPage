@@ -22,8 +22,8 @@ export default class ApiClient {
         }
 
         if (__SERVER__) {
-          if (req.session.token) {
-            request.set('Authorization', req.session.token);
+          if (req.clientSession.token) {
+            request.set('Authorization', req.clientSession.token);
           } else {
             request.set('Authorization', process.env.CLIENT_SECRET);
           }
@@ -34,9 +34,6 @@ export default class ApiClient {
         }
 
         request.end((err, { body } = {}) => {
-          console.log("Response REsult")
-          console.log(err);
-          console.log(body);
           return err ? reject(body || err) : resolve(body);
         });
       }));

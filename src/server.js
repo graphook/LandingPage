@@ -8,6 +8,7 @@ import http from 'http';
 import httpProxy from 'http-proxy';
 import session from 'client-sessions';
 import bodyParser from 'body-parser'
+import Url from 'url';
 
 import routes from './serverRoutes.map'
 
@@ -15,9 +16,7 @@ const targetUrl = process.env.API_URL;
 const pretty = new PrettyError();
 const app = new Express();
 const server = new http.Server(app);
-const proxy = httpProxy.createProxyServer({
-  target: targetUrl
-});
+const proxy = httpProxy.createProxyServer();
 
 import request from 'superagent';
 
@@ -33,14 +32,14 @@ app.use(compression());
 app.use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')));
 
 app.use(session({
-  cookieName: 'session',
+  cookieName: 'clientSession',
   secret: process.env.SESSION_SECRET,
   duration: 30 * 60 * 1000,
   activeDuration: 5 * 60 * 1000
 }));
 
 app.use('/api', (req, res, next) => {
-  if (req.session.secret === process.env.SESSION_SECRET) {
+  if (req.clientSession.secret === process.env.SESSION_SECRET) {
     next()
   } else {
     res.status(401).send('must call this route from the web page')
@@ -57,32 +56,29 @@ app.post('/api/login', (req, res) => {
           res.status(400).send(result.body)
         }
       } else {
-        req.session.user = result.body.auth.user;
-        req.session.token = result.body.auth.token;
+        req.clientSession.user = result.body.auth.user;
+        req.clientSession.token = result.body.auth.token;
         res.send(result.body.auth.user);
       }
     });
 });
 app.get('/api/logout', (req, res) => {
-  delete req.session.token;
-  delete req.session.user;
+  delete req.clientSession.token;
+  delete req.clientSession.user;
   res.send();
 });
 proxy.on('proxyReq', (proxyReq, req, res, options) => {
-  //console.log(proxyReq)
-
-  if (req.session.token) {
-    proxyReq.setHeader('Authorization', req.session.token);
+  proxyReq.setHeader('host', Url.parse(targetUrl).host);
+  if (req.clientSession.token) {
+    proxyReq.setHeader('Authorization', req.clientSession.token);
   } else {
     proxyReq.setHeader('Authorization', process.env.CLIENT_SECRET);
   }
 });
-proxy.on('proxyRes', function (proxyRes, req, res) {
-  console.log('RAW Response from the target', JSON.stringify(proxyRes.headers, true, 2));
-  console.log(JSON.stringify(proxyRes, true, 2))
-});
 app.use('/api', (req, res) => {
-  proxy.web(req, res, {target: targetUrl});
+  proxy.web(req, res, {
+    target: targetUrl
+  });
 });
 
 app.use(Express.static(path.join(__dirname, '..', 'static')));
