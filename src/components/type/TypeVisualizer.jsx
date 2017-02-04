@@ -19,25 +19,25 @@ export default class TypeVisualizer extends Component {
     const info = [];
     const requires = new Set(type.requires);
     if (type.requiresAtLeast) {
-      info.push(<li>requires at least {type.requiresAtLeast.count} of the following:{type.requiresAtLeast.fields.map(field => ' ' + field).toString()}</li>);
+      info.push(<li key="requiresAtLeast">requires at least {type.requiresAtLeast.count} of the following:{type.requiresAtLeast.fields.map(field => ' ' + field).toString()}</li>);
     }
     Object.keys(type.fields).forEach((field) => {
-      info.push(<li className={s.field}><a onClick={() => {
+      info.push(<li className={s.field} key={field}><a onClick={() => {
         this.state[field] = !this.state[field];
         this.setState(this.state);
       }}>
         <i className={(this.state[field]) ? 'fa fa-chevron-down' : 'fa fa-chevron-right'}></i>{field}{(requires.has(field)) ? ' (required)' : ''}:
       </a></li>);
       if (this.state[field]) {
-        info.push(<li><TypeVisualizer type={type.fields[field]} /></li>);
+        info.push(<li key={field + 'data'}><TypeVisualizer type={type.fields[field]} /></li>);
       }
     });
     return info;
   }
   array = (type) => {
     return [
-      <li>items:</li>,
-      <li><TypeVisualizer type={type.items} /></li>
+      <li key="items">items:</li>,
+      <li key="itemsdata"><TypeVisualizer type={type.items} /></li>
     ];
   }
   constant = (type) => {

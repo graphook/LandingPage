@@ -3,7 +3,7 @@ import {Element} from 'react-scroll';
 
 export default class SectionHeader extends Component {
   static propTypes = {
-    children: PropTypes.object.isRequired,
+    children: PropTypes.any.isRequired,
     name: PropTypes.string
   }
   render() {

@@ -103,7 +103,7 @@ export default class RequestTool extends Component {
           }
         })()}
         <div>response status: {this.state.status}</div>
-        <textarea className={s.responseBody} value={JSON.stringify(this.state.responseBody, null, 2)} />
+        <textarea className={s.responseBody} value={JSON.stringify(this.state.responseBody, null, 2)} onChange={() => {}} />
       </form>
     );
   }

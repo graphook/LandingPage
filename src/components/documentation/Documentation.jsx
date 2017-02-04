@@ -41,11 +41,11 @@ export default class Documentation extends Component {
           <ul>
             {Object.keys(sections).map((section) => {
               return [
-                <li><Link to={'/documentation/' + section}>{section}</Link></li>,
-                <ul>
+                <li key={section + 'head'}><Link to={'/documentation/' + section}>{section}</Link></li>,
+                <ul key={section + 'sub'}>
                   {Object.keys(sections[section]).map((subSection) => {
                     return (
-                      <li><Link to={'/documentation/' + section + '/' + subSection}>
+                      <li key={subSection}><Link to={'/documentation/' + section + '/' + subSection}>
                         {sections[section][subSection]}
                       </Link></li>
                     );

@@ -104,7 +104,6 @@
       display: flex;
       justify-content: flex-start;
       padding-left: $margin;
-      border-bottom: 1px solid $black;
       width: 100%;
       box-sizing: border-box;
       flex-shrink: 0;
@@ -115,7 +114,6 @@
 
         > .ntLeaf {
           border-bottom: 1px solid $black;
-          margin-bottom: -1px;
           padding-bottom: 1px;
         }
       }
@@ -129,18 +127,18 @@
       .ntItem {
         display: flex;
         align-items: stretch;
-        justify-content: center;
+        justify-content: flex-start;
         flex-direction: row;
         box-sizing: border-box;
         flex-grow: 1;
+        overflow: auto;
       }
       .ntArrayContainer {
         display: flex;
         flex-direction: column;
 
         > .ntItem:last-child .ntLeaf {
-          border-bottom: 1px solid $black;
-          margin-bottom: -1px;
+          border-bottom: 1px solid $black !important;
           padding-bottom: 1px;
         }
       }

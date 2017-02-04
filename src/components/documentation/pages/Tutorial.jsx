@@ -27,13 +27,13 @@ export default class Tutorial extends Component {
         {(() => {
           if (this.props.isLoggedIn) {
             return [
-              <p>Each user is provided with a unique API Key. Yours is <code>{this.props.user.key}</code>. This key allows you make requests to Zenow. You can find your API Key by going to the "profile" page.</p>,
-              <img src="/images/apiKeyDirections.png" />
+              <p key="pin">Each user is provided with a unique API Key. Yours is <code>{this.props.user.key}</code>. This key allows you make requests to Zenow. You can find your API Key by going to the "profile" page.</p>,
+              <img key="imgin" src="/images/apiKeyDirections.png" />
             ];
           }
           return [
-            <p>Before using the Zenow API you need a developer account to get an API Key.</p>,
-            <div className={s.smallFormContainer + ' ' + s.clickableShadow}>
+            <p key="pout">Before using the Zenow API you need a developer account to get an API Key.</p>,
+            <div key="divout" className={s.smallFormContainer + ' ' + s.clickableShadow}>
               <CreateUserForm />
             </div>
           ];
