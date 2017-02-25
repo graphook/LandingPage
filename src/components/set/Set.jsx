@@ -10,6 +10,7 @@ import ReactDOM from 'react-dom';
 import {Link} from 'react-router';
 import {promptSignIn} from 'redux/modules/modal';
 import Helmet from 'react-helmet';
+import {jsonToCsv, csvToJson} from 'utils/csvConverter';
 
 import s from '../styles/index.scss';
 
@@ -137,8 +138,9 @@ export default class Set extends Component {
             </div>
             <nav className={s.dataNav}>
               {(() => {
-                if (this.props.location.query.view === 'json') {
-                  return (
+                const links = [];
+                if (this.props.location.query.view && this.props.location.query.view !== 'table') {
+                  links.push(
                     <Link
                         to={{
                           pathname: this.props.location.pathname,
@@ -148,19 +150,35 @@ export default class Set extends Component {
                     </Link>
                   );
                 }
-                return (
-                  <Link
-                      to={{
-                        pathname: this.props.location.pathname,
-                        query: {...this.props.location.query, view: 'json'}
-                      }}>
-                    <i className="fa fa-align-right"></i>json view
+                if (this.props.location.query.view !== 'json') {
+                  links.push(
+                    <Link
+                        to={{
+                          pathname: this.props.location.pathname,
+                          query: {...this.props.location.query, view: 'json'}
+                        }}>
+                      <i className="fa fa-align-right"></i>json view
+                    </Link>
+                  )
+                }
+                if (this.props.location.query.view !== 'csv') {
+                  links.push(
+                    <Link
+                        to={{
+                          pathname: this.props.location.pathname,
+                          query: {...this.props.location.query, view: 'csv'}
+                        }}>
+                      <i className="fa fa-list-alt"></i>csv view
+                    </Link>
+                  )
+                }
+                links.push(
+                  <Link to="/documentation/Set">
+                    <i className="fa fa-book"></i>rest api
                   </Link>
                 );
+                return links;
               })()}
-              <Link to="/documentation/Set">
-                <i className="fa fa-book"></i>rest api
-              </Link>
             </nav>
           </div>
           <Waypoint
@@ -168,10 +186,58 @@ export default class Set extends Component {
             onLeave={() => this.setState({focusTable: true})} />
           {(() => {
             if (this.props.location.query.view === 'json') {
+              let formattedData = JSON.stringify(data, null, 2);
               return (
-                <pre className={s.jsonArea}>
-                  {JSON.stringify(data, null, 2)}
-                </pre>
+                <div className={s.jsonArea}>
+                  {(() => {
+                    if (this.props.isLoggedIn) {
+                      return (
+                        <a
+                            href={'data:text/plain;charset=utf-8,' + encodeURIComponent(formattedData)}
+                            download={this.props.set.title + '.json'}>
+                          <i className="fa fa-download"></i>downlod
+                        </a>
+                      )
+                    }
+                    return (
+                      <a onClick={this.props.promptSignIn}>
+                        <i className="fa fa-download"></i>downlod
+                      </a>
+                    );
+                  })()}
+                  <pre>
+                    {formattedData}
+                  </pre>
+                </div>
+              );
+            } else if (this.props.location.query.view === 'csv') {
+              let formattedData = jsonToCsv(data.map((item) => {
+                let newItem = { ...item };
+                delete newItem._sets;
+                delete newItem._type;
+                return newItem;
+              }));
+              return (
+                <div className={s.jsonArea}>
+                  {(() => {
+                    if (this.props.isLoggedIn) {
+                      return (
+                        <a
+                            href={'data:text/plain;charset=utf-8,' + encodeURIComponent(formattedData)}
+                            download={this.props.set.title + '.csv'}>
+                        </a>
+                      )
+                    }
+                    return (
+                      <a onClick={this.props.promptSignIn}>
+                        <i className="fa fa-download"></i>downlod
+                      </a>
+                    );
+                  })()}
+                  <pre>
+                    {formattedData}
+                  </pre>
+                </div>
               );
             }
             return (

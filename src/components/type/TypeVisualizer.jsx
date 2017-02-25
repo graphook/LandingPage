@@ -11,7 +11,7 @@ export default class TypeVisualizer extends Component {
     this.state = {};
     if (props.type.fields) {
       Object.keys(props.type.fields).forEach((field) => {
-        this.state[field] = false;
+        this.state[field] = true;
       });
     }
   }

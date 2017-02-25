@@ -47,7 +47,7 @@
     margin-right: -16px;
 
     .setResult {
-      width: 200px;
+      width: 225px;
       height: 300px;
       border: $containerBorder;
       margin: 16px;
@@ -57,11 +57,12 @@
       display: flex;
       flex-direction: column;
       cursor: pointer;
-      flex-grow: 1;
+      flex-grow: 0;
 
-      @media (max-width: 469px) {
+      @media (max-width: 523px) {
         margin-top: 0;
         height: 200px;
+        flex-grow: 1;
       }
 
       i {

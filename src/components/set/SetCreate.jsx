@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+import Helmet from 'react-helmet';
 
-// import s from '../styles/index.scss';
+import s from '../styles/index.scss';
 
 export default class SetCreate extends Component {
   static propTypes = {
@@ -8,7 +9,13 @@ export default class SetCreate extends Component {
   };
   render() {
     return (
-      <h1>Set Create</h1>
+      <div className={s.createSet + ' ' + s.infoPage}>
+        <Helmet title="create a set" />
+        <div className={s.infoContainer}>
+          <h2>Create a New Data-Set</h2>
+
+        </div>
+      </div>
     );
   }
 }
