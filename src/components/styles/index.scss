@@ -33,9 +33,14 @@ h1, h2, h3, h4, h5, h6, p {
 	margin: 0;
 }
 
-.largeHeader h1 {
-	font-size: 80px;
-	margin-top: -28px;
+.largeHeader {
+	h1 {
+		font-size: 80px;
+		margin-top: -28px;
+	}
+	h1, p {
+		color: $white;
+	}
 }
 
 a {
@@ -200,4 +205,19 @@ ul {
 }
 .infoContainer:hover {
 	box-shadow: $largeShadow;
+}
+
+.banner {
+	z-index: -1;
+	position: absolute;
+	top: $headerHeight;
+	left: 0;
+	right: 0;
+	height: 200px;
+	background-color: $grey;
+	color: $white;
+  background-image: url("/images/background.png");
+  background-size: cover;
+  background-position: center;
+	box-shadow: $smallShadow;
 }

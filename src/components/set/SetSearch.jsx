@@ -82,12 +82,13 @@ export default class SetSearch extends Component {
         </form>
         {(() => {
           if (this.props.location.pathname === '/') {
-            return (
-              <div className={s.centeredMessage + ' ' + s.largeHeader}>
+            return [
+              <div key="title" className={s.centeredMessage + ' ' + s.largeHeader}>
                 <h1>zenow</h1>
                 <p>create, share, and find free public data</p>
-              </div>
-            );
+              </div>,
+              <div key="background" className={s.banner}></div>
+            ];
           }
           return (<Helmet title={this.props.curSearch} />);
         })()}
