@@ -10,7 +10,7 @@ import ReactDOM from 'react-dom';
 import {Link} from 'react-router';
 import {promptSignIn} from 'redux/modules/modal';
 import Helmet from 'react-helmet';
-import {jsonToCsv, csvToJson} from 'utils/csvConverter';
+import {jsonToCsv} from 'utils/csvConverter';
 
 import s from '../styles/index.scss';
 
@@ -159,7 +159,7 @@ export default class Set extends Component {
                         }}>
                       <i className="fa fa-align-right"></i>json view
                     </Link>
-                  )
+                  );
                 }
                 if (this.props.location.query.view !== 'csv') {
                   links.push(
@@ -170,7 +170,7 @@ export default class Set extends Component {
                         }}>
                       <i className="fa fa-list-alt"></i>csv view
                     </Link>
-                  )
+                  );
                 }
                 links.push(
                   <Link to="/documentation/Set">
@@ -186,7 +186,7 @@ export default class Set extends Component {
             onLeave={() => this.setState({focusTable: true})} />
           {(() => {
             if (this.props.location.query.view === 'json') {
-              let formattedData = JSON.stringify(data, null, 2);
+              const formattedData = JSON.stringify(data, null, 2);
               return (
                 <div className={s.jsonArea}>
                   {(() => {
@@ -195,13 +195,13 @@ export default class Set extends Component {
                         <a
                             href={'data:text/plain;charset=utf-8,' + encodeURIComponent(formattedData)}
                             download={this.props.set.title + '.json'}>
-                          <i className="fa fa-download"></i>downlod
+                          <i className="fa fa-download"></i>download
                         </a>
-                      )
+                      );
                     }
                     return (
                       <a onClick={this.props.promptSignIn}>
-                        <i className="fa fa-download"></i>downlod
+                        <i className="fa fa-download"></i>download
                       </a>
                     );
                   })()}
@@ -211,8 +211,8 @@ export default class Set extends Component {
                 </div>
               );
             } else if (this.props.location.query.view === 'csv') {
-              let formattedData = jsonToCsv(data.map((item) => {
-                let newItem = { ...item };
+              const formattedData = jsonToCsv(data.map((item) => {
+                const newItem = { ...item };
                 delete newItem._sets;
                 delete newItem._type;
                 return newItem;
@@ -225,12 +225,13 @@ export default class Set extends Component {
                         <a
                             href={'data:text/plain;charset=utf-8,' + encodeURIComponent(formattedData)}
                             download={this.props.set.title + '.csv'}>
+                            <i className="fa fa-download"></i>download
                         </a>
-                      )
+                      );
                     }
                     return (
                       <a onClick={this.props.promptSignIn}>
-                        <i className="fa fa-download"></i>downlod
+                        <i className="fa fa-download"></i>download
                       </a>
                     );
                   })()}
