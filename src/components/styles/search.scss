@@ -58,9 +58,11 @@
       flex-direction: column;
       cursor: pointer;
       flex-grow: 0;
+      background-color: $white;
 
       @media (max-width: 523px) {
-        margin-top: 0;
+        margin-top: 8px;
+        margin-bottom: 8px;
         height: 200px;
         flex-grow: 1;
       }
