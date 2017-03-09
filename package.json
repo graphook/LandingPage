@@ -32,7 +32,6 @@
         "NODE_PATH": "./src",
         "NODE_ENV": "development",
         "PORT": 3000,
-        "APIPORT": 3030,
         "ENV": "dev"
       }
     },

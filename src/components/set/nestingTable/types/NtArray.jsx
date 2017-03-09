@@ -13,7 +13,7 @@ class NtArray extends Component {
     const ChildComponent = types[this.props.type.items.type];
     return (
       <div className={s.ntArrayContainer}>
-        {this.props.data.map((elem, index) => {
+        {this.props.data && this.props.data.map((elem, index) => {
           const tempPath = this.props.path.slice(0);
           tempPath.push(index);
           return (
