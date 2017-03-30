@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import types from './type.map.js';
+import NtNull from './NtNull.jsx';
 
 import s from 'components/styles/index.scss';
 
@@ -16,13 +17,18 @@ class NtObject extends Component {
           const ChildComponent = types[this.props.type.fields[propKey].type];
           const tempPath = this.props.path.slice(0);
           tempPath.push(propKey);
+          if (this.props.data) {
+            return (
+              <ChildComponent
+                  key={tempPath.join()}
+                  type={this.props.type.fields[propKey]}
+                  data={this.props.data[propKey]}
+                  path={tempPath} />
+              );
+          }
           return (
-            <ChildComponent
-                key={tempPath.join()}
-                type={this.props.type.fields[propKey]}
-                data={this.props.data[propKey]}
-                path={tempPath} />
-            );
+            <NtNull />
+          );
         })}
       </div>
     );
