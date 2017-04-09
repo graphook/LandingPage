@@ -2,13 +2,13 @@
   height: calc(100vh - 50px);
   width: 100vw;
   overflow: auto;
+  background-color: $white;
 
   .infoArea {
     width: 100vw;
     padding-top: 16px;
     box-sizing: border-box;
     overflow-x: auto;
-    background-color: $white;
 
     .setInfo {
       display: flex;
@@ -53,7 +53,6 @@
 
   .nestingTable {
     position: relative;
-    background-color: $white;
 
     .ntFixedHead {
       position: fixed;
