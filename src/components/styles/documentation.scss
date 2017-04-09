@@ -16,6 +16,8 @@
     overflow-y: auto;
     top: $headerHeight;
     left: 0;
+    background-color: $white;
+    border-right: $containerBorder;
 
     > ul > li {
       font-size: 16px;
@@ -74,6 +76,7 @@
         margin-left: auto;
         padding: 16px;
         border: $containerBorder;
+        background-color: $white;
       }
     }
   }
@@ -84,6 +87,7 @@
   border: $containerBorder;
   margin-top: 8px;
   margin-bottom: 8px;
+  background-color: $white;
 
   > ul {
     margin: 0 !important;

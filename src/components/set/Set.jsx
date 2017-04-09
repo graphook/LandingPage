@@ -125,60 +125,47 @@ export default class Set extends Component {
                   <i className="fa fa-file"></i> {this.props.set.items.length}
                 </span>
                 {!this.props.isStarred && (
-                  <a onClick={() => (this.props.isLoggedIn) ? this.props.star(this.props.set._id) : this.props.promptSignIn() }>
+                  <button onClick={() => (this.props.isLoggedIn) ? this.props.star(this.props.set._id) : this.props.promptSignIn() }>
                     <i className="fa fa-star-o"></i>{this.props.set.stars}
-                  </a>
+                  </button>
                 )}
                 {this.props.isStarred && (
-                  <a onClick={() => this.props.unstar(this.props.set._id)}>
+                  <button onClick={() => this.props.unstar(this.props.set._id)}>
                     <i className="fa fa-star"></i>{this.props.set.stars}
-                  </a>
+                  </button>
                 )}
               </nav>
             </div>
             <nav className={s.dataNav}>
-              {(() => {
-                const links = [];
-                if (this.props.location.query.view && this.props.location.query.view !== 'table') {
-                  links.push(
-                    <Link
-                        to={{
-                          pathname: this.props.location.pathname,
-                          query: {...this.props.location.query, view: 'table'}
-                        }}>
-                      <i className="fa fa-table"></i>table view
-                    </Link>
-                  );
-                }
-                if (this.props.location.query.view !== 'json') {
-                  links.push(
-                    <Link
-                        to={{
-                          pathname: this.props.location.pathname,
-                          query: {...this.props.location.query, view: 'json'}
-                        }}>
-                      <i className="fa fa-align-right"></i>json view
-                    </Link>
-                  );
-                }
-                if (this.props.location.query.view !== 'csv') {
-                  links.push(
-                    <Link
-                        to={{
-                          pathname: this.props.location.pathname,
-                          query: {...this.props.location.query, view: 'csv'}
-                        }}>
-                      <i className="fa fa-list-alt"></i>csv view
-                    </Link>
-                  );
-                }
-                links.push(
-                  <Link to="/documentation/Set">
-                    <i className="fa fa-book"></i>rest api
+              <ul className={s.tabs}>
+                <li className={(!this.props.location.query.view || this.props.location.query.view === 'table') ? s.selected : ''}>
+                  <Link
+                      to={{
+                        pathname: this.props.location.pathname,
+                        query: {...this.props.location.query, view: 'table'}
+                      }}>
+                    <i className="fa fa-table"></i>Table View
                   </Link>
-                );
-                return links;
-              })()}
+                </li>
+                <li className={(this.props.location.query.view === 'json') ? s.selected : ''}>
+                  <Link
+                      to={{
+                        pathname: this.props.location.pathname,
+                        query: {...this.props.location.query, view: 'json'}
+                      }}>
+                    <i className="fa fa-align-right"></i>JSON View
+                  </Link>
+                </li>
+                <li className={(this.props.location.query.view === 'csv') ? s.selected : ''}>
+                  <Link
+                      to={{
+                        pathname: this.props.location.pathname,
+                        query: {...this.props.location.query, view: 'csv'}
+                      }}>
+                    <i className="fa fa-list-alt"></i>CSV View
+                  </Link>
+                </li>
+              </ul>
             </nav>
           </div>
           <Waypoint

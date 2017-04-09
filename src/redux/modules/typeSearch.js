@@ -21,13 +21,14 @@ export default function reducer(state = initialState, action = {}) {
         loading: true
       };
     case SEARCH_SUCCESS:
+      const results = action.result.types.read.map((result) => {
+        return result._id;
+      });
       return {
         ...state,
         loading: false,
         loaded: true,
-        results: state.results.concat(action.result.types.read.map((result) => {
-          return result._id;
-        })),
+        results: (action.pageNumber !== 0) ? state.results.concat(results) : results,
         curSearch: action.query,
         searchText: action.query,
         page: action.page

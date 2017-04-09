@@ -12,10 +12,17 @@ header {
   padding-left: $margin;
   padding-right: $margin;
   box-sizing: border-box;
+  border-bottom: $containerBorder;
+
+  nav {
+    display: flex;
+    align-items: center;
+  }
 
   h1 {
     margin: 0;
     font-size: 25px;
+    margin-right: 24px;
 
     a {
       color: $black;
@@ -38,16 +45,6 @@ header {
     display: flex;
     flex-direction: row;
 
-    .curPage {
-      background-color: $grey;
-      margin-left: 0;
-      margin-right: 0;
-      padding-left: 10px;
-      padding-right: 10px;
-      a {
-        color: $white;
-      }
-    }
     li {
       height: $headerHeight;
       list-style: none;
@@ -96,13 +93,9 @@ header {
 
   .feedbackButton {
     position: fixed;
-    border: $containerBorder;
-    padding: 8px;
-    cursor: pointer;
     z-index: 5;
     bottom: 16px;
     right: $margin;
-    background-color: $white;
   }
 }
 

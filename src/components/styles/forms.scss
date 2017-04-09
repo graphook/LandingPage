@@ -1,7 +1,6 @@
 
 input[type=text], input[type=password], input[type=email] {
-  border: none;
-  border-bottom: 1px solid $black;
+  border: 1px solid $primaryLight;
   font-size: $contentFontSize;
   height: 34px;
   padding: 8px;
@@ -12,12 +11,17 @@ input[type=text], input[type=password], input[type=email] {
 input:focus, select:focus, textarea:focus {
   outline: none;
 }
+input[type=text].error, input[type=password].error, input[type=email].error {
+  color: $errorRed;
+  border-color: $errorRed !important;
+}
 input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
-  border-bottom: 2px solid $grey;
+  border: 1px solid $primary;
+  border-bottom: 2px solid $primary;
   padding-bottom: 0;
 }
-input[type=text]:hover, input[type=password]:hover, input[type=email]:focus {
-  border-bottom-color: $grey;
+input[type=text]:hover, input[type=password]:hover, input[type=email]:hover {
+  border-color: $primary;
 }
 
 form {
@@ -45,12 +49,13 @@ form {
   position: relative;
   padding-bottom: 8px;
   padding-top: 8px;
+  color: $primaryLight;
 
   .fieldIcon {
     position: absolute;
     font-size: $contentFontSize;
     padding: 8px;
-    bottom: 12px;
+    bottom: 10px;
     pointer-events: none;
   }
   input[type=text], input[type=password], input[type=email] {
@@ -64,10 +69,10 @@ form {
 }
 
 .select {
-  border: 1px solid $black;
-  background-color: $black;
+  border: 1px solid $primary;
+  background-color: $primary;
   display: block;
-  border-radius: 0;
+  border-radius: 8px;
   height: 35px;
   box-sizing: border-box;
   select {

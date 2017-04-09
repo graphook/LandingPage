@@ -40,16 +40,7 @@ export default class CreateUserForm extends Component {
   render() {
     return (
       <form className="createUserForm" onSubmit={this.props.handleSubmit(this.onSubmit)}>
-        <h2>log in</h2>
-        {(() => {
-          if (this.props.error) {
-            return (
-              <p className={s.error}>
-                <i className="fa fa-exclamation-circle" aria-hidden="true"></i> {this.props.error}
-              </p>
-            );
-          }
-        })()}
+        <h2>Log In</h2>
         <Field
           name="username"
           type="text"
