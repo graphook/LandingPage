@@ -107,8 +107,8 @@ export default class SetSearch extends Component {
                   {resultData.description}
                 </p>
                 <div className={s.rowFlex}>
-                  <span title={resultData.items.length + ' items in this set'}>
-                    {resultData.items.length} <i className="fa fa-file"></i>
+                  <span title={resultData.numItems + ' items in this set'}>
+                    {resultData.numItems} <i className="fa fa-file"></i>
                   </span>
                   <span title={resultData.stars + ' stars'}>
                     {resultData.stars} <i className="fa fa-star"></i>

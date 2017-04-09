@@ -13,7 +13,8 @@ const initialState = {
   allItemsLoaded: false,
   setError: '',
   itemError: {},
-  numPerPage: NUM_PER_PAGE
+  numPerPage: NUM_PER_PAGE,
+  items: []
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -23,7 +24,8 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loading: true,
         id: action.id,
-        setError: ''
+        setError: '',
+        items: []
       };
     case FETCH_SUCCESS:
       return {
@@ -39,13 +41,14 @@ export default function reducer(state = initialState, action = {}) {
     case FETCH_ITEMS:
       return {
         ...state,
-        itemError: {}
+        itemError: {},
       };
     case FETCH_ITEMS_SUCCESS:
       return {
         ...state,
         page: action.page,
-        allItemsLoaded: action.result.items.read.length < NUM_PER_PAGE
+        allItemsLoaded: action.result.items.read.length < NUM_PER_PAGE,
+        items: state.items.concat(action.result.items.read.map(item => item._id))
       };
     case FETCH_ITEMS_FAIL:
       return {
@@ -68,17 +71,13 @@ export function fetchSet(setId) {
 export function fetchItems(setId, setItems, pageNumber) {
   return {
     types: [FETCH_ITEMS, FETCH_ITEMS_SUCCESS, FETCH_ITEMS_FAIL],
-    promise: (client) => client.post('/v1/set/' + setId + '/item/search', {
-      data: {
-        _id: {
-          $in: setItems
-        }
-      },
+    promise: (client) => client.get('/v1/set/' + setId + '/item', {
       params: {
         count: NUM_PER_PAGE,
         page: pageNumber
       }
     }),
+    setId,
     page: pageNumber
   };
 }

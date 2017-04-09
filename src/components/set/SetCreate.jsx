@@ -74,7 +74,6 @@ export default class SetCreate extends Component {
       });
   }
   render() {
-    console.log(this.state);
     return (
       <div className={s.createSet + ' ' + s.infoPage}>
         <Helmet title="create a set" />

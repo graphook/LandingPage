@@ -93,7 +93,6 @@ app.use('/getproxy', (req, res) => {
       'Content-Type': 'application/octet-stream'
     },
   };
-  console.log(url);
   http.get(url, function(resp){
     resp.setEncoding('utf8');
     var completeResponse = '';

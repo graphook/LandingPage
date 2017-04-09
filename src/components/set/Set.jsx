@@ -36,6 +36,7 @@ import s from '../styles/index.scss';
     page: state.setDetails.page,
     numPerPage: state.setDetails.numPerPage,
     id: state.setDetails.id,
+    items: state.setDetails.items,
     allItemsLoaded: state.setDetails.allItemsLoaded,
     itemError: state.setDetails.itemError,
     isStarred: (state.profileDetails.user.stars) ? state.profileDetails.user.stars.indexOf(state.setDetails.id) !== -1 : false,
@@ -75,7 +76,8 @@ export default class Set extends Component {
     star: PropTypes.func,
     unstar: PropTypes.func,
     isLoggedIn: PropTypes.bool,
-    promptSignIn: PropTypes.func
+    promptSignIn: PropTypes.func,
+    items: PropTypes.array
   };
   constructor(props) {
     super(props);
@@ -101,8 +103,8 @@ export default class Set extends Component {
     if (this.props.set) {
       const data = [];
       for (let i = 0; i < (this.props.numPerPage * (this.props.page + 1)); i++) {
-        if (this.props.itemHash[this.props.set.items[i]]) {
-          data.push(this.props.itemHash[this.props.set.items[i]]);
+        if (this.props.itemHash[this.props.items[i]]) {
+          data.push(this.props.itemHash[this.props.items[i]]);
         }
       }
       return (
@@ -122,7 +124,7 @@ export default class Set extends Component {
                   <i className="fa fa-file-text"></i>{this.props.set.type.title}
                 </Link>
                 <span>
-                  <i className="fa fa-file"></i> {this.props.set.items.length}
+                  <i className="fa fa-file"></i> {this.props.set.numItems}
                 </span>
                 {!this.props.isStarred && (
                   <button onClick={() => (this.props.isLoggedIn) ? this.props.star(this.props.set._id) : this.props.promptSignIn() }>
