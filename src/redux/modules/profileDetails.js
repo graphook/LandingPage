@@ -23,11 +23,10 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action = {}) {
-  if (action.result && action.result.users) {
+  if (action.result && action.result.auth && action.result.auth.user) {
     return {
       ...state,
-      user: action.result.users[Object.keys(action.result.users)[0]][0]
-      // ^ *sarcasm* cool
+      user: action.result.auth.user
     };
   }
   switch (action.type) {
@@ -90,7 +89,7 @@ export default function reducer(state = initialState, action = {}) {
 export function fetchUser() {
   return {
     types: [FETCH, FETCH_SUCCESS, FETCH_FAIL],
-    promise: (client) => client.get('/v1/user')
+    promise: (client) => client.get('/v2/user')
   };
 }
 export function fetchUserSets(username) {

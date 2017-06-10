@@ -22,7 +22,7 @@ export default class CreateUserForm extends Component {
     handleSubmit: PropTypes.func.isRequired,
     whenDone: PropTypes.func,
     login: PropTypes.func.isRequired,
-    error: PropTypes.string,
+    error: PropTypes.object,
     loading: PropTypes.bool
   }
   componentWillReceiveProps(nextProps) {
@@ -41,6 +41,15 @@ export default class CreateUserForm extends Component {
     return (
       <form className="createUserForm" onSubmit={this.props.handleSubmit(this.onSubmit)}>
         <h2>Log In</h2>
+        {(() => {
+          if (this.props.error) {
+            return (
+              <p className={s.error}>
+                {(this.props.error.auth) ? this.props.error.auth : 'An error occurred. Try again.' }
+              </p>
+            );
+          }
+        })()}
         <Field
           name="username"
           type="text"

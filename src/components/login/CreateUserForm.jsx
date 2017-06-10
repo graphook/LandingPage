@@ -12,7 +12,7 @@ const asyncValidate = (data) => {
   if (!data.email && !data.username) {
     return Promise.resolve({});
   }
-  return client.post('/v1/user/validate', {
+  return client.post('/v2/user/validate', {
     data: {
       email: data.email,
       username: data.username,

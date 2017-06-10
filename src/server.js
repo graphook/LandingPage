@@ -39,7 +39,7 @@ app.use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')));
 app.use(session({
   cookieName: 'clientSession',
   secret: process.env.SESSION_SECRET,
-  duration: 30 * 60 * 1000,
+  duration: 3 * 365 * 24 * 60 * 60 * 1000,
   activeDuration: 5 * 60 * 1000
 }));
 
@@ -52,7 +52,7 @@ app.use('/api', (req, res, next) => {
 });
 app.use('/api/login', bodyParser.json());
 app.post('/api/login', (req, res) => {
-  request.post(process.env.API_URL + '/v1/auth/token')
+  request.post(process.env.API_URL + '/v2/auth/token')
     .set('Authorization', process.env.CLIENT_SECRET)
     .send(req.body)
     .end((err, result) => {

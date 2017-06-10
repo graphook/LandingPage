@@ -112,7 +112,7 @@
     "piping": "^0.3.0",
     "pretty-error": "^1.2.0",
     "raw-body": "^2.2.0",
-    "react": "0.14.8",
+    "react": "^0.14.8",
     "react-a11y": "^0.2.6",
     "react-addons-test-utils": "0.14.8",
     "react-dom": "0.14.8",

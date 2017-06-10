@@ -48,11 +48,12 @@ export default function reducer(state = initialState, action = {}) {
         user: action.result
       };
     case LOGIN_FAIL:
+      console.log(JSON.stringify(action.error, null, 2));
       return {
         ...state,
         loggingIn: false,
         user: null,
-        loginError: action.error.auth
+        loginError: action.error
       };
     case LOGOUT:
       return {
@@ -124,7 +125,7 @@ export function logout() {
 export function createUser(data) {
   return {
     types: [CREATE_USER, CREATE_USER_SUCCESS, CREATE_USER_FAIL],
-    promise: (client) => client.post('/v1/user', {
+    promise: (client) => client.post('/v2/user', {
       data
     })
   };
