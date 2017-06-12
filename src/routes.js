@@ -2,6 +2,8 @@ import React from 'react';
 import {IndexRoute, Route} from 'react-router';
 import Layout from './components/layout/Layout.jsx';
 
+import Home from './components/home/Home.jsx';
+import Search from './components/search/Search.jsx';
 import SetSearch from './components/set/SetSearch.jsx';
 import Set from './components/set/Set.jsx';
 import SetCreate from './components/set/SetCreate.jsx';
@@ -16,9 +18,10 @@ export default () => {
   return (
     <Route path="/" component={Layout}>
       { /* Home (main) route */ }
-      <IndexRoute component={SetSearch}/>
+      <IndexRoute component={Home}/>
 
       { /* Routes */ }
+      <Route path="/search" component={Search} />
       <Route path="/set" component={SetSearch} />
       <Route path="/set/create" component={SetCreate} />
       <Route path="/set/:id" component={Set} />

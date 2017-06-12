@@ -18,6 +18,9 @@ header {
     display: flex;
     align-items: center;
   }
+  .titleArea{
+    flex-grow: 1;
+  }
 
   h1 {
     margin: 0;
@@ -29,18 +32,23 @@ header {
       text-decoration: none;
     }
   }
-  @media (min-width: 730px) {
-    h1.condensed { display: none; }
+  .hamburger {
+    margin-right: 12px;
   }
-  @media (min-width: 650px) and (max-width: 729px) {
-    h1.expanded { display: none; }
-  }
-  @media (max-width: 649px) {
+  .search {
+    display: flex;
+    padding: 0;
+    flex-grow: 1;
+    max-width: 400px;
 
-    h1.condensed { display: none; }
-    .linkText { display: none; }
+    button {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    input[type=text] {
+      height: 35px;
+    }
   }
-
   ul {
     display: flex;
     flex-direction: row;
@@ -99,11 +107,36 @@ header {
   }
 }
 
-@media (max-width: 1079px) {
-  .signUpContainer {
+.sideMenu {
+  position: fixed;
+  top: $headerHeight;
+  background-color: $white;
+  border-right: $containerBorder;
+  width: 300px;
+  bottom: 0;
+  transition: transform 0.25s ease;
+  box-sizing: border-box;
+
+  ul {
+    list-style: none;
+    margin: 0;
+
+    li {
+      padding-left: $margin;
+      padding-right: $margin;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      border-bottom: $containerBorder;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .topMenu {
     display: none;
   }
 }
+
 
 .contact {
   display: flex;

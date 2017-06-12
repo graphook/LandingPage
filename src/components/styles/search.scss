@@ -2,39 +2,20 @@
   padding-top: 16px;
   padding-left: $margin;
   padding-right: $margin;
-  .searchBar {
-    height: 50px;
-    max-width: 740px;
-    margin-bottom: 16px;
-    margin-left: auto;
-    margin-right: auto;
-    border: $containerBorder;
-    display: flex;
 
-    input[type=text] {
-      height: 100%;
-      padding-left: 16px;
-      padding-top: 8px;
-      padding-bottom: 8px;
-      border: none;
-      box-sizing: border-box;
-      font-size: 16px;
-      font-family: 'Roboto', sans-serif;
-      flex-grow: 1;
-    }
-    input[type=text]:focus {
-      outline: none;
-      padding-top: 8px;
-      padding-bottom: 8px;
-    }
-    input[type=submit] {
-      height: 100%;
-      border: none;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 0;
-    }
+  .searchNav {
+    flex-direction: row;
+    margin: 0;
+    margin-top: -16px;
+    margin-left: -4vw;
+    margin-right: -4vw;
+    display: flex;
+    justify-content: center;
+    border-bottom: $containerBorder;
+    background-color: $white;
   }
+
+
 
   .searchResults {
     display: flex;

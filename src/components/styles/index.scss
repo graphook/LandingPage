@@ -255,15 +255,11 @@ ul.tabs {
 }
 
 .banner {
-	z-index: -1;
-	position: absolute;
-	top: $headerHeight;
-	left: 0;
-	right: 0;
-	height: 200px;
-	background-color: $grey;
+	background-color: $primary;
 	color: $white;
-  background-image: url("/images/background.png");
+	padding-top: 24px;
+	padding-bottom: 24px;
+  /*background-image: url("/images/background.png");*/
   background-size: cover;
   background-position: center;
 	box-shadow: $smallShadow;

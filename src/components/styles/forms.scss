@@ -7,6 +7,7 @@ input[type=text], input[type=password], input[type=email] {
   padding-bottom: 1px;
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
+  padding-top: 0px;
 }
 input:focus, select:focus, textarea:focus {
   outline: none;
@@ -60,7 +61,6 @@ form {
   }
   input[type=text], input[type=password], input[type=email] {
     padding-left: 28px;
-    padding-top: 0px;
   }
   p {
     margin: 0;

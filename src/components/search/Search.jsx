@@ -6,7 +6,7 @@ import {browserHistory} from 'react-router';
 import Waypoint from 'react-waypoint';
 import {Link} from 'react-router';
 import {throttle} from 'lodash';
-import Helmet from 'react-helmet';
+// import Helmet from 'react-helmet';
 
 import s from '../styles/index.scss';
 
@@ -69,19 +69,13 @@ export default class SetSearch extends Component {
   render() {
     return (
       <div className={s.search}>
-        {(() => {
-          if (this.props.location.pathname === '/') {
-            return (
-              <div key="background" className={s.banner}>
-                <div key="title" className={s.centeredMessage + ' ' + s.largeHeader}>
-                  <h1>zenow</h1>
-                  <p>create, share, and find free public data</p>
-                </div>
-              </div>
-            );
-          }
-          return (<Helmet title={this.props.curSearch} />);
-        })()}
+        <nav className={s.searchNav}>
+          <ul className={s.tabs}>
+            <li className={s.selected}><a><i className="fa fa-bar-chart"></i>Insights</a></li>
+            <li><a><i className="fa fa-table"></i>Data Sets</a></li>
+            <li><a><i className="fa fa-file-text"></i>Data Types</a></li>
+          </ul>
+        </nav>
         <section className={s.searchResults}>
           {this.props.searchResults.map((result) => {
             const resultData = this.props.setHash[result];

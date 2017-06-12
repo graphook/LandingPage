@@ -34,75 +34,93 @@ export default class Layout extends Component {
     openModal: PropTypes.func.isRequired,
     modalOpen: PropTypes.bool
   };
-  renderLinks = () => {
-    const path = this.props.location.pathname;
-    const linkData = [
+  constructor(props) {
+    super(props);
+    this.state = {
+      sidePanelOpen: false
+    };
+  }
+  getLinkData = () => {
+    let linkData = [
       {
-        selected: path.startsWith('/set') || path === '/',
-        text: 'Data Sets',
-        icon: 'fa-table',
-        to: '/set'
-      },
-      {
-        selected: path.startsWith('/type'),
-        text: 'Data Types',
-        icon: 'fa-file-text',
-        to: '/type'
-      },
-      {
-        selected: path.startsWith('/documentation'),
         text: 'Rest API',
         icon: 'fa-book',
         to: '/documentation'
+      },
+      {
+        text: 'Create New',
+        icon: 'fa-plus',
+        onClick: () => alert('createNew')
       }
     ];
     if (this.props.user) {
-      linkData.push({
-        selected: path.startsWith('/profile'),
-        text: 'Profile',
-        icon: 'fa-user',
-        to: '/profile'
-      });
+      linkData = linkData.concat([
+        {
+          text: 'Profile',
+          icon: 'fa-user',
+          to: '/profile'
+        },
+        {
+          text: 'Log Out',
+          icon: 'fa-sign-out',
+          onClick: this.props.logout
+        }
+      ]);
+    } else {
+      linkData = linkData.concat([
+        {
+          text: 'Create an Account',
+          icon: 'fa-user',
+          onClick: this.props.openModal.bind(null, <AuthPrompt />)
+        },
+        {
+          text: 'Log In',
+          icon: 'fa-sign-in',
+          primary: true,
+          onClick: this.props.openModal.bind(null, <AuthPrompt loginFocus />)
+        }
+      ]);
     }
-    return linkData.map((link) => {
-      return (
-        <li className={(link.selected) ? s.selected : ''} key={link.text}><Link to={link.to}>
-          <i className={'fa ' + link.icon}></i><span className={s.linkText}>{link.text}</span>
-        </Link></li>
-      );
-    });
+    return linkData;
   }
   render() {
+    const linkData = this.getLinkData();
     return (
       <div className={s.layout}>
         <Helmet {...config.app.head} />
         <header>
-          <nav>
-            <h1 className={s.expanded}><Link to="/">zenow</Link></h1>
-            <h1 className={s.condensed}><Link to="/">z</Link></h1>
-            <ul className={s.tabs}>
-              {this.renderLinks()}
-            </ul>
+          <nav className={s.titleArea}>
+            <a onClick={() => this.setState({ sidePanelOpen: !this.state.sidePanelOpen })}>
+              <i className={'fa fa-bars ' + s.hamburger}></i>
+            </a>
+            <h1><Link to="/">zenow</Link></h1>
+            <form className={s.search}>
+              <input
+                  type="text"
+                  placeholder="Search"
+                  ref="searchBox" />
+              <button className={s.primary}><i className="fa fa-search"></i></button>
+            </form>
           </nav>
-          <nav>
+          <nav className={s.topMenu}>
             <ul>
-              {(() => {
-                if (this.props.user) {
-                  return [
-                    <li key="log out"><button onClick={this.props.logout}>
-                      <i className="fa fa-sign-out"></i><span className={s.linkText}>Log Out</span>
-                    </button></li>
-                  ];
+              {linkData.map((data) => {
+                if (data.to) {
+                  return (
+                    <li key={data.text}><Link to={data.to}>
+                      <i className={'fa ' + data.icon}></i><span className={s.linkText}>{data.text}</span>
+                    </Link></li>
+                );
+                } else if (data.onClick) {
+                  return (
+                    <li key={data.text}>
+                      <button onClick={data.onClick} className={(data.primary) ? s.primary : ''}>
+                        <i className={'fa ' + data.icon}></i><span className={s.linkText}>{data.text}</span>
+                      </button>
+                    </li>
+                  );
                 }
-                return [
-                  <li key="create an account"><button onClick={this.props.openModal.bind(null, <AuthPrompt />)}>
-                    <i className="fa fa-user"></i><span className={s.linkText}>Create an Account</span>
-                  </button></li>,
-                  <li key="log in"><button className={s.primary} onClick={this.props.openModal.bind(null, <AuthPrompt loginFocus />)}>
-                    <i className="fa fa-sign-in"></i><span className={s.linkText}>Log In</span>
-                  </button></li>
-                ];
-              })()}
+              })}
             </ul>
           </nav>
         </header>
@@ -119,6 +137,27 @@ export default class Layout extends Component {
             <button className={s.primary} onClick={() => browserHistory.push('/contact')}>Contact / Feedback</button>
           </div>
         </div>
+        <nav className={s.sideMenu} style={{
+          transform: 'translateX(' + ((this.state.sidePanelOpen) ? '0' : '-300px') + ')'
+        }}>
+          <ul>
+            {linkData.map((data) => {
+              if (data.to) {
+                return (
+                  <Link onClick={() => this.setState({ sidePanelOpen: false })} to={data.to}><li key={data.text}>
+                    <i className={'fa ' + data.icon}></i><span className={s.linkText}>{data.text}</span>
+                  </li></Link>
+                );
+              } else if (data.onClick) {
+                return (
+                  <a onClick={(e) => { this.setState({ sidePanelOpen: false }); data.onClick(e); }}><li key={data.text}>
+                    <i className={'fa ' + data.icon}></i><span className={s.linkText}>{data.text}</span>
+                  </li></a>
+              );
+              }
+            })}
+          </ul>
+        </nav>
       </div>
     );
   }
