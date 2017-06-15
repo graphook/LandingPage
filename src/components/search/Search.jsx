@@ -1,12 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { asyncConnect } from 'redux-async-connect';
 import { connect } from 'react-redux';
-import {searchSets, updateSearchText} from 'redux/modules/setSearch';
 import {browserHistory} from 'react-router';
 import Waypoint from 'react-waypoint';
 import {Link} from 'react-router';
 import {throttle} from 'lodash';
-// import Helmet from 'react-helmet';
+import Helmet from 'react-helmet';
 
 import s from '../styles/index.scss';
 
@@ -29,7 +28,7 @@ import s from '../styles/index.scss';
     searchText: state.setSearch.searchText,
     curSearch: state.setSearch.curSearch,
     page: state.setSearch.page
-  }), {updateSearchText, searchSets})
+  }), {})
 export default class SetSearch extends Component {
   static propTypes = {
     searchText: PropTypes.string,
@@ -45,7 +44,7 @@ export default class SetSearch extends Component {
   constructor(props) {
     super(props);
     this.searchThrottle = throttle(() => {
-      this.props.searchSets(this.refs.searchBox.value);
+      // this.props.searchSets(this.refs.searchBox.value);
     }, 1000);
   }
   search = (e) => {
@@ -54,11 +53,11 @@ export default class SetSearch extends Component {
   }
   loadMore = () => {
     if (!this.props.loading) {
-      this.props.searchSets(this.props.curSearch, this.props.page + 1);
+      // this.props.searchSets(this.props.curSearch, this.props.page + 1);
     }
   }
   updateSearchText = (e) => {
-    this.props.updateSearchText(e.target.value);
+    // this.props.updateSearchText(e.target.value);
     this.searchThrottle();
   }
   goToSet = (id, e) => {

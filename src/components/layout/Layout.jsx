@@ -9,6 +9,7 @@ import Modal from '../common/Modal.jsx';
 import {open} from 'redux/modules/modal';
 import config from 'config';
 import Helmet from 'react-helmet';
+import {updateSearchText, searchSets} from 'redux/modules/search';
 
 import s from '../styles/index.scss';
 
@@ -22,9 +23,10 @@ import s from '../styles/index.scss';
 @connect(
   state => ({
     user: state.auth.user,
-    modalOpen: state.modal.open
+    modalOpen: state.modal.open,
+    searchText: state.search.searchText
   }),
-  {logout, openModal: open})
+  {logout, openModal: open, updateSearchText, searchSets})
 export default class Layout extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
@@ -94,11 +96,16 @@ export default class Layout extends Component {
               <i className={'fa fa-bars ' + s.hamburger}></i>
             </a>
             <h1><Link to="/">zenow</Link></h1>
-            <form className={s.search}>
+            <form className={s.search} onSubmit={(e) => {
+                e.preventDefault();
+                this.props.searchSets(this.props.searchText, 0);
+              }}>
               <input
                   type="text"
                   placeholder="Search"
-                  ref="searchBox" />
+                  ref="searchBox"
+                  value={this.props.searchText}
+                  onChange={(e) => this.props.updateSearchText(e.target.value)} />
               <button className={s.primary}><i className="fa fa-search"></i></button>
             </form>
           </nav>

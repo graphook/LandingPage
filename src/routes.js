@@ -4,10 +4,8 @@ import Layout from './components/layout/Layout.jsx';
 
 import Home from './components/home/Home.jsx';
 import Search from './components/search/Search.jsx';
-import SetSearch from './components/set/SetSearch.jsx';
 import Set from './components/set/Set.jsx';
 import SetCreate from './components/set/SetCreate.jsx';
-import TypeSearch from './components/type/TypeSearch.jsx';
 import Type from './components/type/Type.jsx';
 import TypeCreate from './components/type/TypeCreate.jsx';
 import Profile from './components/profile/Profile.jsx';
@@ -22,10 +20,8 @@ export default () => {
 
       { /* Routes */ }
       <Route path="/search" component={Search} />
-      <Route path="/set" component={SetSearch} />
       <Route path="/set/create" component={SetCreate} />
       <Route path="/set/:id" component={Set} />
-      <Route path="/type" component={TypeSearch} />
       <Route path="/type/create" component={TypeCreate} />
       <Route path="/type/:id" component={Type} />
       <Route path="/documentation" component={Documentation} />

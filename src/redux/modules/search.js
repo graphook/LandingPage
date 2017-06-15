@@ -56,9 +56,10 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 export function searchSets(searchQuery, pageNumber) {
+  console.log(searchQuery);
   return {
     types: [SEARCH, SEARCH_SUCCESS, SEARCH_FAIL],
-    promise: (client) => client.get('/v1/set', {
+    promise: (client) => client.post('/v2/search', {
       params: {
         q: searchQuery || undefined,
         page: pageNumber || 0,

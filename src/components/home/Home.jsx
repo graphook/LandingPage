@@ -13,7 +13,7 @@ export default class Home extends Component {
             <p>create, share, and find free public data</p>
           </div>
         </div>
-        <Search />
+        {/*<Search />*/}
       </div>
     );
   }

@@ -5,13 +5,12 @@ import auth from './auth';
 import {reducer as form} from 'redux-form';
 import modal from './modal';
 import set from './set';
-import setSearchReducer from './setSearch';
 import type from './type';
-import typeSearch from './typeSearch';
 import setDetails from './setDetails';
 import item from './item';
 import typeDetails from './typeDetails';
 import profileDetails from './profileDetails';
+import search from './search';
 
 export default combineReducers({
   routing: routerReducer,
@@ -19,10 +18,9 @@ export default combineReducers({
   auth,
   form,
   modal,
+  search,
   set,
-  setSearch: setSearchReducer,
   type,
-  typeSearch,
   setDetails,
   item,
   typeDetails,
