@@ -12,6 +12,7 @@ import typeDetails from './typeDetails';
 import profileDetails from './profileDetails';
 import searchInput from './searchInput';
 import mainSearch from './mainSearch';
+import searchResults from './searchResults';
 
 
 const createNamedWrapperReducer = (reducerFunction, reducerName) => {
@@ -34,6 +35,8 @@ export default combineReducers({
   modal,
   mainSearchBar: createNamedWrapperReducer(searchInput, 'mainSearchBar'),
   mainSearch,
+  mainDataSetResults: createNamedWrapperReducer(searchResults, 'mainDataSetResults'),
+  mainDataTypeResults: createNamedWrapperReducer(searchResults, 'mainDataTypeResults'),
   set,
   type,
   setDetails,

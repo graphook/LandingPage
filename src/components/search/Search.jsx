@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import {Link} from 'react-router';
 import Helmet from 'react-helmet';
 import {changeSelectedSearch} from 'redux/modules/mainSearch';
+import SearchResults from './SearchResults';
 
 import s from '../styles/index.scss';
 
@@ -66,7 +67,7 @@ export default class SetSearch extends Component {
             </li>
           </ul>
         </nav>
-        {/* <SearchResults name={name} setName={setName} query={query} /> */}
+        <SearchResults name={name} setName={setName} query={query} />
       </div>
     );
   }

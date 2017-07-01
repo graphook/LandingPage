@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+/* import React, { Component, PropTypes } from 'react';
 import { asyncConnect } from 'redux-async-connect';
 import { connect } from 'react-redux';
 import {browserHistory} from 'react-router';
@@ -11,26 +11,30 @@ import {searchSets} from 'redux/modules/search';
 import s from '../styles/index.scss';
 
 @asyncConnect([{
-  promise: ({store: {dispatch, getState}, props: {query, name, setName}}) => {
+  promise: ({ store: {dispatch, getState}}) => {
+    console.log('sdkfjklsdfj')
     const promises = [];
+    console.log('nononon');
     if (query !== getState()[name].curSearch || !getState().setSearch.loaded) {
+      console.log('in here');
       promises.push(dispatch(searchSets(query || '', 0, setName, name)));
     }
     if (__SERVER__) {
+      console.log('in there');
       return Promise.all(promises);
     } else {
       Promise.all(promises);
     }
   }
 }])
-@connect(
-  state => ({
-    loading: state.search.loading,
-    searchResults: state.search.results,
-    setHash: state.search.hash,
-    searchText: state.search.searchText,
-    curSearch: state.search.curSearch,
-    page: state.search.page
+/*@connect(
+  (state, props) => ({
+    loading: state[props.name].loading,
+    searchResults: state[props.name].results,
+    setHash: state[props.name].hash,
+    searchText: state[props.name].searchText,
+    curSearch: state[props.name].curSearch,
+    page: state[props.name].page
   }), {})
 export default class SearchResults extends Component {
   static propTypes = {
@@ -116,6 +120,26 @@ export default class SearchResults extends Component {
           }
         })()}
       </section>
+    );
+  }
+}*/
+
+
+import React, { Component } from 'react';
+import { asyncConnect } from 'redux-async-connect';
+
+@asyncConnect([{
+  promise: () => {
+    console.log('ehehehe');
+  }
+}])
+export default class SearchResults extends Component {
+  static propTypes = {
+
+  }
+  render() {
+    return (
+      <h1>Hi</h1>
     );
   }
 }

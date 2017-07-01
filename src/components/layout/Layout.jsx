@@ -159,13 +159,13 @@ export default class Layout extends Component {
             {linkData.map((data) => {
               if (data.to) {
                 return (
-                  <Link onClick={() => this.setState({ sidePanelOpen: false })} to={data.to}><li key={data.text}>
+                  <Link onClick={() => this.setState({ sidePanelOpen: false })} to={data.to} key={data.text}><li>
                     <i className={'fa ' + data.icon}></i><span className={s.linkText}>{data.text}</span>
                   </li></Link>
                 );
               } else if (data.onClick) {
                 return (
-                  <a onClick={(e) => { this.setState({ sidePanelOpen: false }); data.onClick(e); }}><li key={data.text}>
+                  <a onClick={(e) => { this.setState({ sidePanelOpen: false }); data.onClick(e); }} key={data.text}><li>
                     <i className={'fa ' + data.icon}></i><span className={s.linkText}>{data.text}</span>
                   </li></a>
               );
