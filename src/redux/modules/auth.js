@@ -48,7 +48,6 @@ export default function reducer(state = initialState, action = {}) {
         user: action.result
       };
     case LOGIN_FAIL:
-      console.log(JSON.stringify(action.error, null, 2));
       return {
         ...state,
         loggingIn: false,

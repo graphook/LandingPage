@@ -1,34 +1,30 @@
 import React, { Component, PropTypes } from 'react';
 import { asyncConnect } from 'redux-async-connect';
 import { connect } from 'react-redux';
-import {browserHistory} from 'react-router';
-import Waypoint from 'react-waypoint';
 import {Link} from 'react-router';
-import {throttle} from 'lodash';
 import Helmet from 'react-helmet';
+import {changeSelectedSearch} from 'redux/modules/mainSearch';
 
 import s from '../styles/index.scss';
 
+const DATA_SET_NAME = 'mainDataSetResults';
+const INSIGHT_NAME = 'mainInsightResults';
+const DATA_TYPE_NAME = 'mainDataTypeResults';
+
 @asyncConnect([{
-  promise: ({store: {dispatch, getState}, location: {query: {q}}}) => {
+  promise: ({store: {dispatch, getState}}) => {
     const promises = [];
-    if (q !== getState().setSearch.curSearch) {
-      promises.push(dispatch(searchSets(q || '')));
-    } else if (!getState().setSearch.loaded) {
-      promises.push(dispatch(searchSets()));
-    }
+    const setName = getState().routing.locationBeforeTransitions.pathname.split('/')[2] || 'set_set';
+    promises.push(dispatch(changeSelectedSearch(setName)));
     return Promise.all(promises);
   }
 }])
 @connect(
   state => ({
-    loading: state.setSearch.loading,
-    searchResults: state.setSearch.results,
-    setHash: state.set.hash,
-    searchText: state.setSearch.searchText,
-    curSearch: state.setSearch.curSearch,
-    page: state.setSearch.page
-  }), {})
+    setName: state.mainSearch.selectedSet,
+    modalOpen: state.modal.open,
+    searchText: state.mainSearchBar.searchText
+  }))
 export default class SetSearch extends Component {
   static propTypes = {
     searchText: PropTypes.string,
@@ -39,88 +35,38 @@ export default class SetSearch extends Component {
     updateSearchText: PropTypes.func,
     searchResults: PropTypes.array,
     setHash: PropTypes.object,
-    location: PropTypes.object
-  }
-  constructor(props) {
-    super(props);
-    this.searchThrottle = throttle(() => {
-      // this.props.searchSets(this.refs.searchBox.value);
-    }, 1000);
-  }
-  search = (e) => {
-    e.preventDefault();
-    browserHistory.push('/set?q=' + this.props.searchText);
-  }
-  loadMore = () => {
-    if (!this.props.loading) {
-      // this.props.searchSets(this.props.curSearch, this.props.page + 1);
-    }
-  }
-  updateSearchText = (e) => {
-    // this.props.updateSearchText(e.target.value);
-    this.searchThrottle();
-  }
-  goToSet = (id, e) => {
-    if (e.target.tagName !== 'A') {
-      browserHistory.push('/set/' + id);
-    }
+    location: PropTypes.object,
+    setName: PropTypes.string
   }
   render() {
+    const query = this.props.location.query.q || '';
+    const setName = this.props.setName;
+    let name;
+    switch (setName) {
+      case 'type_set':
+        name = DATA_TYPE_NAME;
+        break;
+      case 'insight_set':
+        name = INSIGHT_NAME;
+        break;
+      default:
+        name = DATA_SET_NAME;
+    }
     return (
       <div className={s.search}>
+        <Helmet title={query || 'Search'} />
         <nav className={s.searchNav}>
           <ul className={s.tabs}>
-            <li className={s.selected}><a><i className="fa fa-bar-chart"></i>Insights</a></li>
-            <li><a><i className="fa fa-table"></i>Data Sets</a></li>
-            <li><a><i className="fa fa-file-text"></i>Data Types</a></li>
+            {/* <li className={s.selected}><a><i className="fa fa-bar-chart"></i>Insights</a></li> */}
+            <li className={(name === DATA_SET_NAME ? s.selected : '')}>
+              <Link to={'/search/set_set?q=' + query}><i className="fa fa-table"></i>Data Sets</Link>
+            </li>
+            <li className={(name === DATA_TYPE_NAME ? s.selected : '')}>
+              <Link to={'/search/type_set?q=' + query}><i className="fa fa-file-text"></i>Data Types</Link>
+            </li>
           </ul>
         </nav>
-        <section className={s.searchResults}>
-          {this.props.searchResults.map((result) => {
-            const resultData = this.props.setHash[result];
-            return (
-              <div className={s.setResult + ' ' + s.clickableShadow}
-                  key={result}
-                  onClick={this.goToSet.bind(null, resultData._id)}>
-                <p>type: <Link to={'/type/' + resultData.type._id}>
-                  {resultData.type.title}
-                </Link></p>
-                <h2>{resultData.title}</h2>
-                <p className={s.description}>
-                  {resultData.description}
-                </p>
-                <div className={s.rowFlex}>
-                  <span title={resultData.numItems + ' items in this set'}>
-                    {resultData.numItems} <i className="fa fa-file"></i>
-                  </span>
-                  <span title={resultData.stars + ' stars'}>
-                    {resultData.stars} <i className="fa fa-star"></i>
-                  </span>
-                </div>
-              </div>
-            );
-          })}
-        </section>
-        <Waypoint onEnter={this.loadMore} />
-        {(() => {
-          if (this.props.searchResults.length === 0 && !this.props.loading) {
-            return (
-              <div className={s.centeredMessage}>
-                <i className="fa fa-frown-o" aria-hidden="true">
-                </i> no results for {this.props.curSearch}.
-              </div>
-            );
-          }
-        })()}
-        {(() => {
-          if (this.props.loading) {
-            return (
-              <div className={s.centeredMessage}>
-                <i className="fa fa-refresh fa-spin" aria-hidden="true"></i>
-              </div>
-            );
-          }
-        })()}
+        {/* <SearchResults name={name} setName={setName} query={query} /> */}
       </div>
     );
   }

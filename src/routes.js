@@ -20,6 +20,7 @@ export default () => {
 
       { /* Routes */ }
       <Route path="/search" component={Search} />
+      <Route path="/search/:setName" component={Search} />
       <Route path="/set/create" component={SetCreate} />
       <Route path="/set/:id" component={Set} />
       <Route path="/type/create" component={TypeCreate} />

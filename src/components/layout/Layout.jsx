@@ -9,14 +9,17 @@ import Modal from '../common/Modal.jsx';
 import {open} from 'redux/modules/modal';
 import config from 'config';
 import Helmet from 'react-helmet';
-import {updateSearchText, searchSets} from 'redux/modules/search';
+import {search} from 'redux/modules/search';
+import {updateSearchText} from 'redux/modules/searchInput';
 
 import s from '../styles/index.scss';
 
 @asyncConnect([{
-  promise: () => {
+  promise: ({ store: {dispatch, getState}}) => {
     const promises = [];
-
+    if (!getState().mainSearchBar.userHasMadeAnInteraction) {
+      promises.push(dispatch(updateSearchText(getState().routing.locationBeforeTransitions.query.q || '', 'mainSearchBar')));
+    }
     return Promise.all(promises);
   }
 }])
@@ -24,9 +27,10 @@ import s from '../styles/index.scss';
   state => ({
     user: state.auth.user,
     modalOpen: state.modal.open,
-    searchText: state.search.searchText
+    searchText: state.mainSearchBar.searchText,
+    setName: state.mainSearch.selectedSet
   }),
-  {logout, openModal: open, updateSearchText, searchSets})
+  {logout, openModal: open, updateSearchText, search})
 export default class Layout extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
@@ -34,7 +38,11 @@ export default class Layout extends Component {
     logout: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
     openModal: PropTypes.func.isRequired,
-    modalOpen: PropTypes.bool
+    modalOpen: PropTypes.bool,
+    search: PropTypes.func,
+    searchText: PropTypes.string,
+    updateSearchText: PropTypes.func,
+    setName: PropTypes.string
   };
   constructor(props) {
     super(props);
@@ -97,15 +105,15 @@ export default class Layout extends Component {
             </a>
             <h1><Link to="/">zenow</Link></h1>
             <form className={s.search} onSubmit={(e) => {
-                e.preventDefault();
-                this.props.searchSets(this.props.searchText, 0);
-              }}>
+              e.preventDefault();
+              browserHistory.push('/search/' + this.props.setName + '?q=' + this.props.searchText);
+            }}>
               <input
                   type="text"
                   placeholder="Search"
                   ref="searchBox"
                   value={this.props.searchText}
-                  onChange={(e) => this.props.updateSearchText(e.target.value)} />
+                  onChange={(e) => this.props.updateSearchText(e.target.value, 'mainSearchBar')} />
               <button className={s.primary}><i className="fa fa-search"></i></button>
             </form>
           </nav>

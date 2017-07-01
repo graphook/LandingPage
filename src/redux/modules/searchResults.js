@@ -1,16 +1,15 @@
 const SEARCH = 'setSearch/SEARCH';
 const SEARCH_SUCCESS = 'setSearch/SEARCH_SUCCESS';
 const SEARCH_FAIL = 'setSearch/SEARCH_FAIL';
-const UPDATE_SEARCH_TEXT = 'setSearch/UPDATE_SEARCH_TEXT';
 
 const NUM_PER_PAGE = 20;
 const initialState = {
   loaded: false,
   page: 0,
-  searchText: '',
-  curSearch: '',
+  loading: false,
   results: [],
-  allResultsLoaded: false
+  allResultsLoaded: false,
+  curSearch: ''
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -31,9 +30,8 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         loaded: true,
         results: (action.page !== 0) ? state.results.concat(results) : results,
-        curSearch: action.query,
-        searchText: action.query,
         page: action.page,
+        curSearch: action.query,
         allResultsLoaded: action.result.sets.read.length < NUM_PER_PAGE
       };
     case SEARCH_FAIL:
@@ -42,48 +40,31 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         loaded: false,
         curSearch: action.query,
-        searchText: action.query,
         error: action.error
-      };
-    case UPDATE_SEARCH_TEXT:
-      return {
-        ...state,
-        searchText: action.text
       };
     default:
       return state;
   }
 }
 
-export function search(searchQuery, pageNumber) {
+export function search(searchQuery, pageNumber = 0, setName, name) {
   return {
     types: [SEARCH, SEARCH_SUCCESS, SEARCH_FAIL],
-    promise: (client) => client.post('/v2/set/search', {
+    promise: (client) => client.post('/v2/set/' + setName + '/search', {
       params: {
-        page: pageNumber || 0,
+        page: pageNumber,
         count: NUM_PER_PAGE
       },
       data: (searchQuery !== '') ? {
         query: {
-          bool: {
-            should: [
-              { match: { title: searchQuery } },
-              { match: { description: searchQuery } },
-              { match: { tags: searchQuery } },
-            ],
-            minimum_should_match: 1
+          match: {
+            _all: searchQuery
           }
         }
       } : {}
     }),
     query: searchQuery,
-    page: pageNumber || 0
-  };
-}
-
-export function updateSearchText(newText) {
-  return {
-    type: UPDATE_SEARCH_TEXT,
-    text: newText
+    page: pageNumber,
+    name: name
   };
 }

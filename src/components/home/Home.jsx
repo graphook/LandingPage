@@ -1,9 +1,14 @@
-import React, { Component } from 'react';
-import Search from 'components/search/Search.jsx';
+import React, { Component, PropTypes } from 'react';
 
 import s from '../styles/index.scss';
+import Search from 'components/search/search';
 
 export default class Home extends Component {
+  static propTypes = {
+    location: PropTypes.object,
+    params: PropTypes.object
+  }
+
   render() {
     return (
       <div>
@@ -13,7 +18,7 @@ export default class Home extends Component {
             <p>create, share, and find free public data</p>
           </div>
         </div>
-        {/*<Search />*/}
+        <Search location={this.props.location} params={this.props.params} />
       </div>
     );
   }

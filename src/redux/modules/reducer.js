@@ -10,7 +10,21 @@ import setDetails from './setDetails';
 import item from './item';
 import typeDetails from './typeDetails';
 import profileDetails from './profileDetails';
-import search from './search';
+import searchInput from './searchInput';
+import mainSearch from './mainSearch';
+
+
+const createNamedWrapperReducer = (reducerFunction, reducerName) => {
+  return (state, action) => {
+    const {name} = action;
+    const isInitializationCall = state === undefined;
+    if (name !== reducerName && !isInitializationCall) {
+      return state;
+    }
+    return reducerFunction(state, action);
+  };
+};
+
 
 export default combineReducers({
   routing: routerReducer,
@@ -18,7 +32,8 @@ export default combineReducers({
   auth,
   form,
   modal,
-  search,
+  mainSearchBar: createNamedWrapperReducer(searchInput, 'mainSearchBar'),
+  mainSearch,
   set,
   type,
   setDetails,
