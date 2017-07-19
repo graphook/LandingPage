@@ -26,7 +26,6 @@ $primaryDark: #0B0717;
 @import 'documentation';
 
 body {
-	background-color: $white;
 	font-family: 'Roboto', sans-serif;
 	font-size: 14px;
 	margin: 0;
@@ -130,19 +129,6 @@ ul.tabs {
 
 .error {
 	color: $errorRed;
-}
-
-.page-container {
-	padding-left: 5%;
-	padding-right: 5%;
-}
-
-.clickableShadow {
-	box-shadow: $smallShadow;
-	transition: box-shadow 0.25s;
-}
-.clickableShadow:hover {
-	box-shadow: $largeShadow;
 }
 
 .rowFlex {
@@ -256,12 +242,171 @@ ul.tabs {
 }
 
 .banner {
-	background-color: $primary;
 	color: $white;
 	padding-top: 24px;
-	padding-bottom: 24px;
-  /*background-image: url("/images/background.png");*/
-  background-size: cover;
-  background-position: center;
-	box-shadow: $smallShadow;
+	padding-bottom: 150px;
+	height: 550px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-sizing: border-box;
+
+	h1 {
+		font-size: 100px;
+	}
+
+	p {
+		font-size: 20px;
+	}
+	
+}
+
+form.emailBox {
+		display: flex;
+		padding: 0;
+		flex-grow: 1;
+		margin-top: 64px;
+		justify-content: center;
+
+		input[type=submit] {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+			background-color: $primaryDark;
+			border: 1px solid $primaryDark;
+		}
+		input[type=submit]:hover {
+			background-color: $primary;
+			border: 1px solid $primary;
+		}
+		input[type=text] {
+			height: 35px;
+			border-top-left-radius: 8px;
+			border-bottom-left-radius: 8px;
+		}
+	}
+
+.pitchArea {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+
+	@media (max-width: 450px) {
+		img {
+			width: 300px;
+		}
+		h2 {
+			font-size: 32px;
+		}
+	}
+
+	.pitchInner {
+		max-width: 1000px;
+		display: flex;
+		align-items: center;
+		padding-top: 75px;
+		padding-bottom: 75px;
+		margin-left: $margin;
+		margin-right: $margin;
+
+		@media (max-width: 800px) {
+			flex-direction: column;
+
+			h2 {
+			  margin-top: 16px;
+        text-align: center;
+			}
+		}
+
+		img {
+			border-radius: 8px;
+			flex-grow: 0;
+			flex-shrink: 0;
+			box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+
+		}
+		section {
+			margin-left: $margin;
+			margin-right: $margin;
+
+			h2 {
+				font-size: 50px;
+				margin-bottom: 16px;
+			}
+			p {
+				font-size: 16px;
+			}
+		}
+	}
+	
+}
+.pitchArea:nth-child(odd) {
+	background-color: $white;
+}
+.pitchArea:nth-child(even) {
+	background-color: $primarySubtle;
+
+	.pitchInner {
+		flex-direction: row-reverse;
+
+		@media (max-width: 800px) {
+			flex-direction: column;
+
+			h2 {
+			  margin-top: 16px;
+        text-align: center;
+			}
+		}
+	}
+}
+
+.parallaxSpacer {
+	height: 100px;
+	width: 100vw;
+}
+
+.bannerSpacer {
+	height: 172px;
+	background-color: $primarySubtle;
+}
+
+.cards {
+	position: absolute;
+	left: 0;
+	top: 400px;
+	right: 0;
+	height: 300px;
+	background-image: url("/images/cards.png");
+	background-repeat: repeat-x;
+	background-position-x: center;
+}
+
+footer {
+	height: 450px;
+	background-color: $primaryDark;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-left: $margin;
+	padding-right: $margin;
+	flex-direction: column;
+
+	form.emailBox {
+		max-width: 500px;
+		flex-grow: 0;
+
+		input[type=submit] {
+			background-color: $primary !important;
+			border: 1px solid $primary !important;
+		}
+		input[type=submit]:hover {
+			background-color: $primaryLight !important;
+			border: 1px solid $primaryLight !important;
+		}
+	}
+
+	p {
+		font-size: 32px;
+		color: $white;
+	}
+	
 }

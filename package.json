@@ -120,6 +120,7 @@
     "react-height": "^2.1.1",
     "react-helmet": "^2.2.0",
     "react-inline-css": "^2.0.0",
+    "react-parallax": "^1.4.4",
     "react-redux": "^4.0.0",
     "react-router": "2.0.0",
     "react-router-redux": "^4.0.0",

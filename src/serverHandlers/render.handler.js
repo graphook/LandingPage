@@ -30,9 +30,7 @@ export default function(req, res) {
 
   let data = {};
   if (req.clientSession.token && req.clientSession.user) {
-    data.auth = {
-      user: req.clientSession.user
-    }
+
   }
 
   const client = new ApiClient(req);
