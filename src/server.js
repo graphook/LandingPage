@@ -22,7 +22,6 @@ const proxy = httpProxy.createProxyServer();
 import request from 'superagent';
 import needle from 'needle';
 import rawBody from 'raw-body';
-import {csvToJson} from 'utils/csvConverter'
 
 
 /*if (process.env.ENV === 'prod') {
@@ -86,25 +85,7 @@ app.use('/api', (req, res) => {
   });
 });
 // HACK: This route is insecure
-app.use('/getproxy', (req, res) => {
-  const url = {
-    ...Url.parse(req.query.url),
-    headers: {
-      'Content-Type': 'application/octet-stream'
-    },
-  };
-  http.get(url, function(resp){
-    resp.setEncoding('utf8');
-    var completeResponse = '';
-    resp.on('data', function (chunk) {
-      completeResponse += chunk;
-    });
-    resp.on('end', function(chunk) {
-      res.send(csvToJson(completeResponse));
-    });
-  });
 
-});
 
 app.use(Express.static(path.join(__dirname, '..', 'static')));
 

@@ -2,13 +2,14 @@
   height: calc(100vh - 50px);
   width: 100vw;
   overflow: auto;
-  background-color: $white;
 
   .infoArea {
     width: 100vw;
     padding-top: 16px;
     box-sizing: border-box;
     overflow-x: auto;
+    background-color: $white;
+    overflow: hidden;
 
     .setInfo {
       display: flex;
@@ -47,7 +48,24 @@
       padding-right: $margin;
       display: flex;
       justify-content: space-between;
-      border-top: 1px solid $subtleGrey;
+      border-bottom: $containerBorder;
+      border-top: $containerBorder;
+      align-items: center;
+
+      .searchBox {
+        margin-left: 16px;
+      }
+
+      @media (max-width: 600px) {
+        flex-direction: column-reverse;
+
+        .searchBox {
+          margin-top: 16px;
+          max-width: none;
+          width: 100%;
+          margin-left: 0;
+        }
+      }
     }
   }
 
@@ -63,7 +81,7 @@
     }
     .ntHeadArea {
       position: relative;
-      background-color: $black;
+      background-color: $primaryDark;
       display: flex;
       color: $white;
       justify-content: flex-start;
@@ -91,7 +109,7 @@
         display: flex;
       }
       > .itemContainer {
-        background-color: $black;
+        background-color: $primaryDark;
 
         > .item {
           padding-top: 4px;
@@ -112,8 +130,9 @@
       width: 100%;
       box-sizing: border-box;
       flex-shrink: 0;
+      border-bottom: 1px solid black;
 
-      > .ntObject {
+      /*> .ntObject {
         border-right: 1px solid $lightGrey;
         padding-right: 0;
 
@@ -121,12 +140,20 @@
           border-bottom: 1px solid $black;
           padding-bottom: 1px;
         }
+      }*/
+
+      > .ntObject, > .ntItem, > .ntArrayContainer {
+        border-bottom: 1px solid $black;
+        padding-bottom: 1px;
+        margin-bottom: -1px;
+      }
+      > .ntObject:last-of-type, > .ntItem:last-of-type, > .ntArrayContainer:last-of-type {
+        border-right: 1px solid $lightGrey;
       }
 
       .ntObject {
         display: flex;
         flex-direction: row;
-        margin-top: -1px;
       }
 
       .ntItem {
@@ -142,14 +169,15 @@
         display: flex;
         flex-direction: column;
 
-        > .ntItem:last-child .ntLeaf {
-          border-bottom: 1px solid $black !important;
-          padding-bottom: 1px;
+        > .ntItem, > .ntObject, > .ntArrayContainer {
+          border-bottom: 1px solid $lightGrey;
+        }
+        > .ntItem:last-of-type, > .ntObject:last-of-type, > .ntArrayContainer:last-of-type {
+          border-bottom: none;
         }
       }
       .ntLeaf {
         width: 200px;
-        border-bottom: 1px solid $lightGrey;
         border-left: 1px solid $lightGrey;
         padding: 4px;
         input[type=text] {
