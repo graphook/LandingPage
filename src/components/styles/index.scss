@@ -251,6 +251,13 @@ ul.tabs {
 	align-items: center;
 	box-sizing: border-box;
 
+	video {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+	}
 	h1 {
 		font-size: 100px;
 	}
@@ -369,6 +376,11 @@ form.emailBox {
 	background-color: $primarySubtle;
 }
 
+@keyframes animatedBackground {
+	from { background-position: 0 0; }
+	to { background-position: 10000px 0; }
+}
+
 .cards {
 	position: absolute;
 	left: 0;
@@ -377,7 +389,7 @@ form.emailBox {
 	height: 300px;
 	background-image: url("/images/cards.png");
 	background-repeat: repeat-x;
-	background-position-x: center;
+	animation: animatedBackground 200s linear infinite;
 }
 
 footer {

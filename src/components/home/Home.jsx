@@ -30,18 +30,17 @@ export default class Home extends Component {
   render() {
     return (
       <div>
-        <Parallax bgImage="images/background.png" strength={400}>
-          <div className={s.banner}>
-              <div key="title" className={s.centeredMessage + ' ' + s.largeHeader}>
-                <h1>zenow</h1>
-                <p>The most accessible data on this side of the Galaxy!</p>
-                <form className={s.emailBox}>
-                  <input type="text" placeholder="Email" />
-                  <input type="submit" value="Get in Early" />
-                </form>
-              </div>
+        <div className={s.banner}>
+          <video src="nyc.mp4" autoplay poster="posterimage.jpg" />
+          <div key="title" className={s.centeredMessage + ' ' + s.largeHeader}>
+            <h1>zenow</h1>
+            <p>The most accessible data on this side of the Galaxy!</p>
+            <form className={s.emailBox}>
+              <input type="text" placeholder="Email" />
+              <input type="submit" value="Get in Early" />
+            </form>
           </div>
-        </Parallax>
+        </div>
         <div className={s.cards} />
         <div className={s.bannerSpacer} />
         {pitches.map((pitch) => {
