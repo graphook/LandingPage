@@ -65,6 +65,7 @@ button, input[type=submit] {
 	border-radius: 8px;
 	cursor: pointer;
 	outline: 0;
+	font-family: 'Montserrat', 'sans-serif';
 
 	i {
 		margin-right: 4px;
@@ -279,7 +280,7 @@ form.emailBox {
 		border: 1px solid $primary;
 	}
 	input[type=text] {
-		height: 35px;
+		height: 36px;
 		border-top-left-radius: 8px;
 		border-bottom-left-radius: 8px;
 	}
@@ -296,6 +297,9 @@ form.emailBox {
 		flex-direction: column;
 		align-items: stretch;
 
+		.pitchInner {
+			width: auto !important;
+		}
 	}
 
 	.pitchInner {
@@ -442,8 +446,4 @@ footer {
 
 pre {
 	border-radius: 8px;
-}
-
-.hljs-string {
-	color: $primary !important;
 }

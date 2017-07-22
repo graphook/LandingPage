@@ -27,7 +27,7 @@ const pitches = [
 const codes = [
   {
     header: "Create a Type Schema",
-    code: "curl http://api.zenow.io/v2/type -H \"Content-Type: application/json\" -X POST -d '\n" + JSON.stringify({
+    code: "curl http://api.zenow.io/v2/type -H \"Content-Type: application/json\" -X POST -d \n" + JSON.stringify({
       "title": "Family",
       "description": "Describes a family unit. Usually one that lives in the same house.",
       "properties": {
@@ -44,11 +44,11 @@ const codes = [
           }
         }
       }
-    }, null, 2) + "'"
+    }, null, 2)
   },
   {
     header: "Create a Data Set",
-    code: "curl http://api.zenow.io/v2/set -H \"Content-Type: application/json\" -X POST -d '\n" + JSON.stringify({
+    code: "curl http://api.zenow.io/v2/set -H \"Content-Type: application/json\" -X POST -d \n" + JSON.stringify({
       title: "Master Chef Winners",
       description: "A collection of people who have won Master Chef.",
       tags: ["Cooking", "TV", "Reality Show"],
@@ -56,11 +56,11 @@ const codes = [
         _id: "person_type",
         title: "Person"
       }
-    }, null, 2) + "'"
+    }, null, 2)
   },
   {
     header: "Add To Your Data Set",
-    code: "curl http://api.zenow.io/v2/set/SET_ID/item -H \"Content-Type: application/json\" -X POST -d '\n" + JSON.stringify([
+    code: "curl http://api.zenow.io/v2/set/SET_ID/item -H \"Content-Type: application/json\" -X POST -d \n" + JSON.stringify([
       {
         name: "Whitney Miller",
         age: 29
@@ -69,7 +69,7 @@ const codes = [
         name: "Jennifer Behm",
         age: 39
       }
-    ], null, 2) + "'"
+    ], null, 2)
   },
   {
     header: "The World can Query your Data",

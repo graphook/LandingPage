@@ -31,6 +31,10 @@ export default class Html extends Component {
           {head.link.toComponent()}
           {head.script.toComponent()}
 
+          <style>
+            {".hljs-string { color: #5770F1 !important; }"}
+          </style>
+
           <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/mono-blue.min.css" />
           <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
           <link rel="shortcut icon" href="/favicon.ico" />
