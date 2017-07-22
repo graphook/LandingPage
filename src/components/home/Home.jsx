@@ -3,7 +3,6 @@ import React, { Component, PropTypes } from 'react';
 import s from '../styles/index.scss';
 
 import request from 'superagent';
-import Highlight from 'react-highlight';
 
 const pitches = [
   {

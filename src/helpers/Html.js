@@ -31,6 +31,8 @@ export default class Html extends Component {
           {head.link.toComponent()}
           {head.script.toComponent()}
 
+          <title>Zenow</title>
+
           <style>
             {".hljs-string { color: #5770F1 !important; }"}
           </style>
