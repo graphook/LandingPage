@@ -9,6 +9,7 @@ import httpProxy from 'http-proxy';
 import session from 'client-sessions';
 import bodyParser from 'body-parser'
 import Url from 'url';
+import {startMongo, db} from './mongo';
 
 import routes from './serverRoutes.map'
 
@@ -32,6 +33,8 @@ import rawBody from 'raw-body';
       next()
   });
 }*/
+startMongo();
+
 app.use(compression());
 app.use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')));
 
@@ -42,52 +45,22 @@ app.use(session({
   activeDuration: 5 * 60 * 1000
 }));
 
-app.use('/api', (req, res, next) => {
+
+app.use('/email', bodyParser.json());
+
+app.use(Express.static(path.join(__dirname, '..', 'static')));
+
+app.post('/email', (req, res) => {
   if (req.clientSession.secret === process.env.SESSION_SECRET) {
-    next()
+    db.email.insert({ ...req.body, date: (new Date).toString() }).then(() => {
+      res.send();
+    }).catch(() => {
+      res.status(500).send()
+    });
   } else {
     res.status(401).send('must call this route from the web page')
   }
 });
-app.use('/api/login', bodyParser.json());
-app.post('/api/login', (req, res) => {
-  request.post(process.env.API_URL + '/v2/auth/token')
-    .set('Authorization', process.env.CLIENT_SECRET)
-    .send(req.body)
-    .end((err, result) => {
-      if (err) {
-        if (result.error) {
-          res.status(400).send(result.body)
-        }
-      } else {
-        req.clientSession.user = result.body.auth.user;
-        req.clientSession.token = result.body.auth.token;
-        res.send(result.body.auth.user);
-      }
-    });
-});
-app.get('/api/logout', (req, res) => {
-  delete req.clientSession.token;
-  delete req.clientSession.user;
-  res.send();
-});
-proxy.on('proxyReq', (proxyReq, req, res, options) => {
-  proxyReq.setHeader('host', Url.parse(targetUrl).host);
-  if (req.clientSession.token) {
-    proxyReq.setHeader('Authorization', req.clientSession.token);
-  } else {
-    proxyReq.setHeader('Authorization', process.env.CLIENT_SECRET);
-  }
-});
-app.use('/api', (req, res) => {
-  proxy.web(req, res, {
-    target: targetUrl
-  });
-});
-// HACK: This route is insecure
-
-
-app.use(Express.static(path.join(__dirname, '..', 'static')));
 
 routes.forEach((route) => {
     try {

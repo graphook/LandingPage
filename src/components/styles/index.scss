@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,100);
+@import url(https://fonts.googleapis.com/css?family=Montserrat:light);
 
 $black: #000;
 $white: #FFF;
@@ -17,16 +18,10 @@ $primarySubtle: #F4F5F7;
 $primaryLight: #6FCAE8;
 $primaryDark: #0B0717;
 
-@import 'layout';
-@import 'search';
 @import 'forms';
-@import 'set';
-@import 'type';
-@import 'profile';
-@import 'documentation';
 
 body {
-	font-family: 'Roboto', sans-serif;
+	font-family: 'Montserrat', sans-serif;
 	font-size: 14px;
 	margin: 0;
 	color: $black;
@@ -38,6 +33,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .largeHeader {
+	z-index: 2;
 	h1 {
 		font-size: 80px;
 		margin-top: -28px;
@@ -242,6 +238,7 @@ ul.tabs {
 }
 
 .banner {
+	position: relative;
 	color: $white;
 	padding-top: 24px;
 	padding-bottom: 150px;
@@ -250,21 +247,15 @@ ul.tabs {
 	justify-content: center;
 	align-items: center;
 	box-sizing: border-box;
-
-	video {
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		right: 0;
-	}
+	background: linear-gradient(to top right, $primary , $primaryLight);
+	
 	h1 {
 		font-size: 100px;
 	}
 
 	p {
 		font-size: 20px;
-	}
+	}	
 	
 }
 
@@ -338,6 +329,8 @@ form.emailBox {
 			h2 {
 				font-size: 50px;
 				margin-bottom: 16px;
+				font-family: 'Montserrat', sans-serif;
+				font-weight: light;
 			}
 			p {
 				font-size: 16px;
@@ -390,35 +383,37 @@ form.emailBox {
 	background-image: url("/images/cards.png");
 	background-repeat: repeat-x;
 	animation: animatedBackground 200s linear infinite;
+	/*margin-top: 50px;
+	margin-bottom: 50px;*/
 }
 
 footer {
 	height: 450px;
-	background-color: $primaryDark;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	padding-left: $margin;
 	padding-right: $margin;
 	flex-direction: column;
+	position: relative;
+	background: linear-gradient(to top right, $primary , $primaryLight);
 
 	form.emailBox {
-		max-width: 500px;
+		max-width: 340px;
 		flex-grow: 0;
+		z-index: 2;
+		display: flex;
+		width: 100%;
 
-		input[type=submit] {
-			background-color: $primary !important;
-			border: 1px solid $primary !important;
-		}
-		input[type=submit]:hover {
-			background-color: $primaryLight !important;
-			border: 1px solid $primaryLight !important;
+		input[type=text] {
+			flex-grow: 1;
 		}
 	}
 
 	p {
 		font-size: 32px;
 		color: $white;
+		z-index: 2;
 	}
 	
 }

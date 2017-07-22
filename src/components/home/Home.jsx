@@ -1,25 +1,28 @@
 import React, { Component, PropTypes } from 'react';
 
 import s from '../styles/index.scss';
-import { Parallax } from 'react-parallax';
+
+import request from 'superagent';
 
 const pitches = [
   {
     img: '/images/docs.png',
-    header: 'One API for Everything',
-    paragraph: 'Data scientists spend 70% of thier time just formatting data, and this makes sense considering data sets can be any form of csv, json, pdf or other format. Zenow provides a single API to access all data so you save time.'
-  },
-  {
-    img: '/images/table.png',
-    header: 'Share your own Data',
-    paragraph: 'Use schemas to structure datasets and ensure that all data is well formatted.'
+    header: 'One All-Access API',
+    paragraph: 'Encompassing quality data from the financial, environmental, policy, transportation sectors and more to empower a wide range of industries and use cases.'
   },
   {
     img: '/images/type.png',
-    header: 'Always get the Right Format',
-    paragraph: 'Upload your own dataset to Zenow and instantly make it accessible to anyone using the API.'
+    header: 'Let us do the Cleaning for you',
+    paragraph: 'Data scientists spend over 60% of their time reformatting data. Put Zenow to use - we can wrangle your data for you so you have more time to do the interpretation that matters.'
+  },
+  {
+    img: '/images/table.png',
+    header: 'Share your Data with the World',
+    paragraph: 'Upload your own dataset to Zenow and instantly make it accessible to a community of researchers and innovators. We believe that through crowdsourcing, we can build a meaningful repository of knowledge together.'
   }
 ];
+
+const typeForm = 'https://zenow.typeform.com/to/AjrN4o';
 
 export default class Home extends Component {
   static propTypes = {
@@ -27,16 +30,43 @@ export default class Home extends Component {
     params: PropTypes.object
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      top: '',
+      bottom: ''
+    }
+  }
+
+  submitEmail = (location, e) => {
+    e.preventDefault();
+    let email = '';
+    if (location === "top") {
+      email = this.state.top;
+    } else {
+      email = this.state.bottom;
+    }
+    request.post('/email')
+        .send({ email: email })
+        .end((err, res) => {
+          window.location = typeForm;
+        });
+  }
+
   render() {
     return (
       <div>
         <div className={s.banner}>
-          <video src="nyc.mp4" autoplay poster="posterimage.jpg" />
+          <div className={s.cover} />
           <div key="title" className={s.centeredMessage + ' ' + s.largeHeader}>
             <h1>zenow</h1>
-            <p>The most accessible data on this side of the Galaxy!</p>
-            <form className={s.emailBox}>
-              <input type="text" placeholder="Email" />
+            <p>Find, Create and Share Public Data</p>
+            <form className={s.emailBox} onSubmit={this.submitEmail.bind(null, "top")}>
+              <input
+                  type="text"
+                  value={this.state.top}
+                  onChange={(e) => this.setState({top: e.target.value})}
+                  placeholder="Email" />
               <input type="submit" value="Get in Early" />
             </form>
           </div>
@@ -53,16 +83,17 @@ export default class Home extends Component {
                   <p>{pitch.paragraph}</p>
                 </section>
               </div>
-              <Parallax bgImage="images/background.png" strength={400}>
-                <div className={s.parallaxSpacer} />
-              </Parallax>
             </div>
           );
         })}
         <footer>
           <p>Join the Community</p>
-          <form className={s.emailBox}>
-            <input type="text" placeholder="Email" />
+          <form className={s.emailBox} onSubmit={this.submitEmail.bind(null, "bottom")}>
+            <input
+                type="text"
+                value={this.state.bottom}
+                onChange={(e) => this.setState({bottom: e.target.value})}
+                placeholder="Email" />
             <input type="submit" value="Get in Early" />
           </form>
         </footer>
