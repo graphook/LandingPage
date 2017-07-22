@@ -3,24 +3,91 @@ import React, { Component, PropTypes } from 'react';
 import s from '../styles/index.scss';
 
 import request from 'superagent';
+import Highlight from 'react-highlight';
 
 const pitches = [
   {
-    img: '/images/docs.png',
     header: 'One All-Access API',
+    icon: "fa-globe",
     paragraph: 'Encompassing quality data from the financial, environmental, policy, transportation sectors and more to empower a wide range of industries and use cases.'
   },
   {
-    img: '/images/type.png',
-    header: 'Let us do the Cleaning for you',
+    header: 'We\'ll clean your Data',
+    icon: "fa-table",
     paragraph: 'Data scientists spend over 60% of their time reformatting data. Put Zenow to use - we can wrangle your data for you so you have more time to do the interpretation that matters.'
   },
   {
-    img: '/images/table.png',
-    header: 'Share your Data with the World',
-    paragraph: 'Upload your own dataset to Zenow and instantly make it accessible to a community of researchers and innovators. We believe that through crowdsourcing, we can build a meaningful repository of knowledge together.'
+    header: 'Share your Data',
+    icon: "fa-users",
+    paragraph: 'Upload your own dataset to Zenow and instantly make it accessible to a community of researchers and innovators. Through crowdsourcing, we can build a meaningful repository of knowledge together.'
   }
 ];
+
+
+const codes = [
+  {
+    header: "Create a Type Schema",
+    code: "curl http://api.zenow.io/v2/type -H \"Content-Type: application/json\" -X POST -d '\n" + JSON.stringify({
+      "title": "Family",
+      "description": "Describes a family unit. Usually one that lives in the same house.",
+      "properties": {
+        "type": "object",
+        "fields": {
+          "name": {
+            "type": "text",
+            "description": "The name of the person"
+          },
+          "age": {
+            "type": "integer",
+            "default": false,
+            "description": "The age of the person in years."
+          }
+        }
+      }
+    }, null, 2) + "'"
+  },
+  {
+    header: "Create a Data Set",
+    code: "curl http://api.zenow.io/v2/set -H \"Content-Type: application/json\" -X POST -d '\n" + JSON.stringify({
+      title: "Master Chef Winners",
+      description: "A collection of people who have won Master Chef.",
+      tags: ["Cooking", "TV", "Reality Show"],
+      type: {
+        _id: "person_type",
+        title: "Person"
+      }
+    }, null, 2) + "'"
+  },
+  {
+    header: "Add To Your Data Set",
+    code: "curl http://api.zenow.io/v2/set/SET_ID/item -H \"Content-Type: application/json\" -X POST -d '\n" + JSON.stringify([
+      {
+        name: "Whitney Miller",
+        age: 29
+      },
+      {
+        name: "Jennifer Behm",
+        age: 39
+      }
+    ], null, 2) + "'"
+  },
+  {
+    header: "The World can Query your Data",
+    code: "curl http://api.zenow.io/v2/set/SET_ID/search?query=whitney -X GET\n" + "\n#RESULT...\n" + JSON.stringify({
+      status: 200,
+      read: {
+        person_type: [
+          {
+            name: "Whitney Miller",
+            age: 29,
+            _type: "person_type",
+            _id: "AV1oywf2lkT-P01kds5-"
+          }
+        ]
+      }
+    }, null, 2)
+  }
+]
 
 const typeForm = 'https://zenow.typeform.com/to/AjrN4o';
 
@@ -73,18 +140,32 @@ export default class Home extends Component {
         </div>
         <div className={s.cards} />
         <div className={s.bannerSpacer} />
-        {pitches.map((pitch) => {
-          return (
-            <div className={s.pitchArea}>
+        <div className={s.pitchArea}>
+          {pitches.map((pitch) => {
+            return (
               <div className={s.pitchInner}>
-                <img src={pitch.img} />
+                <i className={"fa " + pitch.icon} />
                 <section>
                   <h2>{pitch.header}</h2>
                   <p>{pitch.paragraph}</p>
                 </section>
               </div>
+            );
+          })}
+        </div>
+        {codes.map((code) => {
+          return (
+            <div className={s.codeArea}>
+              <div className={s.codeInner}>
+                <h2>{code.header}</h2>
+                <pre className="hljs">
+                  <code className="bash">
+                    {code.code}
+                  </code>
+                </pre>
+              </div>
             </div>
-          );
+          )
         })}
         <footer>
           <p>Join the Community</p>

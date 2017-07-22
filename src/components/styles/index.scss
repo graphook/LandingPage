@@ -248,9 +248,11 @@ ul.tabs {
 	align-items: center;
 	box-sizing: border-box;
 	background: linear-gradient(to top right, $primary , $primaryLight);
+	padding-left: $margin;
+	padding-right: $margin;
 	
 	h1 {
-		font-size: 100px;
+		font-size: 75px;
 	}
 
 	p {
@@ -260,32 +262,68 @@ ul.tabs {
 }
 
 form.emailBox {
-		display: flex;
-		padding: 0;
-		flex-grow: 1;
-		margin-top: 64px;
-		justify-content: center;
+	display: flex;
+	padding: 0;
+	flex-grow: 1;
+	margin-top: 64px;
+	justify-content: center;
 
-		input[type=submit] {
-			border-top-left-radius: 0;
-			border-bottom-left-radius: 0;
-			background-color: $primaryDark;
-			border: 1px solid $primaryDark;
-		}
-		input[type=submit]:hover {
-			background-color: $primary;
-			border: 1px solid $primary;
-		}
-		input[type=text] {
-			height: 35px;
-			border-top-left-radius: 8px;
-			border-bottom-left-radius: 8px;
-		}
+	input[type=submit] {
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+		background-color: $primaryDark;
+		border: 1px solid $primaryDark;
 	}
+	input[type=submit]:hover {
+		background-color: $primary;
+		border: 1px solid $primary;
+	}
+	input[type=text] {
+		height: 35px;
+		border-top-left-radius: 8px;
+		border-bottom-left-radius: 8px;
+	}
+}
 
 .pitchArea {
+	background-color: $primarySubtle;
 	display: flex;
-	align-items: center;
+	justify-content: center;
+	margin-left: $margin;
+	margin-right: $margin;
+
+	@media (max-width: 700px) {
+		flex-direction: column;
+		align-items: stretch;
+
+	}
+
+	.pitchInner {
+		width: 300px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+		i {
+			font-size: 75px;
+			color: $primary;
+			margin-bottom: 16px;
+		}
+
+		h2 {
+			margin-bottom: 16px;
+		}
+
+		p {
+			font-size: 16px;
+		}
+
+	}
+}
+
+
+.codeArea {
 	flex-direction: column;
 
 	@media (max-width: 450px) {
@@ -297,29 +335,15 @@ form.emailBox {
 		}
 	}
 
-	.pitchInner {
-		max-width: 1000px;
-		display: flex;
-		align-items: center;
+	.codeInner {
 		padding-top: 75px;
 		padding-bottom: 75px;
 		margin-left: $margin;
 		margin-right: $margin;
 
-		@media (max-width: 800px) {
-			flex-direction: column;
-
-			h2 {
-			  margin-top: 16px;
-        text-align: center;
-			}
-		}
-
-		img {
-			border-radius: 8px;
-			flex-grow: 0;
-			flex-shrink: 0;
-			box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+		i {
+			font-size: 100px;
+			color: $primary;
 
 		}
 		section {
@@ -339,29 +363,27 @@ form.emailBox {
 	}
 	
 }
-.pitchArea:nth-child(odd) {
+.codeArea:nth-child(odd) {
 	background-color: $white;
-}
-.pitchArea:nth-child(even) {
-	background-color: $primarySubtle;
 
-	.pitchInner {
-		flex-direction: row-reverse;
+	pre {
+		background-color: $primarySubtle;
 
-		@media (max-width: 800px) {
-			flex-direction: column;
-
-			h2 {
-			  margin-top: 16px;
-        text-align: center;
-			}
+		code {
+			background-color: $primarySubtle;
 		}
 	}
 }
+.codeArea:nth-child(even) {
+	background-color: $primarySubtle;
 
-.parallaxSpacer {
-	height: 100px;
-	width: 100vw;
+	pre {
+		background-color: $white;
+
+		code {
+			background-color: $white;
+		}
+	}
 }
 
 .bannerSpacer {
@@ -416,4 +438,12 @@ footer {
 		z-index: 2;
 	}
 	
+}
+
+pre {
+	border-radius: 8px;
+}
+
+.hljs-string {
+	color: $primary !important;
 }
