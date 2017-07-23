@@ -28,20 +28,20 @@ const codes = [
   {
     header: "Create a Type Schema",
     code: "curl http://api.zenow.io/v2/type -H \"Content-Type: application/json\" -X POST -d \n" + JSON.stringify({
-      "title": "Person",
-      "description": "Describes some information about a human person.",
+      "title": "MasterChef Contestant",
+      "description": "Describes information about a contestant on the TV show MasterChef.",
+      "extends": "person_type",
       "properties": {
         "type": "object",
         "fields": {
-          "name": {
-            "type": "text",
-            "description": "The name of the person"
-          },
-          "age": {
+          "seasonNumber": {
             "type": "integer",
-            "default": false,
-            "description": "The age of the person in years."
-          }
+            "description": "The season of the show he/she was on."
+          },
+          "winningDish": {
+            "type": "text",
+            "description": "The name of the dish with which this contestant won the show."
+          },
         }
       }
     }, null, 2)
@@ -50,11 +50,11 @@ const codes = [
     header: "Create a Data Set",
     code: "curl http://api.zenow.io/v2/set -H \"Content-Type: application/json\" -X POST -d \n" + JSON.stringify({
       title: "Master Chef Winners",
-      description: "A collection of people who have won Master Chef.",
+      description: "A collection of people who have won MasterChef.",
       tags: ["Cooking", "TV", "Reality Show"],
       type: {
-        _id: "person_type",
-        title: "Person"
+        _id: "masterchef_contestant_type",
+        title: "MasterChef Contestant"
       }
     }, null, 2)
   },
@@ -63,11 +63,15 @@ const codes = [
     code: "curl http://api.zenow.io/v2/set/SET_ID/item -H \"Content-Type: application/json\" -X POST -d \n" + JSON.stringify([
       {
         name: "Whitney Miller",
-        age: 29
+        age: 29,
+        seasonNumber: 1,
+        winningDish: "Sweet shrimp on crispy corn bread with black eyed pea purée"
       },
       {
         name: "Jennifer Behm",
-        age: 39
+        age: 39,
+        seasonNumber: 2,
+        winningDish: "Stuffed Quail with Creamy Potatoes and Spinach"
       }
     ], null, 2)
   },
@@ -80,7 +84,9 @@ const codes = [
           {
             name: "Whitney Miller",
             age: 29,
-            _type: "person_type",
+            seasonNumber: 1,
+            winningDish: "Sweet shrimp on crispy corn bread with black eyed pea purée",
+            _type: "masterchef_contestant_type",
             _id: "AV1oywf2lkT-P01kds5-"
           }
         ]
