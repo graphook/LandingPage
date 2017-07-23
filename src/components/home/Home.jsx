@@ -49,7 +49,7 @@ const codes = [
   {
     header: "Create a Data Set",
     code: "curl http://api.zenow.io/v2/set -H \"Content-Type: application/json\" -X POST -d \n" + JSON.stringify({
-      title: "Master Chef Winners",
+      title: "MasterChef Winners",
       description: "A collection of people who have won MasterChef.",
       tags: ["Cooking", "TV", "Reality Show"],
       type: {
