@@ -28,8 +28,8 @@ const codes = [
   {
     header: "Create a Type Schema",
     code: "curl http://api.zenow.io/v2/type -H \"Content-Type: application/json\" -X POST -d \n" + JSON.stringify({
-      "title": "Family",
-      "description": "Describes a family unit. Usually one that lives in the same house.",
+      "title": "Person",
+      "description": "Describes some information about a human person.",
       "properties": {
         "type": "object",
         "fields": {
