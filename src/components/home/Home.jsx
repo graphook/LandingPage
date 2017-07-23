@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import s from '../styles/index.scss';
 
 import request from 'superagent';
+import Helmet from 'react-helmet';
 
 const pitches = [
   {
@@ -122,6 +123,9 @@ export default class Home extends Component {
   render() {
     return (
       <div>
+        <Helmet>
+          <title>Zenow</title>
+        </Helmet>
         <div className={s.banner}>
           <div className={s.cover} />
           <div key="title" className={s.centeredMessage + ' ' + s.largeHeader}>
