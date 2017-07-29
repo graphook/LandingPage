@@ -19,6 +19,9 @@ $primaryLight: #6FCAE8;
 $primaryDark: #0B0717;
 
 @import 'forms';
+@import 'documentation';
+@import 'layout';
+@import 'type';
 
 body {
 	font-family: 'Montserrat', sans-serif;
