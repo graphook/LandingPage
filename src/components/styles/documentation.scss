@@ -7,6 +7,7 @@
 .documentation {
   height: calc(100vh - 50px);
   position: relative;
+  display: flex;
 
   .method {
     font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
@@ -28,19 +29,20 @@
     .categoryHeader {
       padding-top: 8px;
       padding-bottom: 8px;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: bold;
     }
 
     .categoryList {
+      font-size: 12px;
       list-style: none;
       padding-left: $margin;
-      padding-right: $margin;
+      padding-right: 16px;
       overflow-y: auto;
       height: 100%;
       margin-top: 0;
       margin-bottom: 0;
-      padding-top: 12px;
+      padding-top: 14px;
       padding-bottom: 12px;
       box-sizing: border-box;
 
@@ -50,7 +52,7 @@
 
         > ul {
           margin-top: 8px;
-          margin-left: 24px;
+          margin-left: 18px;
         }
       }
 
@@ -58,15 +60,14 @@
 
     @media (min-width: 850px) {
       transform: translateX(0) !important;
-      width: 30vw;
+      width: 25%;
+      position: relative;
+      max-width: calc(4vw + 300px);
+      flex-grow: 1;
 
       .panelToggler {
         display: none;
       }
-    }
-
-    @media (min-width: 1025px) {
-      width: 308px !important;
     }
 
     .panelToggler {
@@ -97,29 +98,18 @@
 
   .docContentContainer {
     z-index: 1;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding-right: $margin;
-    padding-left: $margin;
-    display: flex;
-    justify-content: center;
     overflow-y: auto;
+    padding-bottom: 48px;
 
     @media (min-width: 850px) {
-      left: 30vw;
-    }
-    @media (min-width: 1025px) {
-      left: 307px !important;
+      left: 25%;
     }
 
     .docContent {
       max-width: 800px;
-      padding-bottom: 48px;
+    }
 
-      p {
+     p {
         font-size: 16px;
         margin-top: 1em;
         margin-bottom: 1em;
@@ -156,8 +146,9 @@
       .typeVisContainer {
         margin-bottom: 24px;
         background-color: $white;
+        overflow-x: auto;
+        border-radius: 8px;
       }
-    }
   }
 }
 
@@ -214,135 +205,24 @@
   }
 }
 
+.route {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  border-bottom: $containerBorder;
 
-/*.documentation {
-  position: relative;
-
-  nav {
-    width: 230px;
-    height: calc(100vh - 50px);
-    position: fixed;
-    box-shadow: $smallShadow;
-    padding-right: $margin;
-    padding-left: $margin;
-    overflow-y: auto;
-    top: $headerHeight;
-    left: 0;
-    background-color: $white;
-    border-right: $containerBorder;
-
-    > ul > li {
-      font-size: 16px;
-      margin-left: 0;
-    }
-    li {
-      padding-top: 4px;
-      padding-bottom: 4px;
-      list-style: none;
-      margin-left: 16px;
-
-    }
+  .routeDescription, .routeExample {
+    min-width: 500px;
+    padding-left: 16px;
+    padding-right: 16px;
+    flex: 1;
   }
-  .docContentArea {
-    padding: 16px;
-    padding-left: calc(12vw + 230px);
-    padding-right: $margin;
-    width: 100%;
-    box-sizing: border-box;
 
-    .docContent {
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-
-      p {
-        font-size: 16px;
-        margin-top: 1em;
-        margin-bottom: 1em;
-      }
-      h1 {
-        margin-top: 0.67em;
-        margin-bottom: 0.67em;
-      }
-      ul, ol {
-        font-size: 16px;
-        padding-left: 40px;
-        margin-top: 1em;
-        margin-bottom: 1em
-      }
-      code {
-        background-color: $subtleGrey;
-      }
-      img {
-        box-shadow: $smallShadow;
-        border: $containerBorder;
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 100%;
-        display: block;
-      }
-
-      .smallFormContainer {
-        width: 300px;
-        margin-right: auto;
-        margin-left: auto;
-        padding: 16px;
-        border: $containerBorder;
-        background-color: $white;
-      }
+  .routeExample {
+    background-color: $primaryDark;
+  
+    p {
+      color: $white;
     }
   }
 }
-
-.requestTool {
-  padding: 16px;
-  border: $containerBorder;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  background-color: $white;
-
-  > ul {
-    margin: 0 !important;
-    padding-left: 0 !important;
-  }
-  h2 {
-    margin-bottom: 8px;
-  }
-
-  .topRequestTools {
-    display: flex;
-    margin-bottom: 8px;
-    align-items: center;
-
-    .urlArea {
-      display: flex;
-      padding-left: 8px;
-      padding-right: 8px;
-      flex-grow: 1;
-
-      input {
-        padding-top: 0;
-        height: 21px;
-        padding-left: 0;
-      }
-    }
-  }
-  .requestBody, .responseBody {
-    margin-top: 8px;
-    margin-bottom: 8px;
-    height: 100px;
-    width: 100%;
-    display: block;
-    box-sizing: border-box;
-    border: $containerBorder;
-    font-size: 12px;
-    font-family: monospace;
-    padding: 4px;
-    resize: vertical;
-  }
-  .responseBody {
-    margin: 0;
-    color : transparent;
-    text-shadow : 0 0 0 $black;
-  }
-}*/

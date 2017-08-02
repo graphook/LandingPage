@@ -4,6 +4,7 @@ import { asyncConnect } from 'redux-async-connect';
 import { Link } from 'react-router';
 import sections from './sections';
 import {scroller} from 'react-scroll';
+import {browserHistory} from 'react-router';
 
 import IntroAuth from './pages/IntroAuth.jsx';
 import GetTutorial from './pages/GetTutorial.jsx';
@@ -31,7 +32,8 @@ const specialComponents = {
   }
 }])
 @connect((state) => ({
-  categories: state.documentation.categories
+  categories: state.documentation.categories,
+  focus: state.documentation.focus
 }))
 export default class Documentation extends Component {
   static propTypes = {
@@ -46,11 +48,12 @@ export default class Documentation extends Component {
   componentDidMount() {
     this.goToProperPlace();
   }
-  componentDidUpdate() {
-    this.goToProperPlace();
+  componentDidUpdate(prevProps) {
+    if (this.props.params.subTopic !== prevProps.params.subTopic) {
+      this.goToProperPlace();
+    }
   }
   goToProperPlace = () => {
-    console.log('going to propper place');
     scroller.scrollTo(this.props.params.subTopic, {
       offset: -4,
       containerId: 'docs'
@@ -75,16 +78,22 @@ export default class Documentation extends Component {
         <nav className={s.docNav + (this.state.sidePanelClosed ? ' ' + s.closed : '' )}>
           <i className={'fa ' + s.panelToggler + (this.state.sidePanelClosed ? ' fa-chevron-right' : ' fa-chevron-left')}
             onClick={() => this.setState({ sidePanelClosed: !this.state.sidePanelClosed })}></i>
-          <ul className={s.categoryList}>
+          <ul className={s.categoryList} id="docNav">
             {this.props.categories.map((category) => {
               return (<li>
-                <Link to={'/documentation/' + category.category} className={s.categoryHeader}>{category.category}</Link>
+                
+                <Link to={'/documentation/' + category.category} className={s.categoryHeader}
+                    className={(category.category === this.props.params.topic) ? s.focused : ''}>
+                  {category.category}
+                </Link>
                 <ul>
                   {(() => {
                     if (category.routes) {
                       return category.routes.map((route) => {
+                        const thisSubTopic = route.method + route.path.replace(new RegExp('/', 'g'), ' ')
                         return (<li>
-                          <Link to={'/documentation/' + category.category + '/' + route.method + route.path.replace(new RegExp('/', 'g'), ' ')}>
+                          <Link to={'/documentation/' + category.category + '/' + thisSubTopic}
+                              className={(thisSubTopic === this.props.focus) ? s.focused : ''}>
                             <span className={s.method}>{route.method}</span> {route.path}
                           </Link>
                         </li>)
@@ -92,7 +101,8 @@ export default class Documentation extends Component {
                     }
                     return category.subTopics.map((subTopic) => {
                       return (<li>
-                        <Link to={'/documentation/' + category.category + '/' + subTopic.title}>
+                        <Link to={'/documentation/' + category.category + '/' + subTopic.title}
+                            className={(subTopic.title === this.props.focus) ? s.focused : ''}>
                           {subTopic.title}
                         </Link>
                       </li>);
@@ -104,9 +114,7 @@ export default class Documentation extends Component {
           </ul>
         </nav>
         <div className={s.docContentContainer} id="docs">
-          <div className={s.docContent}>
-            <DocComponent category={category} />
-          </div>
+          <DocComponent category={category} />
         </div>
       </div>
     );

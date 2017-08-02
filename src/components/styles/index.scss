@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,100);
+@import url(https://fonts.googleapis.com/css?family=Roboto:400);
 @import url(https://fonts.googleapis.com/css?family=Montserrat:light);
 
 $black: #000;
@@ -24,7 +24,7 @@ $primaryDark: #0B0717;
 @import 'type';
 
 body {
-	font-family: 'Montserrat', sans-serif;
+	font-family: 'Roboto', sans-serif;
 	font-size: 14px;
 	margin: 0;
 	color: $black;
@@ -33,6 +33,10 @@ body {
 
 h1, h2, h3, h4, h5, h6, p {
 	margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Montserrat', sans-serif;
 }
 
 .largeHeader {
@@ -58,6 +62,10 @@ a {
 a:hover {
 	color: $primary;
 }
+a.focused {
+	color: $primary;
+}
+
 
 button, input[type=submit] {
 	color: $primary;
@@ -295,6 +303,7 @@ form.emailBox {
 	justify-content: center;
 	margin-left: $margin;
 	margin-right: $margin;
+	font-family: 'Montserrat', 'sans-serif';
 
 	@media (max-width: 700px) {
 		flex-direction: column;

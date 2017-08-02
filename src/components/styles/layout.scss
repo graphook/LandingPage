@@ -27,6 +27,8 @@ header {
   padding-left: $margin;
   padding-right: $margin;
   box-sizing: border-box;
+  border-bottom: $containerBorder;
+  font-family: 'Montserrat', sans-serif;
 
   nav {
     display: flex;

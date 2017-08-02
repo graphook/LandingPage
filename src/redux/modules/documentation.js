@@ -1,62 +1,15 @@
 const FETCH = 'documentation/FETCH';
 const FETCH_SUCCESS = 'documentation/FETCH_SUCCESS';
 const FETCH_FAIL = 'documentation/FETCH_FAIL';
+const SET_FOCUS = 'documentation/SET_FOCUS';
 
 const categoryOrder = ['Base Operations', 'Authentication', 'Set Operations', 'Set Item Operations', 'Type Operations', 'Other'];
 const methodOrder = ['get', 'post', 'put', 'delete'];
 
 const initialState = {
   loaded: false,
+  focus: '',
   categories: [
-    {
-      category: 'Introduction and Authentication',
-      specialComponent: 'IntroAuth',
-      subTopics: [
-        { title: 'Get Your Developer Account' },
-        { title: 'Understanding HTTP Requests' },
-        { title: 'Understanding JSON' },
-        { title: 'Using Zenow’s Request Tool' }
-      ]
-    },
-    {
-      category: 'Get Objects Tutorial',
-      specialComponent: 'GetTutorial',
-      subTopics: [
-        { title: 'Get a Set' },
-        { title: 'Get Items in a Set' },
-        { title: 'Get a Type' },
-      ]
-    },
-    {
-      category: 'Search Tutorial',
-      specialComponent: 'SearchTutorial',
-      subTopics: [
-        { title: 'Using ElasticSearch Queries' }
-      ]
-    },
-    {
-      category: 'Create a Set Tutorial',
-      specialComponent: 'CreateSetTutorial',
-      subTopics: [
-        { title: 'Create your own Set' },
-        { title: 'Add Items to a Set' },
-        { title: 'Other Set Operations' }
-      ]
-    },
-    {
-      category: 'Update Objects Tutorial',
-      specialComponent: 'UpdateTutorial',
-      subTopics: [
-        { title: 'Using Mongo Queries' }
-      ]
-    },
-    {
-      category: 'Create a Type Tutorial',
-      specialComponent: 'CreateTypeTutorial',
-      subTopics: [
-        { title: 'Creating a Type' }
-      ]
-    },
     {
       'category': 'Introduction and Authentication',
       'specialComponent': 'IntroAuth',
@@ -3480,5 +3433,20 @@ const initialState = {
 
 // TODO: Add search suggestions
 export default function reducer(state = initialState, action = {}) {
-  return state;
+  switch(action.type) {
+    case SET_FOCUS:
+      return {
+        ...state,
+        focus: action.name
+      }
+    default:
+      return state;
+  }
+}
+
+export function setFocus(name) {
+  return {
+    type: SET_FOCUS,
+    name: name
+  };
 }

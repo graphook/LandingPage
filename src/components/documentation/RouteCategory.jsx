@@ -12,7 +12,6 @@ export default class RouteCategory extends Component {
   render() {
     return (
       <div>
-        <h1>{this.props.category.category}</h1>
         {this.props.category.routes.map((route) => {
           let elements = [
             <SectionHeader name={route.method + route.path.replace(new RegExp('/', 'g'), ' ')} >
@@ -29,7 +28,7 @@ export default class RouteCategory extends Component {
           }
           const headers = route.headers;
           if (headers && Object.keys(headers.fields).length > 0) {
-            elements.push(<h3>Headers</h3>);
+            elements.push(<p>Headers</p>);
             elements.push(
               <div className={s.typeVisContainer}>
                 <TypeVisualizer type={{
@@ -41,7 +40,7 @@ export default class RouteCategory extends Component {
           }
           const parameters = route.parameters;
           if (parameters && Object.keys(parameters.fields).length > 0) {
-            elements.push(<h3>URL Parameters</h3>);
+            elements.push(<p>URL Parameters</p>);
             elements.push(
               <div className={s.typeVisContainer}>
                 <TypeVisualizer type={{
@@ -53,7 +52,7 @@ export default class RouteCategory extends Component {
           }
           const body = route.body;
           if (body) {
-            elements.push(<h3>Request Body</h3>);
+            elements.push(<p>Request Body</p>);
             elements.push(
               <div className={s.typeVisContainer}>
                 <TypeVisualizer type={{
@@ -63,20 +62,34 @@ export default class RouteCategory extends Component {
               </div>
             );
           }
-          const sample = route.sample;
-          if (sample && Object.keys(sample).length > 0) {
-            elements.push(<h3>Sample Request</h3>);
-            elements.push(
-              <RequestTool
-                initMethod={sample.method.toUpperCase()}
-                initPath={sample.path}
-                initStatus={sample.responseStatus}
-                initBody={sample.requestBody}
-                initResponseBody={sample.responseBody}  />
-            );
-          }
-          // toRender.push(<RequestTool {...this.props.request} />);
-          return elements;
+
+          return (
+            <div className={s.route}>
+              <div className={s.routeDescription}>
+                {elements}
+              </div>
+              <div className={s.routeExample}>
+                <p>Method, URL</p>
+                <pre className="hljs">
+                  <code className="bash">
+                    {route.sample.method}, {route.sample.path}
+                  </code>
+                </pre>
+                <p>Request Body</p>
+                <pre className="hljs">
+                  <code className="json">
+                    {JSON.stringify(route.sample.requestBody, null, 2)}
+                  </code>
+                </pre>
+                <p>Response Body</p>
+                <pre className="hljs">
+                  <code className="json">
+                    {JSON.stringify(route.sample.responseBody, null, 2)}
+                  </code>
+                </pre>
+              </div>
+            </div>
+          );
         })}
       </div>
     )
