@@ -1,717 +1,506 @@
 
-const docData = {
-  getSet: {
-    request: {
-      initMethod: 'GET',
-      initPath: '/v1/set/58895a32ac72909f9a496314',
-      initStatus: '200',
-      initResponseBody: {
-        'status': 200,
-        'errors': {},
-        'sets': {
-          'read': [
-            {
-              '_id': '58895a32ac72909f9a496314',
-              'title': 'Cartoon Families',
-              'description': 'A list of cartoon families',
-              'type': {
-                '_id': '5889596bac72909f9a49630f',
-                'title': 'Family'
-              },
-              'tags': [
-                'cartoon',
-                'family',
-                'character',
-                'fiction'
-              ],
-              'creator': {
-                '_id': '586ec2e73c4e8c1fdb7ac068',
-                'username': 'jackson'
-              },
-              'stars': 0,
-              'items': [
-                '58895a32ac72909f9a496315',
-                '58896145ac72909f9a49632a',
-                '58896145ac72909f9a49632b',
-                '58896145ac72909f9a49632c'
-              ]
-            }
-          ]
-        }
-      }
-    }
-  },
-  getItems: {
-    request: {
-      initMethod: 'GET',
-      initPath: '/v1/set/58895a32ac72909f9a496314/item?count=2&page=0',
-      initStatus: '200',
-      initResponseBody: {
-        'status': 200,
-        'errors': {},
-        'items': {
-          'read': [
-            {
-              '_id': '58895a32ac72909f9a496315',
-              'surname': 'Waterson',
-              'people': [
-                {
-                  'firstName': 'Gumball',
-                  'age': 12,
-                  'isParent': false
-                },
-                {
-                  'firstName': 'Darwin',
-                  'age': 10,
-                  'isParent': false
-                },
-                {
-                  'firstName': 'Anais',
-                  'age': 4,
-                  'isParent': false
-                },
-                {
-                  'firstName': 'Nicole',
-                  'age': 38,
-                  'isParent': true
-                },
-                {
-                  'firstName': 'Richard',
-                  'age': 38,
-                  'isParent': true
-                }
-              ],
-              'lives': [
-                'Elmore'
-              ],
-              '_type': {
-                '_id': '5889596bac72909f9a49630f',
-                '_type': 'Family'
-              },
-              '_sets': [
-                {
-                  '_id': '58895a32ac72909f9a496314',
-                  '_title': 'Cartoon Families'
-                }
-              ]
-            },
-            {
-              '_id': '58896145ac72909f9a49632a',
-              'surname': 'Neutron',
-              'people': [
-                {
-                  'firstName': 'Jimmy',
-                  'age': 12,
-                  'isParent': false
-                },
-                {
-                  'firstName': 'Hugh',
-                  'age': 40,
-                  'isParent': true
-                },
-                {
-                  'firstName': 'Judy',
-                  'age': 40,
-                  'isParent': true
-                }
-              ],
-              'lives': [
-                'Retroville'
-              ],
-              '_type': {
-                '_id': '5889596bac72909f9a49630f',
-                '_type': 'Family'
-              },
-              '_sets': [
-                {
-                  '_id': '58895a32ac72909f9a496314',
-                  '_title': 'Cartoon Families'
-                }
-              ]
-            }
-          ]
-        }
-      }
-    }
-  },
-  searchItems: {
-    request: {
-      initMethod: 'POST',
-      initPath: '/v1/set/58895a32ac72909f9a496314/item/search',
-      initStatus: '200',
-      initBody: {
-        surname: 'Turner'
+export const familyTypeId = 'AV19M3pmabSTtBb93fgG';
+export const familyType = {
+  'title': 'Family',
+  'description': 'Describes a family unit. Usually one that lives in the same house.',
+  'properties': {
+    'type': 'object',
+    'fields': {
+      'surname': {
+        'type': 'text',
+        'description': ''
       },
-      initResponseBody: {
-        'status': 200,
-        'errors': {},
-        'items': {
-          'read': [
-            {
-              '_id': '58896145ac72909f9a49632b',
-              'surname': 'Turner',
-              'people': [
-                {
-                  'firstName': 'Timmy',
-                  'age': 10,
-                  'isParent': false
-                },
-                {
-                  'firstName': 'Dad',
-                  'age': 42,
-                  'isParent': true
-                },
-                {
-                  'firstName': 'Mom',
-                  'age': 40,
-                  'isParent': true
-                }
-              ],
-              'lives': [
-                'Dimmsdale'
-              ],
-              '_type': {
-                '_id': '5889596bac72909f9a49630f',
-                '_type': 'Family'
-              },
-              '_sets': [
-                {
-                  '_id': '58895a32ac72909f9a496314',
-                  '_title': 'Cartoon Families'
-                }
-              ]
-            }
-          ]
-        }
-      }
-    }
-  },
-  createSet: {
-    request: {
-      initMethod: 'POST',
-      initPath: '/v1/set',
-      initStatus: '201',
-      initBody: {
-        'title': 'Cartoon Families 2, Electric Boogaloo',
-        'description': 'A list of cartoon families. Used for the documentation.',
-        'tags': ['cartoon', 'family', 'character', 'fiction', 'test', 'sample', 'example'],
-        'type': '5889596bac72909f9a49630f',
-        'items': [
-          {
-            'surname': 'Simpson',
-            'people': [
-              {
-                'firstName': 'Homer',
-                'age': 39,
-                'isParent': true
-              },
-              {
-                'firstName': 'Marge',
-                'age': 36,
-                'isParent': true
-              },
-              {
-                'firstName': 'Bart',
-                'age': 10,
-                'isParent': false
-              },
-              {
-                'firstName': 'Lisa',
-                'age': 8,
-                'isParent': false
-              },
-              {
-                'firstName': 'Maggie',
-                'age': 1,
-                'isParent': false
-              }
-            ],
-            'lives': [
-              'Springfield'
-            ]
-          }
-        ]
+      'isMetaphoricalFamily': {
+        'type': 'boolean',
+        'default': false
       },
-      initResponseBody: {
-        'status': 200,
-        'errors': {},
-        'types': {
-          'updated': [
-            {
-              '_id': '5889596bac72909f9a49630f',
-              'title': 'Family',
-              'description': 'Describes a family unit. Usually one that lives in the same house.',
-              'properties': {
-                'type': 'object',
-                'fields': {
-                  'surname': {
-                    'type': 'string',
-                    'description': ''
-                  },
-                  'people': {
-                    'type': 'array',
-                    'items': {
-                      'type': 'object',
-                      'fields': {
-                        'firstName': {
-                          'type': 'string',
-                          'description': ''
-                        },
-                        'age': {
-                          'type': 'number',
-                          'description': ''
-                        },
-                        'isParent': {
-                          'type': 'boolean',
-                          'description': ''
-                        }
-                      },
-                      'requires': [],
-                      'description': '',
-                      'allowOtherFields': false
-                    },
-                    'description': ''
-                  },
-                  'lives': {
-                    'type': 'array',
-                    'items': {
-                      'type': 'string',
-                      'description': ''
-                    },
-                    'description': ''
-                  }
-                },
-                'requires': [],
-                'description': '',
-                'allowOtherFields': false
-              },
-              'tags': [],
-              'uses': [
-                {
-                  '_id': '58895a32ac72909f9a496314',
-                  'title': 'Cartoon Families'
-                },
-                {
-                  '_id': '588a9fcaeef4e4a5c066d8bb',
-                  'title': 'Cartoon Families 2, Electric Boogaloo'
-                }
-              ],
-              'numUses': 2
-            }
-          ]
-        },
-        'sets': {
-          'created': [
-            {
-              '_id': '588a9fcaeef4e4a5c066d8bb',
-              'title': 'Cartoon Families 2, Electric Boogaloo',
-              'description': 'A list of cartoon families. Used for the documentation.',
-              'type': {
-                '_id': '5889596bac72909f9a49630f',
-                'title': 'Family'
-              },
-              'tags': [
-                'cartoon',
-                'family',
-                'character',
-                'fiction',
-                'test',
-                'sample',
-                'example'
-              ],
-              'creator': {
-                '_id': '586ec2e73c4e8c1fdb7ac068',
-                'username': 'jackson'
-              },
-              'stars': 0,
-              'items': [
-                '588a9fcaeef4e4a5c066d8bc'
-              ]
-            }
-          ]
-        },
+      'numberOfChildren': {
+        'type': 'integer'
+      },
+      'people': {
+        'type': 'array',
         'items': {
-          'created': [
-            {
-              'surname': 'Simpson',
-              'people': [
-                {
-                  'firstName': 'Homer',
-                  'age': 39,
-                  'isParent': true
-                },
-                {
-                  'firstName': 'Marge',
-                  'age': 36,
-                  'isParent': true
-                },
-                {
-                  'firstName': 'Bart',
-                  'age': 10,
-                  'isParent': false
-                },
-                {
-                  'firstName': 'Lisa',
-                  'age': 8,
-                  'isParent': false
-                },
-                {
-                  'firstName': 'Maggie',
-                  'age': 1,
-                  'isParent': false
-                }
-              ],
-              'lives': [
-                'Springfield'
-              ],
-              '_type': {
-                '_id': '5889596bac72909f9a49630f',
-                '_type': 'Family'
-              },
-              '_sets': [
-                {
-                  '_id': '588a9fcaeef4e4a5c066d8bb',
-                  '_title': 'Cartoon Families 2, Electric Boogaloo'
-                }
-              ],
-              '_id': '588a9fcaeef4e4a5c066d8bc'
-            }
-          ]
-        }
-      }
-    }
-  },
-  addItems: {
-    request: {
-      initMethod: 'POST',
-      initPath: '/v1/set/588a9fcaeef4e4a5c066d8bb/item',
-      initStatus: '200',
-      initBody: [
-        '58896145ac72909f9a49632c',
-        {
-          'surname': 'Smith',
-          'people': [
-            {
-              'firstName': 'Rick',
-              'age': 90,
-              'isParent': false
-            },
-            {
-              'firstName': 'Beth',
-              'age': 34,
-              'isParent': true
-            },
-            {
-              'firstName': 'Jerry',
-              'age': 34,
-              'isParent': true
-            },
-            {
-              'firstName': 'Summer',
-              'age': 17,
-              'isParent': false
-            },
-            {
-              'firstName': 'Morty',
-              'age': 14,
-              'isParent': true
-            }
-          ],
-          'lives': [
-            'Earth'
-          ]
-        }
-      ],
-      initResponseBody: {
-        'status': 200,
-        'errors': {},
-        'sets': {
-          'updated': [
-            {
-              '_id': '588a9fcaeef4e4a5c066d8bb',
-              'title': 'Cartoon Families 2, Electric Boogaloo',
-              'description': 'A list of cartoon families. Used for the documentation.',
-              'type': {
-                '_id': '5889596bac72909f9a49630f',
-                'title': 'Family'
-              },
-              'tags': [
-                'cartoon',
-                'family',
-                'character',
-                'fiction',
-                'test',
-                'sample',
-                'example'
-              ],
-              'creator': {
-                '_id': '586ec2e73c4e8c1fdb7ac068',
-                'username': 'jackson'
-              },
-              'stars': 0,
-              'items': [
-                '588a9fcaeef4e4a5c066d8bc',
-                '58896145ac72909f9a49632c',
-                '588aa234eef4e4a5c066d8c5'
-              ]
-            }
-          ]
-        },
-        'items': {
-          'read': [
-            {
-              '_id': '58896145ac72909f9a49632c',
-              'surname': 'Gaang',
-              'people': [
-                {
-                  'firstName': 'Aang',
-                  'age': 12,
-                  'isParent': false
-                },
-                {
-                  'firstName': 'Zuko',
-                  'age': 16,
-                  'isParent': false
-                },
-                {
-                  'firstName': 'Katara',
-                  'age': 14,
-                  'isParent': false
-                },
-                {
-                  'firstName': 'Sokka',
-                  'age': 15,
-                  'isParent': false
-                },
-                {
-                  'firstName': 'Toph',
-                  'age': 12,
-                  'isParent': false
-                }
-              ],
-              'lives': [
-                'Water Tribes',
-                'Earth Kingdom',
-                'Fire Nation',
-                'Air Temples'
-              ],
-              '_type': {
-                '_id': '5889596bac72909f9a49630f',
-                '_type': 'Family'
-              },
-              '_sets': [
-                {
-                  '_id': '58895a32ac72909f9a496314',
-                  '_title': 'Cartoon Families'
-                }
-              ]
-            }
-          ],
-          'created': [
-            {
-              'surname': 'Smith',
-              'people': [
-                {
-                  'firstName': 'Rick',
-                  'age': 90,
-                  'isParent': false
-                },
-                {
-                  'firstName': 'Beth',
-                  'age': 34,
-                  'isParent': true
-                },
-                {
-                  'firstName': 'Jerry',
-                  'age': 34,
-                  'isParent': true
-                },
-                {
-                  'firstName': 'Summer',
-                  'age': 17,
-                  'isParent': false
-                },
-                {
-                  'firstName': 'Morty',
-                  'age': 14,
-                  'isParent': true
-                }
-              ],
-              'lives': [
-                'Earth'
-              ],
-              '_type': {
-                '_id': '5889596bac72909f9a49630f',
-                '_type': 'Family'
-              },
-              '_sets': [
-                {
-                  '_id': '588a9fcaeef4e4a5c066d8bb',
-                  '_title': 'Cartoon Families 2, Electric Boogaloo'
-                }
-              ],
-              '_id': '588aa234eef4e4a5c066d8c5'
-            }
-          ],
-          'updated': [
-            {
-              '_id': '58896145ac72909f9a49632c',
-              'surname': 'Gaang',
-              'people': [
-                {
-                  'firstName': 'Aang',
-                  'age': 12,
-                  'isParent': false
-                },
-                {
-                  'firstName': 'Zuko',
-                  'age': 16,
-                  'isParent': false
-                },
-                {
-                  'firstName': 'Katara',
-                  'age': 14,
-                  'isParent': false
-                },
-                {
-                  'firstName': 'Sokka',
-                  'age': 15,
-                  'isParent': false
-                },
-                {
-                  'firstName': 'Toph',
-                  'age': 12,
-                  'isParent': false
-                }
-              ],
-              'lives': [
-                'Water Tribes',
-                'Earth Kingdom',
-                'Fire Nation',
-                'Air Temples'
-              ],
-              '_type': {
-                '_id': '5889596bac72909f9a49630f',
-                '_type': 'Family'
-              },
-              '_sets': [
-                {
-                  '_id': '58895a32ac72909f9a496314',
-                  '_title': 'Cartoon Families'
-                },
-                {
-                  '_id': '588a9fcaeef4e4a5c066d8bb',
-                  'title': 'Cartoon Families 2, Electric Boogaloo'
-                }
-              ]
-            }
-          ]
-        }
-      }
-    }
-  },
-  createType: {
-    request: {
-      initMethod: 'POST',
-      initPath: '/v1/type',
-      initStatus: '200',
-      initBody: {
-        'title': 'Family',
-        'description': 'Describes a family unit. Usually one that lives in the same house.',
-        'properties': {
           'type': 'object',
           'fields': {
-            'surname': {
-              'type': 'string'
+            'firstName': {
+              'type': 'text',
+              'description': ''
             },
-            'people': {
-              'type': 'array',
-              'items': {
-                'type': 'object',
-                'fields': {
-                  'firstName': {
-                    'type': 'string'
-                  },
-                  'age': {
-                    'type': 'number'
-                  },
-                  'isParent': {
-                    'type': 'boolean'
-                  }
-                }
-              }
+            'age': {
+              'type': 'integer',
+              'description': ''
             },
-            'lives': {
-              'type': 'array',
-              'items': {
-                'type': 'string'
-              }
+            'isParent': {
+              'type': 'boolean',
+              'description': ''
             }
+          },
+          'requires': [],
+          'description': '',
+          'allowOtherFields': false
+        },
+        'description': ''
+      },
+      'lives': {
+        'type': 'array',
+        'items': {
+          'type': 'text',
+          'description': ''
+        },
+        'description': ''
+      },
+      '_sets': {
+        'type': 'array',
+        'items': {
+          'type': 'keyword',
+        },
+        'default': [],
+        'description': 'Defines the Sets of which this object is a member.'
+      },
+      '_type': {
+        'type': 'keyword',
+        'constant': familyTypeId,
+        'description': 'Defines the object\'s Type as set_type.'
+      }
+    },
+    'requires': [],
+    'description': '',
+    'allowOtherFields': false
+  }
+};
+
+export const familySetId = 'AV19M_7-abSTtBb93fgH';
+export const familySet = {
+  title: 'Cartoon Families',
+  description: 'A collection of families from various cartoons.',
+  tags: ['sample'],
+  type: {
+    _id: familyTypeId,
+    title: 'Family'
+  },
+  creator: {
+    _id: 'zenow',
+    username: 'zenow'
+  },
+  stars: 0,
+  numberOfItems: 0,
+  _permissions: {
+    owner: 'zenow',
+    read: ['all']
+  },
+  _sets: ['set_set']
+};
+
+export const familyIds = [
+  'AV19NNWIabSTtBb93fgI',
+  'AV19NTPnabSTtBb93fgJ',
+  'AV19NVaSabSTtBb93fgK',
+  'AV19NXPbabSTtBb93fgL',
+  'AV19NY41abSTtBb93fgM',
+  'AV19NalAabSTtBb93fgN',
+  'AV19NcFOabSTtBb93fgO'
+];
+export const families = [
+  {
+    'surname': 'Simpson',
+    'isMetaphoricalFamily': false,
+    'numberOfChildren': 3,
+    'people': [
+      {
+        'firstName': 'Homer',
+        'age': 39,
+        'isParent': true
+      },
+      {
+        'firstName': 'Marge',
+        'age': 36,
+        'isParent': true
+      },
+      {
+        'firstName': 'Bart',
+        'age': 10,
+        'isParent': false
+      },
+      {
+        'firstName': 'Lisa',
+        'age': 8,
+        'isParent': false
+      },
+      {
+        'firstName': 'Maggie',
+        'age': 1,
+        'isParent': false
+      }
+    ],
+    'lives': [
+      'Springfield'
+    ]
+  },
+  {
+    'surname': 'Smith',
+    'isMetaphoricalFamily': false,
+    'numberOfChildren': 2,
+    'people': [
+      {
+        'firstName': 'Rick',
+        'age': 90,
+        'isParent': false
+      },
+      {
+        'firstName': 'Beth',
+        'age': 34,
+        'isParent': true
+      },
+      {
+        'firstName': 'Jerry',
+        'age': 34,
+        'isParent': true
+      },
+      {
+        'firstName': 'Summer',
+        'age': 17,
+        'isParent': false
+      },
+      {
+        'firstName': 'Morty',
+        'age': 14,
+        'isParent': false
+      }
+    ],
+    'lives': [
+      'Earth',
+      'Tiny Planet'
+    ]
+  },
+  {
+    'surname': 'Belcher',
+    'isMetaphoricalFamily': false,
+    'numberOfChildren': 3,
+    'people': [
+      {
+        'firstName': 'Bob',
+        'age': 45,
+        'isParent': true
+      },
+      {
+        'firstName': 'Linda',
+        'age': 44,
+        'isParent': true
+      },
+      {
+        'firstName': 'Tina',
+        'age': 13,
+        'isParent': false
+      },
+      {
+        'firstName': 'Gene',
+        'age': 11,
+        'isParent': false
+      },
+      {
+        'firstName': 'Louise',
+        'age': 9,
+        'isParent': false
+      }
+    ],
+    'lives': [
+      'Ocean City'
+    ]
+  },
+  {
+    'surname': 'Waterson',
+    'isMetaphoricalFamily': false,
+    'numberOfChildren': 3,
+    'people': [
+      {
+        'firstName': 'Gumball',
+        'age': 12,
+        'isParent': false
+      },
+      {
+        'firstName': 'Darwin',
+        'age': 10,
+        'isParent': false
+      },
+      {
+        'firstName': 'Anais',
+        'age': 4,
+        'isParent': false
+      },
+      {
+        'firstName': 'Nicole',
+        'age': 38,
+        'isParent': true
+      },
+      {
+        'firstName': 'Richard',
+        'age': 38,
+        'isParent': true
+      }
+    ],
+    'lives': [
+      'Elmore'
+    ]
+  },
+  {
+    'surname': 'Neutron',
+    'isMetaphoricalFamily': false,
+    'numberOfChildren': 1,
+    'people': [
+      {
+        'firstName': 'Jimmy',
+        'age': 12,
+        'isParent': false
+      },
+      {
+        'firstName': 'Hugh',
+        'age': 40,
+        'isParent': true
+      },
+      {
+        'firstName': 'Judy',
+        'age': 40,
+        'isParent': true
+      }
+    ],
+    'lives': [
+      'Retroville'
+    ]
+  },
+  {
+    'surname': 'Turner',
+    'isMetaphoricalFamily': false,
+    'numberOfChildren': 1,
+    'people': [
+      {
+        'firstName': 'Timmy',
+        'age': 10,
+        'isParent': false
+      },
+      {
+        'firstName': 'Dad',
+        'age': 42,
+        'isParent': true
+      },
+      {
+        'firstName': 'Mom',
+        'age': 40,
+        'isParent': true
+      }
+    ],
+    'lives': [
+      'Dimmsdale'
+    ]
+  },
+  {
+    'surname': 'Gaang',
+    'isMetaphoricalFamily': true,
+    'numberOfChildren': 5,
+    'people': [
+      {
+        'firstName': 'Aang',
+        'age': 12,
+        'isParent': false
+      },
+      {
+        'firstName': 'Zuko',
+        'age': 16,
+        'isParent': false
+      },
+      {
+        'firstName': 'Katara',
+        'age': 14,
+        'isParent': false
+      },
+      {
+        'firstName': 'Sokka',
+        'age': 15,
+        'isParent': false
+      },
+      {
+        'firstName': 'Toph',
+        'age': 12,
+        'isParent': false
+      }
+    ],
+    'lives': [
+      'Water Tribes',
+      'Earth Kingdom',
+      'Fire Nation',
+      'Air Temples'
+    ]
+  }
+];
+
+export const responseType = {
+  'type': 'object',
+  'description': 'Zenow Response',
+  'requires': ['status'],
+  'fields': {
+    'status': {
+      'type': 'integer',
+      'description': 'The HTTP status code for this request'
+    },
+    'created': {
+      'type': 'object',
+      'description': 'A collection of objects CREATED for this request grouped by typeId',
+      'fields': {
+        'TYPE_ID': {
+          'type': 'array',
+          'description': 'A collection of all CREATED objects of this type.',
+          'items': {
+            'type': 'object',
+            'description': 'A single object.',
+            'allowOtherFields': true,
+            'fields': {}
           }
         }
+      }
+    },
+    'read': {
+      'type': 'object',
+      'description': 'A collection of objects READ for this request grouped by typeId',
+      'fields': {
+        'TYPE_ID': {
+          'type': 'array',
+          'description': 'A collection of all READ objects of this type.',
+          'items': {
+            'type': 'object',
+            'description': 'A single object.',
+            'allowOtherFields': true,
+            'fields': {}
+          }
+        }
+      }
+    },
+    'updated': {
+      'type': 'object',
+      'description': 'A collection of objects UPDATED for this request grouped by typeId',
+      'fields': {
+        'TYPE_ID': {
+          'type': 'array',
+          'description': 'A collection of all UPDATED objects of this type.',
+          'items': {
+            'type': 'object',
+            'description': 'A single object.',
+            'allowOtherFields': true,
+            'fields': {}
+          }
+        }
+      }
+    },
+    'deleted': {
+      'type': 'object',
+      'description': 'A collection of objects DELETED for this request grouped by typeId',
+      'fields': {
+        'TYPE_ID': {
+          'type': 'array',
+          'description': 'A collection of all DELTED objects of this type.',
+          'items': {
+            'type': 'object',
+            'description': 'A single object.',
+            'allowOtherFields': true,
+            'fields': {}
+          }
+        }
+      }
+    },
+    'errors': {
+      'type': 'object',
+      'description': 'A map between the cause of an error and its description.',
+      'allowOtherFields': true,
+      'fields': {}
+    }
+  }
+};
+
+export const updateType = {
+  type: 'array',
+  items: {
+    type: 'object',
+    requires: ['ids', 'query'],
+    description: 'A pairing between object ids to be updated and the way to update them',
+    fields: {
+      ids: {
+        type: 'array',
+        description: 'The object ids to be updated',
+        items: {
+          type: 'keyword'
+        }
       },
-      initResponseBody: {
-        'status': 200,
-        'errors': {},
-        'types': {
-          'created': [
-            {
-              'title': 'Family',
-              'description': 'Describes a family unit. Usually one that lives in the same house.',
-              'properties': {
-                'type': 'object',
-                'fields': {
-                  'surname': {
-                    'type': 'string',
-                    'description': ''
-                  },
-                  'people': {
-                    'type': 'array',
-                    'items': {
-                      'type': 'object',
-                      'fields': {
-                        'firstName': {
-                          'type': 'string',
-                          'description': ''
-                        },
-                        'age': {
-                          'type': 'number',
-                          'description': ''
-                        },
-                        'isParent': {
-                          'type': 'boolean',
-                          'description': ''
-                        }
-                      },
-                      'requires': [],
-                      'description': '',
-                      'allowOtherFields': false
-                    },
-                    'description': ''
-                  },
-                  'lives': {
-                    'type': 'array',
-                    'items': {
-                      'type': 'string',
-                      'description': ''
-                    },
-                    'description': ''
-                  }
-                },
-                'requires': [],
-                'description': '',
-                'allowOtherFields': false
-              },
-              'tags': [],
-              'uses': [],
-              'numUses': 0,
-              '_id': '5880f08debe2fa58b13d7e78'
-            }
-          ]
+      query: {
+        type: 'object',
+        description: 'The way the objects should be updated',
+        fields: {
+          $inc: {
+            type: 'object',
+            allowOtherFields: true,
+            description: 'Increment a number. The key is a period-separated string representing the key in the object to increment. The value is the number by which the value will be incremented. Use negative numbers to decrement.',
+            fields: {}
+          },
+          $mul: {
+            type: 'object',
+            allowOtherFields: true,
+            description: 'Multiply a number. The key is a period-separated string representing the key in the object to multiplied. The value is the number by which the value will be multiplied.',
+            fields: {}
+          },
+          $rename: {
+            type: 'object',
+            allowOtherFields: true,
+            description: 'Rename a field. The key is a period-separated string representing the key in the object to renamed. The value is the name to which the field will be renamed.',
+            fields: {}
+          },
+          $set: {
+            type: 'object',
+            allowOtherFields: true,
+            description: 'Set a field. The key is a period-separated string representing the key in the object to set. The value is the value to which the field will be set.',
+            fields: {}
+          },
+          $unset: {
+            type: 'object',
+            allowOtherFields: true,
+            description: 'Removes a field. The key is a period-separated string representing the key in the object to unset. The value does not matter.',
+            fields: {}
+          },
+          $min: {
+            type: 'object',
+            allowOtherFields: true,
+            description: 'Set a field if the value is less than the current value. The key is a period-separated string representing the key in the object to set. The value is the value to which the field will be set.',
+            fields: {}
+          },
+          $max: {
+            type: 'object',
+            allowOtherFields: true,
+            description: 'Set a field if the value is greater than the current value. The key is a period-separated string representing the key in the object to set. The value is the value to which the field will be set.',
+            fields: {}
+          },
+          $addToSet: {
+            type: 'object',
+            allowOtherFields: true,
+            description: 'Add a value to a collection only if it is unique to that collection. The key is a period-separated string representing the key in the object of the collection. The value is the value to add to the collection.',
+            fields: {}
+          },
+          $pop: {
+            type: 'object',
+            allowOtherFields: true,
+            description: 'Remove the last or first value of a collection. The key is a period-separated string representing the key in the object of the collection. The value is a positive number to remove the last value and a negative number to remove the first value.',
+            fields: {}
+          },
+          $pullAll: {
+            type: 'object',
+            allowOtherFields: true,
+            description: 'Remove all values of a kind from a collection. The key is a period-separated string representing the key in the object of the collection. The value is the value to remove.',
+            fields: {}
+          },
+          $push: {
+            type: 'object',
+            allowOtherFields: true,
+            description: 'Add a value to a collection. The key is a period-separated string representing the key in the object of the collection. The value is the value to add to the collection.',
+            fields: {}
+          }
         }
       }
     }
   }
 };
 
-export default docData;

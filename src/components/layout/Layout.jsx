@@ -1,15 +1,13 @@
 import React, { Component, PropTypes } from 'react';
-import {Link} from 'react-router';
 import { asyncConnect } from 'redux-async-connect';
-import { browserHistory } from 'react-router';
-import { connect } from 'react-redux';
 import config from 'config';
 import Helmet from 'react-helmet';
+import {Link} from 'react-router';
 
 import s from '../styles/index.scss';
 
 @asyncConnect([{
-  promise: ({ store: {dispatch, getState}}) => {
+  promise: () => {
     const promises = [];
     return Promise.all(promises);
   }
@@ -26,7 +24,7 @@ export default class Layout extends Component {
     };
   }
   getLinkData = () => {
-    let linkData = [
+    const linkData = [
       {
         text: 'Feedback / Contact',
         icon: 'fa-comment',

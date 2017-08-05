@@ -1,17 +1,19 @@
 import React from 'react';
-import RequestTool from '../RequestTool.jsx';
 import SectionHeader from '../SectionHeader.jsx';
-import { Link } from 'react-router';
-import data from './tutorialData.js';
+import DocSection from '../DocSection.jsx';
 
 export default () => {
   return (
     <div>
-      <SectionHeader name="Search Items in a Set">Search Items in a Set</SectionHeader>
-      <p>Sometimes you want to find specific items within a set based on parameters. To do this, we can <code>POST</code> a search request and pass our search query through the request body.</p>
-      <p>In the example below, we’re looking for all the cartoon families with the surname "Turner"</p>
-      <RequestTool {...data.searchItems.request} />
-      <p>This is just one example. For more complex search queries, see the (Advanced Search documentation).</p>
+      <DocSection>
+        <SectionHeader name="Basic Search">Basic Search</SectionHeader>
+        <p>One of the simplest ways to search on Zenow is by simply providing a string value via the "query" paramerter, which looks for all objects that contain that word or number.</p>
+        <p>Search requests for objects, types, sets, and items all support the same functionality, but for the purposes of these examples, we'll be searching among items in the a set of cartoon families: <code>/v2/set//item/search</code></p>
+      </DocSection>
+      <DocSection>
+        <SectionHeader name="Advanced Search">Advanced Search</SectionHeader>
+        <p>Sometimes you want to search based on more than just the simple string matching, so the search route accepts a JSON object to define a more advanced search. Zenow is built on Elasticsearch, and you can find their documentation for search queries <a href=" https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-body.html">here</a>.</p>
+      </DocSection>
     </div>
-  )
-}
+  );
+};

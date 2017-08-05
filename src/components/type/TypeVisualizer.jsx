@@ -123,7 +123,7 @@ export default class TypeVisualizer extends Component {
       </tr>
     ];
     if (!this.state.isClosed[pathName]) {
-      rendering = rendering.concat(this.getRenderMethod(type.items.type)(type.items, path.concat('[]'), false));
+      rendering = rendering.concat(this.getRenderMethod(type.items.type)(type.items, path.concat('[ ]'), false));
     }
     return rendering;
   }
@@ -204,7 +204,7 @@ export default class TypeVisualizer extends Component {
             <td>Key</td>
             <td>Description</td>
             <td>Type</td>
-            <td>Required</td>
+            <td>Required / Guaranteed</td>
             <td>Default</td>
             <td>Other Properties</td>
           </tr>

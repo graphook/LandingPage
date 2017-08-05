@@ -1,10 +1,5 @@
-const FETCH = 'documentation/FETCH';
-const FETCH_SUCCESS = 'documentation/FETCH_SUCCESS';
-const FETCH_FAIL = 'documentation/FETCH_FAIL';
-const SET_FOCUS = 'documentation/SET_FOCUS';
 
-const categoryOrder = ['Base Operations', 'Authentication', 'Set Operations', 'Set Item Operations', 'Type Operations', 'Other'];
-const methodOrder = ['get', 'post', 'put', 'delete'];
+const SET_FOCUS = 'documentation/SET_FOCUS';
 
 const initialState = {
   loaded: false,
@@ -22,9 +17,18 @@ const initialState = {
         },
         {
           'title': 'Understanding JSON'
+        }
+      ]
+    },
+    {
+      'category': 'Zenow API Tutorial',
+      'specialComponent': 'ApiTutorial',
+      'subTopics': [
+        {
+          'title': 'Data Structure'
         },
         {
-          'title': 'Using Zenow’s Request Tool'
+          'title': 'Zenow Responses'
         }
       ]
     },
@@ -48,7 +52,10 @@ const initialState = {
       'specialComponent': 'SearchTutorial',
       'subTopics': [
         {
-          'title': 'Using ElasticSearch Queries'
+          'title': 'Basic Search'
+        },
+        {
+          'title': 'Advanced Search'
         }
       ]
     },
@@ -285,8 +292,7 @@ const initialState = {
                         'isParent': true
                       },
                       {
-                        'firstName'
-                        : 'Marge',
+                        'firstName': 'Marge',
                         'age': 36,
                         'isParent': true
                       },
@@ -807,253 +813,6 @@ const initialState = {
       ]
     },
     {
-      'category': 'Authentication',
-      'routes': [
-        {
-          'category': 'Authentication',
-          'description': 'Get the user that is currently logged in.',
-          'method': 'get',
-          'path': '/v2/user',
-          'protocol': 'https',
-          'domain': 'api.zenow.io',
-          'parameters': {
-            'type': 'object',
-            'description': 'The parameters given to the URL via the query (?).',
-            'requires': [
-              'apikey'
-            ],
-            'fields': {
-              'apikey': {
-                'type': 'keyword',
-                'description': 'The user access key for the api. This can also be passed in via a header variable.'
-              }
-            }
-          },
-          'headers': {
-            'type': 'object',
-            'description': 'The header variables.',
-            'requires': [
-              'apikey'
-            ],
-            'fields': {
-              'Authorization': {
-                'type': 'keyword',
-                'description': 'The user access key for the api. This can also be passed in via the url parameters.'
-              }
-            }
-          },
-          'body': {},
-          'sample': {},
-          '_sets': [
-            'route_set'
-          ],
-          '_type': 'route_type',
-          '_id': 'AV2MoxCsabSTtBb93fix'
-        },
-        {
-          'category': 'Authentication',
-          'description': 'Create a new user',
-          'method': 'post',
-          'path': '/v2/user',
-          'protocol': 'https',
-          'domain': 'api.zenow.io',
-          'parameters': {
-            'type': 'object',
-            'description': 'The parameters given to the URL via the query (?).',
-            'requires': [
-              'apikey'
-            ],
-            'fields': {
-              'apikey': {
-                'type': 'keyword',
-                'description': 'The user access key for the api. This can also be passed in via a header variable.'
-              }
-            }
-          },
-          'headers': {
-            'type': 'object',
-            'description': 'The header variables.',
-            'requires': [
-              'apikey'
-            ],
-            'fields': {
-              'Authorization': {
-                'type': 'keyword',
-                'description': 'The user access key for the api. This can also be passed in via the url parameters.'
-              }
-            }
-          },
-          'body': {
-            'type': 'object',
-            'requires': [
-              'username',
-              'email',
-              'password'
-            ],
-            'fields': {
-              'username': {
-                'type': 'keyword',
-                'description': 'The name of the user. This will be public on Zenow. Usernames must consist of letters, numbers, -, or _ and be between 3 and 30 characters in length.',
-                'regex': '^[a-zA-Z0-9\\-_]{3,30}$'
-              },
-              'email': {
-                'type': 'keyword',
-                'description': 'The user\'s email',
-                'regex': '^(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$'
-              },
-              'password': {
-                'type': 'keyword',
-                'description': 'The user\'s password. Passwords must consist of letters, numbers, or one of these symbols: $-/:-?{-~!\"^_`[]',
-                'regex': '^[a-zA-Z0-9$-/:-?{-~!\"^_`\\[\\]]'
-              }
-            }
-          },
-          'sample': {},
-          '_sets': [
-            'route_set'
-          ],
-          '_type': 'route_type',
-          '_id': 'AV2MoxCsabSTtBb93fiv'
-        },
-        {
-          'category': 'Authentication',
-          'description': 'Get a token to query the api by passing a username/email and password',
-          'method': 'post',
-          'path': '/v2/auth/token',
-          'protocol': 'https',
-          'domain': 'api.zenow.io',
-          'parameters': {
-            'type': 'object',
-            'description': 'The parameters given to the URL via the query (?).',
-            'requires': [
-              'apikey'
-            ],
-            'fields': {
-              'apikey': {
-                'type': 'keyword',
-                'description': 'The user access key for the api. This can also be passed in via a header variable.'
-              }
-            }
-          },
-          'headers': {
-            'type': 'object',
-            'description': 'The header variables.',
-            'requires': [
-              'apikey'
-            ],
-            'fields': {
-              'Authorization': {
-                'type': 'keyword',
-                'description': 'The user access key for the api. This can also be passed in via the url parameters.'
-              }
-
-            }
-          },
-          'body': {
-            'type': 'object',
-            'requires': [
-              'password'
-            ],
-            'requiresAtLeast': {
-              'count': 1,
-              'fields': [
-                'username',
-                'password'
-              ]
-            },
-            'fields': {
-              'username': {
-                'type': 'keyword',
-                'description': 'The name of the user. This will be public on Zenow. Usernames must consist of letters, numbers, -, or _ and be between 3 and 30 characters in length.',
-                'regex': '^[a-zA-Z0-9\\-_]{3,30}$'
-              },
-              'email': {
-                'type': 'keyword',
-                'description': 'The user\'s email',
-                'regex': '^(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$'
-              },
-              'password': {
-                'type': 'keyword',
-                'description': 'The user\'s password. Passwords must consist of letters, numbers, or one of these symbols: $-/:-?{-~!\"^_`[]',
-                'regex': '^[a-zA-Z0-9$-/:-?{-~!\"^_`\\[\\]]'
-              }
-            }
-          },
-          'sample': {},
-          '_sets': [
-            'route_set'
-          ],
-          '_type': 'route_type',
-          '_id': 'AV2MoxCsabSTtBb93fiu'
-        },
-        {
-          'category': 'Authentication',
-          'description': 'Validate that a given user\'s credentials do not conflict with other users.',
-          'method': 'post',
-          'path': '/v2/user/validate',
-          'protocol': 'https',
-          'domain': 'api.zenow.io',
-          'parameters': {
-            'type': 'object',
-            'description': 'The parameters given to the URL via the query (?).',
-            'requires': [
-              'apikey'
-            ],
-            'fields': {
-              'apikey': {
-                'type': 'keyword',
-                'description': 'The user access key for the api. This can also be passed in via a header variable.'
-              }
-            }
-          },
-          'headers': {
-            'type': 'object',
-            'description': 'The header variables.',
-            'requires': [
-              'apikey'
-            ],
-            'fields': {
-              'Authorization': {
-                'type': 'keyword',
-                'description': 'The user access key for the api. This can also be passed in via the url parameters.'
-              }
-            }
-          },
-          'body': {
-            'type': 'object',
-            'requires': [
-              'username',
-              'email',
-              'password'
-            ],
-            'fields': {
-              'username': {
-                'type': 'keyword',
-                'description': 'The name of the user. This will be public on Zenow. Usernames must consist of letters, numbers, -, or _ and be between 3 and 30 characters in length.',
-                'regex': '^[a-zA-Z0-9\\-_]{3,30}$'
-              },
-              'email': {
-                'type': 'keyword',
-                'description': 'The \'s email',
-                'regex': '^(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$'
-              },
-              'password': {
-                'type': 'keyword',
-                'description': 'The user\'s password. Passwords must consist of letters, numbers, or one of these symbols: $-/:-?{-~!\"^_`[]',
-                'regex': '^[a-zA-Z0-9$-/:-?{-~!\"^_`\\[\\]]'
-              }
-            }
-          },
-          'sample': {},
-          '_sets': [
-            'route_set'
-          ],
-          '_type': 'route_type',
-          '_id': 'AV2MoxCsabSTtBb93fiw'
-        }
-      ]
-    },
-    {
       'category': 'Set Operations',
       'routes': [
         {
@@ -1187,8 +946,7 @@ const initialState = {
                 'default': [],
                 'description': 'A list of terms to aid in searching.'
               },
-              'type':
-              {
+              'type': {
                 'type': 'object',
                 'requires': [
                   '_id'
@@ -3048,8 +2806,7 @@ const initialState = {
             },
             'responseStatus': 201,
             'responseBody': {
-              'status': 201
-              ,
+              'status': 201,
               'created': {
                 'set_type': [
                   {
@@ -3433,12 +3190,12 @@ const initialState = {
 
 // TODO: Add search suggestions
 export default function reducer(state = initialState, action = {}) {
-  switch(action.type) {
+  switch (action.type) {
     case SET_FOCUS:
       return {
         ...state,
         focus: action.name
-      }
+      };
     default:
       return state;
   }
