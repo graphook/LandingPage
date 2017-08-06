@@ -4,6 +4,8 @@ import Waypoint from 'react-waypoint';
 import {setFocus} from 'redux/modules/documentation';
 import { connect } from 'react-redux';
 
+import s from 'components/styles/index.scss';
+
 @connect(null, {setFocus})
 export default class SectionHeader extends Component {
   static propTypes = {
@@ -13,7 +15,7 @@ export default class SectionHeader extends Component {
   }
   render() {
     return (
-      <Element name={this.props.name}>
+      <Element name={this.props.name} className={s.sectionHeader}>
         <Waypoint onEnter={() => {
           this.props.setFocus(this.props.name);
         }} />
