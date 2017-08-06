@@ -1,3 +1,12 @@
+import {cloneAssign} from 'utilities';
+
+export const createRoute = (sample) => {
+  return {
+    protocol: 'https',
+    domain: 'api.zenow.io',
+    sample
+  };
+};
 
 export const familyTypeId = 'AV19M3pmabSTtBb93fgG';
 export const familyType = {
@@ -504,3 +513,251 @@ export const updateType = {
   }
 };
 
+// Converters
+const addFamilyMetadata = (family, index) => {
+  return cloneAssign(family, {
+    _id: familyIds[index],
+    _sets: [ familySetId ],
+    _type: familyTypeId
+  });
+};
+const addSetMetadata = (set, setId) => {
+  return cloneAssign(set, {
+    _id: setId,
+    _sets: [ 'set_set' ],
+    _type: 'set_type'
+  }, ['_permissions']);
+};
+const addTypeMetadata = (type, typeId) => {
+  return cloneAssign(type, {
+    _id: typeId,
+    _sets: [ 'type_set' ],
+    _type: 'type_type'
+  }, ['_permissions']);
+};
+
+// Converted Objects
+export const familyTypeResponse = addTypeMetadata(familyType, familyTypeId);
+export const familySetResponse = addSetMetadata(familySet, familySetId);
+export const familiesResponse = families.map((family, index) => {
+  return addFamilyMetadata(family, index);
+});
+
+export const schemas = {
+  object: {
+    type: 'object',
+    requires: ['type', 'fields'],
+    fields: {
+      type: {
+        type: 'keyword',
+        constant: 'object',
+        description: 'The schema type of this part of the schema.'
+      },
+      constant: {
+        type: 'object',
+        allowOtherFields: true,
+        fields: {},
+        description: 'Requires that this field be a certain value.'
+      },
+      fields: {
+        type: 'object',
+        allowOtherFields: true,
+        fields: {},
+        default: {},
+        description: 'A map between a value and a key that this object must follow.'
+      },
+      requires: {
+        type: 'array',
+        items: {
+          type: 'keyword'
+        },
+        default: [],
+        description: 'A collection of the fields this object requires to be present.'
+      },
+      default: {
+        type: 'object',
+        allowOtherFields: true,
+        fields: {},
+        description: 'Defines the default value for this field.'
+      },
+      description: {
+        type: 'text',
+        default: '',
+        description: 'A description of this part of the schema for documentation purposes.'
+      },
+      allowOtherFields: {
+        type: 'boolean',
+        default: false,
+        description: 'If true, this object will allow fields that are not listed in the fields attribute.'
+      },
+      requiresAtLeast: {
+        type: 'object',
+        requires: ['count', 'fields'],
+        fields: {
+          count: {
+            type: 'integer',
+            description: 'The minimum number of fields from the fields collection that are required.'
+          },
+          fields: {
+            type: 'array',
+            items: {
+              type: 'keyword'
+            },
+            description: 'A collection of possible fields.'
+          }
+        },
+        description: 'Defines the requirement of a variable number of fields given a collection of possible fields.'
+      },
+      cannotHave: {
+        type: 'array',
+        items: {
+          type: 'string'
+        },
+        description: 'A collection of field names that this object cannot have.'
+      }
+    }
+  },
+  array: {
+    type: 'object',
+    requires: ['type', 'items'],
+    fields: {
+      type: {
+        type: 'keyword',
+        constant: 'array',
+        description: 'The schema type of this part of the schema.'
+      },
+      constant: {
+        type: 'array',
+        items: {
+          type: 'any'
+        },
+        description: 'Requires that this field be a certain value.'
+      },
+      items: {
+        type: 'object',
+        allowOtherFields: true,
+        fields: {},
+        description: 'Defines the schema of items allowed to be within this collection.'
+      },
+      description: {
+        type: 'text',
+        default: '',
+        description: 'A description of this part of the schema for documentation purposes.'
+      },
+      default: {
+        type: 'array',
+        items: {
+          type: 'any'
+        },
+        description: 'Defines the default value for this field.'
+      }
+    }
+  },
+  string: {
+    type: 'object',
+    requires: ['type'],
+    fields: {
+      type: {
+        type: 'keyword',
+        enums: ['keyword', 'text'],
+        description: 'The schema type of this part of the schema.'
+      },
+      constant: {
+        type: 'any',
+        description: 'Requires that this field be a certain value.'
+      },
+      default: {
+        type: 'any',
+        description: 'Defines the default value for this field.'
+      },
+      description: {
+        type: 'text',
+        default: '',
+        description: 'A description of this part of the schema for documentation purposes.'
+      },
+      regex: {
+        type: 'keyword',
+        description: 'A regular expression that the value must follow.'
+      },
+      enums: {
+        type: 'array',
+        items: {
+          type: 'keyword'
+        },
+        description: 'The value may only be one of the strings in this collection.'
+      }
+    }
+  },
+  number: {
+    type: 'object',
+    requires: ['type'],
+    fields: {
+      type: {
+        type: 'keyword',
+        enums: ['integer', 'long', 'short', 'byte', 'double', 'float'],
+        description: 'The schema type of this part of the schema.'
+      },
+      constant: {
+        type: 'any',
+        description: 'Requires that this field be a certain value.'
+      },
+      default: {
+        type: 'any',
+        description: 'Defines the default value for this field.'
+      },
+      description: {
+        type: 'text',
+        default: '',
+        description: 'A description of this part of the schema for documentation purposes.'
+      }
+    }
+  },
+  boolean: {
+    type: 'object',
+    requires: ['type'],
+    fields: {
+      type: {
+        type: 'keyword',
+        constant: 'boolean',
+        description: 'The schema type of this part of the schema.'
+      },
+      constant: {
+        type: 'boolean',
+        description: 'Requires that this field be a certain value.'
+      },
+      default: {
+        type: 'boolean',
+        description: 'Defines the default value for this field.'
+      },
+      description: {
+        type: 'text',
+        default: '',
+        description: 'A description of this part of the schema for documentation purposes.'
+      }
+    }
+  },
+  any: {
+    type: 'object',
+    requires: ['type'],
+    fields: {
+      type: {
+        type: 'keyword',
+        constant: 'any',
+        description: 'The schema type of this part of the schema.'
+      },
+      constant: {
+        type: 'any',
+        description: 'Requires that this field be a certain value.'
+      },
+      default: {
+        type: 'any',
+        description: 'Defines the default value for this field.'
+      },
+      description: {
+        type: 'text',
+        default: '',
+        description: 'A description of this part of the schema for documentation purposes.'
+      }
+    }
+  }
+};

@@ -4,6 +4,7 @@ import {Link} from 'react-router';
 import {responseType} from './tutorialData.js';
 import TypeVisualizer from 'components/type/TypeVisualizer.jsx';
 import DocSection from '../DocSection.jsx';
+import {familiesResponse} from './tutorialData';
 
 import s from 'components/styles/index.scss';
 
@@ -12,7 +13,7 @@ export default () => {
     <div>
       <DocSection>
         <SectionHeader name="Data Structure">Data Structure</SectionHeader>
-        <p>All data stored in Zenow is stored as "objects," and each object is represented by <Link to="/Introduction%20and%20Authentication/Understanding%20JSON">JSON</Link>. Objects can be accessed and manipulated using the <Link to="/documentation/Base%20Operations">Base Operations API</Link>, but there are also more convenient ways to organize information.</p>
+        <p>All data stored on Zenow is stored as "objects," and each object is represented by <Link to="/Introduction%20and%20Authentication/Understanding%20JSON">JSON</Link>. Objects can be accessed and manipulated using the <Link to="/documentation/Base%20Operations">Base Operations API</Link>, but there are also more convenient ways to organize information.</p>
         <p>While all operations can technically be performed with base operations, the <Link to="/documentation/Set%20Operations">Set Operations</Link>, <Link to="/documentation/Set%20Item%20Operations">Set Item Operations</Link>, and <Link to="/documentation/Type%20Operations">Type Operations</Link> keep everything organized in an understandable structure:</p>
         <p>"Types" represent the schema for an object. Every object has a type and Zenow will return an error if a provided or updated object does not match its type.</p>
         <p>"Sets" are collections of objects or items. Each set has a type and items within the set must all be of that type.</p>
@@ -35,7 +36,7 @@ export default () => {
             {JSON.stringify({
               read: {
                 AV19M3pmabSTtBb93fgG: [
-                  'hi'
+                  familiesResponse[0]
                 ]
               }
             }, null, 2)}

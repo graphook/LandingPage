@@ -52,13 +52,13 @@ export default class Documentation extends Component {
     this.goToProperPlace();
   }
   componentDidUpdate(prevProps) {
-    if (this.props.params.subTopic !== prevProps.params.subTopic) {
-      this.goToProperPlace();
-    } else if (this.props.params.topic !== prevProps.params.topic) {
+    if (this.props.params.topic !== prevProps.params.topic) {
       animateScroll.scrollToTop({
         containerId: 'docs',
         duration: 0
       });
+    } else if (this.props.params.subTopic !== prevProps.params.subTopic) {
+      this.goToProperPlace();
     }
   }
   goToProperPlace = () => {
@@ -91,8 +91,7 @@ export default class Documentation extends Component {
             onClick={() => this.setState({ sidePanelClosed: !this.state.sidePanelClosed })}></i>
           <ul className={s.categoryList} id="docNav">
             {this.props.categories.map((category) => {
-              return (<li>
-
+              return (<li key={category.category}>
                 <Link to={'/documentation/' + category.category} className={s.categoryHeader}
                     className={(category.category === this.props.params.topic) ? s.focused : ''}>
                   {category.category}
@@ -102,7 +101,7 @@ export default class Documentation extends Component {
                     if (category.routes) {
                       return category.routes.map((route) => {
                         const thisSubTopic = route.method + route.path.replace(new RegExp('/', 'g'), ' ');
-                        return (<li>
+                        return (<li key={thisSubTopic}>
                           <Link to={'/documentation/' + category.category + '/' + thisSubTopic}
                               className={(thisSubTopic === this.props.focus) ? s.focused : ''}>
                             <span className={s.method}>{route.method}</span> {route.path}
@@ -111,7 +110,7 @@ export default class Documentation extends Component {
                       });
                     }
                     return category.subTopics.map((subTopic) => {
-                      return (<li>
+                      return (<li key={subTopic.title}>
                         <Link to={'/documentation/' + category.category + '/' + subTopic.title}
                             className={(subTopic.title === this.props.focus) ? s.focused : ''}>
                           {subTopic.title}

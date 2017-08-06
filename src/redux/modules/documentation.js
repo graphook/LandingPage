@@ -68,9 +68,6 @@ const initialState = {
         },
         {
           'title': 'Add Items to a Set'
-        },
-        {
-          'title': 'Other Set Operations'
         }
       ]
     },
@@ -79,7 +76,40 @@ const initialState = {
       'specialComponent': 'UpdateTutorial',
       'subTopics': [
         {
-          'title': 'Using Mongo Queries'
+          'title': 'Updating Nested Fields'
+        },
+        {
+          'title': '$inc'
+        },
+        {
+          'title': '$mul'
+        },
+        {
+          'title': '$rename'
+        },
+        {
+          'title': '$set'
+        },
+        {
+          'title': '$unset'
+        },
+        {
+          'title': '$min'
+        },
+        {
+          'title': '$max'
+        },
+        {
+          'title': '$addToSet'
+        },
+        {
+          'title': '$pop'
+        },
+        {
+          'title': '$pullAll'
+        },
+        {
+          'title': '$push'
         }
       ]
     },
@@ -88,7 +118,28 @@ const initialState = {
       'specialComponent': 'CreateTypeTutorial',
       'subTopics': [
         {
-          'title': 'Creating a Type'
+          'title': 'Create a Type'
+        },
+        {
+          'title': 'Defining Properties'
+        },
+        {
+          'title': 'Object Schemas'
+        },
+        {
+          'title': 'Array Schemas'
+        },
+        {
+          'title': 'String Schemas'
+        },
+        {
+          'title': 'Number Schemas'
+        },
+        {
+          'title': 'Boolean Schemas'
+        },
+        {
+          'title': 'Any Schemas'
         }
       ]
     },

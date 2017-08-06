@@ -5,7 +5,7 @@ import s from 'components/styles/index.scss';
 
 export default class DocSection extends Component {
   static propTypes = {
-    children: PropTypes.element,
+    children: PropTypes.any,
     route: PropTypes.object
   }
   render() {

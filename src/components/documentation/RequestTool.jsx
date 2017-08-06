@@ -18,8 +18,8 @@ export default class RequestTool extends Component {
           {(() => {
             if (this.props.route.sample.requestBody) {
               return [
-                <p>Request Body</p>,
-                <pre className="hljs">
+                <p key="rb">Request Body</p>,
+                <pre key="pre" className="hljs">
                   <code className="json">
                     {JSON.stringify(this.props.route.sample.requestBody, null, 2)}
                   </code>

@@ -42,18 +42,19 @@ export default class IntroAuth extends Component {
               <li><strong>PUT</strong>: Request to update some content</li>
               <li><strong>DELETE</strong>: Request to remove some content</li>
             </ul>
-            <li>The <strong>URL</strong> is defines the location to which you would like to send requests and looks something like this: <code>https://api.zenow.io/v1/set/search?count=10&page=0</code>. This URL is split into 4 sections</li>
+            <li>The <strong>URL</strong> defines the location to which you would like to send requests and looks something like this: <code>https://api.zenow.io/v2/set/search?count=10&page=0</code>. This URL is split into 4 sections</li>
             <ul>
               <li><code>https://</code> This is the <strong>protocol</strong>. All Zenow requests use the HTTPS protocol, which is a variation of HTTP with additional security.</li>
-              <li><code>/v1/set/search</code> This is the <strong>path</strong>. It defines the location to which you want to send your request within Zenow’s API.</li>
+              <li><code>api.zenow.io</code> This is the <strong>domain</strong>. It describes the location to which your request should be sent, in this case, the Zenow API.</li>
+              <li><code>/v2/set/search</code> This is the <strong>path</strong>. It defines the location to which you want to send your request within Zenow’s API.</li>
               <li><code>?count=10&page=0</code> These are the <strong>parameters</strong>. They help define special information about the request and are always placed at the end of the URL. The parameter section is preceded by a question mark and all parameters are separated by an ampersand.</li>
             </ul>
-            <li>The <strong>Headers</strong> are a collection of meta-data that describe the request itself. Though, Zenow doesn’t require any special headers.</li>
+            <li>The <strong>Headers</strong> are a collection of meta-data that describe the request itself. .</li>
             <li>The <strong>Body</strong> is a collection of data that you wish to send to the server. On Zenow, Bodies are only used in POST and PUT requests as these are the requests that entail you sending content to Zenow. All bodies on Zenow are in the JSON (Javascrpt Object Notation) format which is discussed in the next section.</li>
           </ul>
           <p>HTTP responses consist of 3 basic components: the Status, the Response Headers, and the Response Body.</p>
           <ul>
-            <li>The <strong>Status</strong> is a numerical code describing how the request went. You can see all possible status codes here (https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html). Below are some common codes you’ll encounter on Zenow. Don’t worry about memorizing these. The response body usually has enough information to help you figure out what’s going on.</li>
+            <li>The <strong>Status</strong> is a numerical code describing how the request went. You can see all possible status codes <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html" target="_blank">here</a>. Below are some common codes you’ll encounter on Zenow. Don’t worry about memorizing these. The response body usually has enough information to help you figure out what’s going on.</li>
             <ul>
               <li>2XX: Everything’s good! Your request was processed correctly.</li>
               <ul>
@@ -75,7 +76,7 @@ export default class IntroAuth extends Component {
         </DocSection>
         <DocSection>
           <SectionHeader name="Understanding JSON">Understanding JSON</SectionHeader>
-          <p>All HTTP request and response bodies (discussed in the previous section) on Zenow are formatted in JSON (JavaScript Object Notation). This is a logical way to represent data as a string of characters, and looks something like this:</p>
+          <p>All HTTP request and response bodies (discussed in the previous section) on Zenow are formatted in JSON (JavaScript Object Notation). This is a logical way to represent data as a string of characters and looks something like this:</p>
           <pre className="hljs">
             <code className="json">
               {JSON.stringify({
@@ -105,9 +106,9 @@ export default class IntroAuth extends Component {
           </pre>
           <p>JSON consists of various types of information which may or may not contain more types of information. These types are as follows:</p>
           <ul>
-            <li><strong>Object</strong>: Objects are denoted by curly brackets <code>{}</code>. Inside these curly brackets are various <strong>keys</strong> which are strings that correspond with <strong>values</strong>. A value can be any of the JSON types. For example in <code>{JSON.stringify({ surname: 'Neutron', people: [] })}</code> the key "surname" corresponds to the string "Neutron" while the key "people" corresponds with an empty array. Note that keys are surrounded by quotes, keys and values are separated by colons, and there is a comma separating each key-value pair.</li>
-            <li><strong>Array</strong>: Arrays are denoted by brackets <code>[]</code>. Inside these brackets is an ordered list of any number of JSON types. For example the array <code>["Jimmy", true, {}]</code> contains 3 ordered items: first, the string "Jimmy," second, the boolean "true," and third, an empty array. Note that all items in the array are separated by a comma.</li>
-            <li><strong>String</strong>: Strings are a collection of characters usually used to create words or sentences. Example: <code>"Neutro"</code>. Note that strings are surrounded by quotes.</li>
+            <li><strong>Object</strong>: Objects are denoted by curly brackets <code>{'{}'}</code>. Inside these curly brackets are various <strong>keys</strong> which are strings that correspond with <strong>values</strong>. A value can be any of the JSON types. For example in <code>{JSON.stringify({ surname: 'Neutron', people: [] })}</code> the key "surname" corresponds to the string "Neutron" while the key "people" corresponds with an empty array. Note that keys are surrounded by quotes, keys and values are separated by colons, and there is a comma separating each key-value pair.</li>
+            <li><strong>Array</strong>: Arrays are denoted by brackets <code>[]</code>. Inside these brackets is an ordered list of any number of JSON types. For example the array <code>["Jimmy", true, {'{}'}]</code> contains 3 ordered items: first, the string "Jimmy," second, the boolean "true," and third, an empty object. Note that all items in the array are separated by a comma.</li>
+            <li><strong>String</strong>: Strings are a collection of characters usually used to create words or sentences. Example: <code>"Neutron"</code>. Note that strings are surrounded by quotes.</li>
             <li><strong>Number</strong>: Numbers are… well numbers. Examples: <code>12</code>, <code>3.1415</code>. Note that numbers should only contain numbers or a decimal point in the case that it’s a decimal.</li>
             <li><strong>Boolean</strong>: Booleans indicate a binary condition and are written in one of two ways: <code>true</code>, <code>false</code></li>
           </ul>
