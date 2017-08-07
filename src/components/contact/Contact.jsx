@@ -13,13 +13,6 @@ export default class Contact extends Component {
           <table className="banner-container">
             <tbody>
               <tr>
-                <td><i className="fa fa-comments"></i></td>
-                <td>
-                  <a href="https://discord.gg/QMsGdK5" target="_blank">Join the discord chat</a>
-                </td>
-              </tr>
-
-              <tr>
                 <td><i className="fa fa-twitter"></i></td>
                 <td>
                   <a href="https://twitter.com/OisForOh" target="_blank">or contact me on twitter: twitter.com/OisForOh</a>
@@ -28,7 +21,7 @@ export default class Contact extends Component {
 
               <tr>
                 <td><i className="fa fa-envelope-o"></i></td>
-                <td>You can also email me at jaxoncreed@gmail.com</td>
+                <td>You can also email me at jackson.c.morgan@gmail.com</td>
               </tr>
             </tbody>
           </table>
