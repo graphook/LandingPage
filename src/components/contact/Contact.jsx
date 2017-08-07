@@ -15,7 +15,7 @@ export default class Contact extends Component {
               <tr>
                 <td><i className="fa fa-twitter"></i></td>
                 <td>
-                  <a href="https://twitter.com/OisForOh" target="_blank">or contact me on twitter: twitter.com/OisForOh</a>
+                  <a href="https://twitter.com/OisForOh" target="_blank">Contact me on twitter: twitter.com/OisForOh</a>
                 </td>
               </tr>
 
